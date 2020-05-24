@@ -1,0 +1,19 @@
+.tjqy_wrapper {
+  margin-bottom: 10px;
+  :global {
+    .ant-card {
+      .ant-card-body {
+        padding: 10px 0;
+        .ant-card-meta {
+          margin: 0;
+          .ant-card-meta-detail > div:not(:last-child) {
+            margin-bottom: 4px;
+          }
+          .ant-typography, .ant-typography p {
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+  }
+}

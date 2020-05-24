@@ -1,0 +1,121 @@
+.header-nav-layout {
+  .header_logo {
+    height: 26px;
+    vertical-align: middle;
+  }
+  .header-nav-layout-content {
+    //min-width: 1200px;
+    width: 100%;
+    //min-height: calc(100vh - 200px);
+    margin: 0 auto;
+    background-color: #f0f2f5;
+  }
+  .copyright {
+    font-size: 13px;
+    color: #bdc2c7;
+    min-width: 1200px;
+  }
+  .logout_icon {
+    &:hover {
+      color: #ff4d4f;
+    }
+  }
+  :global {
+    .ant-menu-horizontal > .ant-menu-item > a::before{
+      bottom: 0;
+    }
+    .ant-layout {
+      min-width: 1200px;
+      .ant-layout-header {
+        background: #fff;
+        height: auto;
+        //height: 84px;
+        #header {
+          width: 1200px;
+          margin: 0 auto;
+          height: 39px;
+          line-height: 39px;
+          .ant-menu-horizontal {
+            display: inline-block;
+            height: 39px;
+            line-height: 39px;
+            border: none;
+          }
+          .ant-menu-item {
+            margin-top: 0;
+            top: 0;
+            border: none;
+            a {
+              color: #333333;
+              span {
+                font-size: 14px;
+              }
+            }
+            &:hover {
+              background-color: #1890ff;
+              border: none;
+              a {
+                color: #FFFFFF;
+              }
+            }
+          }
+          .ant-menu-item-selected {
+            background-color: #1890ff;
+            border: none;
+            a {
+              color: #FFFFFF;
+            }
+            &:hover {
+              a {
+                color: #FFFFFF;
+              }
+            }
+          }
+          .header_more {
+            color: #333333;
+            padding: 0 10px;
+            &:hover {
+              cursor: pointer;
+              color: #1890ff;
+            }
+          }
+        }
+        .show_name {
+          color: #333333;
+        }
+        #header_menu {
+          //background-color: #1c2a75;
+          //border-bottom: 1px solid #1c2a75;
+          .ant-menu {
+            margin: 0 auto;
+            width: 1200px;
+            line-height: 40px;
+            //background-color: #1c2a75;
+            color: rgba(0, 0, 0, 0.65);
+            .ant-menu-item {
+              height: 40px;
+              //border-bottom: 3px solid transparent;
+              //&:hover {
+              //  color: #ffffff;
+              //  border-color: transparent;
+              //}
+            }
+            //.ant-menu-item-selected {
+            //color: #ffffff;
+            //border-bottom: 3px solid #ffffff;
+            //&:hover {
+            //  border-color: #ffffff;
+            //}
+            //}
+          }
+          .ant-menu-horizontal {
+            border: none;
+          }
+          .ant-menu-horizontal .ant-menu-item, .ant-menu-horizontal .ant-menu-submenu {
+            //margin-top: -2px;
+          }
+        }
+      }
+    }
+  }
+}

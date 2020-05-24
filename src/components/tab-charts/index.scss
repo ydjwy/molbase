@@ -1,0 +1,14 @@
+.tab_charts_wrapper {
+  :global {
+    .ant-tabs {
+      .ant-tabs-bar {
+        margin: 0;
+      }
+      .ant-tabs-content {
+        padding: 20px;
+        border: 1px solid #e8e8e8;
+        border-top: none;
+      }
+    }
+  }
+}

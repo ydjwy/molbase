@@ -1,0 +1,27 @@
+.trading_view_wrapper {
+  :global {
+    .ant-card {
+      .ant-card-head {
+        padding: 0;
+        font-weight: bold;
+        font-size: 15px;
+        border: none;
+      }
+      .ant-card-body {
+        padding: 0;
+        .ant-carousel .slick-slide {
+          overflow: hidden;
+        }
+        .ant-carousel .slick-slide .ant-row {
+          width: auto !important;
+        }
+        .ant-carousel .slick-dots li button{
+          background: #5c6b77;
+        }
+        .ant-carousel .slick-dots li.slick-active button{
+          background-color: #40a9ff;
+        }
+      }
+    }
+  }
+}

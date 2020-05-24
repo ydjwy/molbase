@@ -1,0 +1,23 @@
+.cpfl_card_wrapper {
+  :global {
+    .ant-card {
+      .ant-card-body {
+        border: 1px solid #e8e8e8;
+      }
+      .ant-card-head {
+        padding: 0 20px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #5997EC;
+      }
+      .ant-list-items {
+        .ant-list-item {
+          cursor: pointer;
+          padding: 0;
+          border: none;
+        }
+      }
+    }
+  }
+}

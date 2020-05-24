@@ -1,0 +1,39 @@
+.ppg_card_wrapper {
+  :global {
+    .ant-card {
+      .ppg_card_mask {
+        display: none;
+        position: absolute;
+        line-height: 98px;
+        height: 98px;
+        top: -98px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(49, 126, 231, .85);
+        .ppg_card_mask_content {
+          padding: 0 10px;
+          display: inline-block;
+          width: 100%;
+          line-height: 1.5;
+          vertical-align: middle;
+          text-align: center;
+          h4 {
+            color: #ffffff;
+            margin: 0;
+          }
+        }
+      }
+      &:hover {
+        .ppg_card_mask {
+          display: inline-block;
+        }
+      }
+    }
+    .ant-card-body {
+      position: relative;
+      padding: 0;
+      background-color: #5c6b77;
+    }
+  }
+}

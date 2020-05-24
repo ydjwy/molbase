@@ -1,0 +1,20 @@
+.rmsj_card_wrapper {
+  .rmsj_abstract {
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+    text-align: center;
+  }
+  :global {
+    .ant-card {
+      .ant-card-body {
+        padding: 0;
+        .ant-card-meta {
+          padding: 13px 20px;
+          margin: 0;
+        }
+      }
+    }
+
+  }
+}
