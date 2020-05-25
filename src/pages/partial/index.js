@@ -3,7 +3,9 @@
  */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import {Divider } from 'antd'
 import globalModel from "../../store/reducers/global";
+import SearchView from "./search-view";
 import NavView from "./nav-view";
 import DataView from "./data-view";
 import TradingView from "./trading-view";
@@ -41,8 +43,9 @@ export default class Position extends Component {
   render() {
     return (<div id={style.partial_wrapper}>
       <div id={style.partial_search_wrapper}>
-        搜索
+        <SearchView/>
       </div>
+      <Divider className={style.partial_search_nav_line}/>
       <div id={style.partial_nav_wrapper}>
         {/*导航*/}
         <NavView/>
