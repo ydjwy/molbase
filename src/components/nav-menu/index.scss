@@ -1,12 +1,18 @@
 .nav_menu_wrapper {
   position: relative;
   :global {
+    .ant-menu{
+      height: 440px;
+      padding:10px 0;
+    }
     .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
       background-color: inherit
     }
     .ant-menu-vertical .ant-menu-item, .ant-menu .ant-menu-item {
+      white-space: normal;
       position: inherit;
       overflow: visible;
+      margin: 0;
       .nav_detail_box {
         position: absolute;
         padding: 10px;

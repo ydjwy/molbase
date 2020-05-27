@@ -39,7 +39,7 @@ const postCssOptions = {
 
 const proxy = {
   "/cts/*": {
-     "target": "http://t100.geetemp.com",//测试
+     // "target": "http://t100.geetemp.com",//测试
     // "target": "http://192.168.140.152:28002",//george
     // "target": "http://192.168.140.151:28002", //jason
     // "target": "http://192.168.140.103:28002", //alan
