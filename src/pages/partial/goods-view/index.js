@@ -17,7 +17,7 @@ export default class GoodsView extends Component {
     componentDidMount(){
         const productCondition={
             page:0,
-            size:10,
+            size:8,
             sort:'sort,desc'
         };
         getStoreProduct(productCondition).then(res=>{
