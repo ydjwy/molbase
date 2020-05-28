@@ -4,11 +4,12 @@ import  style from './index.scss'
 const {Meta} = Card;
 const {Paragraph} = Typography;
 // data: {
-//     title: '市场资讯',
-//         list: [
-//         { id:1, title: '药品稳定性结果',text:'在线支付', url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'},
-//         { id:2, title: '药品稳定性结果', text:'在线支付', url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'}
-//     ]
+//     title: '市场资讯',,
+//     name: '市讯',,
+//     summary : 'summary',
+//     url : 'url',
+//     price : 'price',
+//     unit : 'unit'
 // }
 export default class SLSPCard extends Component {
     constructor(props) {
@@ -17,37 +18,46 @@ export default class SLSPCard extends Component {
     }
 
     render() {
-        const {data: {title, list}} = this.props;
+        // const {data: {title, list}} = this.props;
+        const {
+            data,
+            title = 'title',
+            summary = 'summary',
+            url = 'url',
+            price = 'price',
+            unit = 'unit',
+            name='name'
+        } = this.props;
         return (
             <div className={style.slsp_card_wrapper}>
-                <Card bordered={false} size="small" title={title} extra={<a href="#">更多></a>}>
-                    <small>一站式满足实验室需求</small>
+                <Card bordered={false} size="small" title={data[title]} extra={<a href="#">更多></a>}>
+                    <small><Paragraph ellipsis>{data[summary]}</Paragraph></small>
                     <Row type="flex" align="bottom">
                         <Col span={12}>
                             <div className="fs12 mt20">
-                                <Paragraph ellipsis>单道可调移液器单道可调移液器gfd</Paragraph>
+                                <Paragraph ellipsis>{data[name]}</Paragraph>
                             </div>
-                            <p className="mt30 mb0">￥257.00起</p>
+                            <p className="mt30 mb0">￥{data[price]}{data[unit]}</p>
                             <p className="mt5 mb0">在线支付</p>
                         </Col>
                         <Col span={12}>
                             <img width="100%" height="84"
-                                 src="http://pimg.molbase.net/upload/supplyshow/6b/9e/6b9ef3203993dac25c5faa0812c7992320180510101945.jpg"
+                                 src={data[url]}
                                  alt=""/>
                         </Col>
                     </Row>
-                    <Divider/>
-                    <Row gutter={10}>
-                        { list.map((item, index) => {
-                            return ( <Col span={12} key={index}>
-                                <Card bordered={false} cover={<img alt="example" height="80" src={item.url}/>}>
-                                    <Meta
-                                        title={<Paragraph ellipsis>{item.title} </Paragraph>}
-                                        description={<Paragraph ellipsis>{item.text} </Paragraph>}/>
-                                </Card>
-                            </Col>)
-                        })}
-                    </Row>
+                    {/*<Divider/>*/}
+                    {/*<Row gutter={10}>*/}
+                    {/*{ list.map((item, index) => {*/}
+                    {/*return ( <Col span={12} key={index}>*/}
+                    {/*<Card bordered={false} cover={<img alt="example" height="80" src={item.url}/>}>*/}
+                    {/*<Meta*/}
+                    {/*title={<Paragraph ellipsis>{item.title} </Paragraph>}*/}
+                    {/*description={<Paragraph ellipsis>{item.text} </Paragraph>}/>*/}
+                    {/*</Card>*/}
+                    {/*</Col>)*/}
+                    {/*})}*/}
+                    {/*</Row>*/}
                 </Card>
             </div>
         )

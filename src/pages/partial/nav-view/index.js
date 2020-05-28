@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Carousel, Row, Col} from "antd";
 import NavMenu from '../../../components/nav-menu'
 import WelcomeCard from '../../../components/welcome-card'
-import {getStoreCategory} from '../../../services/api1'
+import {getStoreCategory, getSystemGroupData} from '../../../services/api1'
 import style from './index.scss'
 
 
@@ -19,22 +19,7 @@ export default class NavView extends Component {
                 name: 'cateName',
                 id: 'id',
             },
-            carouselData: [
-                {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                },
-
-            ],
+            carouselData: [],
             welcomeData: {
                 imgUrl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
                 buyerService: [//买家服务
@@ -63,8 +48,17 @@ export default class NavView extends Component {
 
     componentDidMount() {
         const {navData} = this.state;
+        const carouselCondition = {
+            page: 0,
+            size: 10,
+            sort: 'id,desc',
+            groupName: 'yshop_home_banner'
+        };
         getStoreCategory().then(res => {
             this.setState({navData: {...navData, list: res.data.content}})
+        });
+        getSystemGroupData(carouselCondition).then(res => {
+            this.setState({carouselData: res.data.content || []})
         })
     }
 
@@ -80,7 +74,7 @@ export default class NavView extends Component {
                         <Carousel autoplay>
                             {carouselData && carouselData.map((item, index) => {
                                 return (<div key={index}>
-                                    <img src={item.imgUrl} width="100%" height="420" alt=""/>
+                                    <img src={item.map.pic} width="100%" height="420" alt=""/>
                                 </div>)
                             })}
                         </Carousel>
