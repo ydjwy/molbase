@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Card, Divider,  Row, Col} from "antd";
 import RMSJCard from '../../../components/rmsj-card'
+import DPFWCard from '../../../components/dpfw-card'
 import  style from './index.scss'
 
 
@@ -70,7 +71,7 @@ export default class BusinessView extends Component {
                     <Col span={6}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">店铺服务</Divider>}
                               extra={ <a href="#">更多></a>}>
-                            3567
+                            <DPFWCard/>
                         </Card>
                     </Col>
                 </Row>

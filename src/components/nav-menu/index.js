@@ -20,18 +20,18 @@ export default class NavMenu extends Component {
     }
 
     render() {
-        const {data: {list}} = this.props;
+        const {data: {list,id='id',name='name'}} = this.props;
         return (
             <div className={style.nav_menu_wrapper}>
                 <Menu mode="vertical" theme="dark" overflowedIndicator={false}>
                     {list && list.map(sItem => {
-                        return (<Item key={sItem.id}>
-                            {sItem.name}
+                        return (<Item key={sItem[id]}>
+                            {sItem[name]}
                             <div className='nav_detail_box'>
-                                <h3>{sItem.name}</h3>
+                                <h3>{sItem[name]}</h3>
                                 <Divider/>
                                 {sItem.children && sItem.children.map(gItem => {
-                                    return <Button key={gItem.id} type='link'>{gItem.name}</Button>
+                                    return <Button key={gItem[id]} type='link'>{gItem[name]}</Button>
                                 })}
                             </div>
                         </Item>)

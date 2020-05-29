@@ -37,3 +37,28 @@ export async function exportLoginLogMonitorReport(params) {
         dataType: 'download'
     });
 }
+
+//菜单数据
+export async function getStoreCategory(params) {
+    return XHR({
+        url:'http://123.56.104.75:8000/api/portal/lxdzStoreCategory',
+        method: 'GET',
+        body: params
+    })
+}
+//实力商品
+export async function getStoreProduct(params) {
+    return XHR({
+        url:'http://123.56.104.75:8000/api/portal/lxdzStoreProduct',
+        method: 'GET',
+        body: params
+    })
+}
+//导航轮播图数据
+export async function getSystemGroupData(params) {
+    return XHR({
+        url:'http://123.56.104.75:8000/api/portal/lxdzSystemGroupData',
+        method: 'GET',
+        body: params
+    })
+}

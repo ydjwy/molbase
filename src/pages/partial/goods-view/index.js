@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Card, Divider, List, Typography, Row, Col, Carousel} from "antd";
+import {Card, Divider, Row, Col} from "antd";
 import SLSPCard from '../../../components/slsp-card'
-import TJQYCard from '../../../components/tjqy-card'
-import PPGCard from '../../../components/ppg-card'
+import {getStoreProduct} from '../../../services/api1'
+
 import  style from './index.scss'
 
 
@@ -10,79 +10,31 @@ export default class GoodsView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goodsData: [
-                {
-                    title: '市场资讯',
-                    list: [
-                        {
-                            id: 1,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        },
-                        {
-                            id: 2,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        }
-                    ]
-                },{
-                    title: '市场资讯',
-                    list: [
-                        {
-                            id: 1,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        },
-                        {
-                            id: 2,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        }
-                    ]
-                },{
-                    title: '市场资讯',
-                    list: [
-                        {
-                            id: 1,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        },
-                        {
-                            id: 2,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        }
-                    ]
-                },{
-                    title: '市场资讯',
-                    list: [
-                        {
-                            id: 1,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        },
-                        {
-                            id: 2,
-                            title: '药品稳定性结果',
-                            text: '在线支付',
-                            url: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                        }
-                    ]
-                }
-            ]
+            goodsData: []
 
         };
+    }
+    componentDidMount(){
+        const productCondition={
+            page:0,
+            size:8,
+            sort:'sort,desc'
+        };
+        getStoreProduct(productCondition).then(res=>{
+            this.setState({goodsData:res.data.content||[]})
+        })
     }
 
     render() {
         const {goodsData} = this.state;
+        const goodKeys={
+            title : 'productTitle',
+            name : 'storeName',
+            summary : 'storeInfo',
+            url : 'image',
+            price : 'price',
+            unit : 'unitName'
+        }
         return (
             <div className={style.goods_view_wrapper}>
                 <Row gutter={20}>
@@ -91,8 +43,8 @@ export default class GoodsView extends Component {
                               extra={ <a href="#">更多></a>}>
                             <Row gutter={20}>
                                 {goodsData && goodsData.map((rItem, rIndex) => {
-                                    return (<Col key={rIndex} span={6}>
-                                        <SLSPCard data={rItem}/>
+                                    return (<Col key={rIndex} span={6} className='mb20'>
+                                        <SLSPCard data={rItem} {...goodKeys}/>
                                     </Col>)
                                 })}
                             </Row>

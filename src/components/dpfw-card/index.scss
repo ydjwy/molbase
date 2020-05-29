@@ -1,0 +1,15 @@
+.dpfw_wrapper {
+  margin-bottom: 10px;
+  :global {
+    .ant-card {
+      .ant-card-body {
+        padding: 10px 0;
+        height: 417px;
+        background: url(http://img.molbase.net/oc/rv/34/10292.png) 100% 100% no-repeat;
+        .ant-input,.ant-btn{
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+}
