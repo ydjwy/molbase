@@ -11,19 +11,22 @@ import style from './index.scss'
 export default class PPGCard extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
+        this.state = {}
     }
 
     render() {
-        const {data} = this.props;
+        const {
+            data,
+            title = 'title',
+            imgUrl = 'imgUrl'
+        } = this.props;
         return (
             <div className={style.ppg_card_wrapper}>
                 <Card style={{width: '100%', height: 98}}
-                      cover={<img style={{width: '100%', height: 98}} src={data.imgUrl}/>}>
+                      cover={<img style={{width: '100%', height: 98}} src={data[imgUrl]}/>}>
                     <div className='ppg_card_mask'>
                         <div className='ppg_card_mask_content'>
-                            <h4>{data.title}</h4>
+                            <h4>{data[title]}</h4>
                         </div>
                     </div>
                 </Card>

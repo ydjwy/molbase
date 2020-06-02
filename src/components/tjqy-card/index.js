@@ -16,15 +16,20 @@ export default class TJQYCard extends Component {
     }
 
     render() {
-        const {data: {companyName, desc, imgurl}} = this.props;
+        const {
+            data,
+            companyName = 'companyName',
+            desc = 'desc',
+            imgurl = 'imgurl'
+        } = this.props;
         return (
             <div className={style.tjqy_wrapper}>
                 <Card
                     hoverable
                     bordered={false}
-                    cover={<img alt="example" width="100%" height='120' src={imgurl}/>}>
-                    <Meta title={companyName}
-                          description={<Typography.Paragraph ellipsis>{desc}</Typography.Paragraph>}/>
+                    cover={<img alt="example" width="100%" height='120' src={data[imgurl]}/>}>
+                    <Meta title={data[companyName]}
+                          description={<Typography.Paragraph ellipsis>{data[desc]}</Typography.Paragraph>}/>
                 </Card>
             </div>
         )

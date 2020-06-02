@@ -3,6 +3,7 @@ import {Card, Divider, List, Typography, Row, Col, Carousel} from "antd";
 import ViewTitle from '../../../components/view-title'
 import TJQYCard from '../../../components/tjqy-card'
 import PPGCard from '../../../components/ppg-card'
+import {getShopBrandsData, getShopEnterprises} from '../../../services/api1'
 import  style from './index.scss'
 
 
@@ -14,115 +15,52 @@ export default class TradingView extends Component {
                 title: '交易大厅',
                 url: 'https://r.molbase.net/mall_v2/home/assets/images/title-deal.png'
             },
-            tradingData: [[
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                }
-            ], [
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                },
-                {
-                    companyName: '公司名称',
-                    desc: 'www.instagram.com',
-                    imgurl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                }
-            ]],
-            brandData: [
-                [
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'}
-                ], [
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'},
-                    {title: '推广服务推广服务', imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg'}
-                ]
-            ]
+            tradingData: [],
+            brandData: []
         };
+    }
+
+    componentDidMount() {
+        const brandsCondition = {
+            page: 0,
+            size: 16
+        };
+        const enterprisesCondition = {
+            page: 0,
+            size: 16
+        };
+        getShopBrandsData(brandsCondition).then(res => {
+            if (res.content && res.content.length > 0) {
+                let result = [];
+                for (let i = 0; i < res.content.length; i += 8) {
+                    result.push(res.content.slice(i, i + 8));
+                }
+                this.setState({brandData: result || []})
+            }
+        });
+        getShopEnterprises(enterprisesCondition).then(res => {
+            console.log('resddfg', res)
+            if (res.data.content && res.data.content.length > 0) {
+                let result = [];
+                for (let i = 0; i < res.data.content.length; i += 8) {
+                    result.push(res.data.content.slice(i, i + 8));
+                }
+                this.setState({tradingData: result || []})
+            }
+        });
     }
 
     render() {
         const {viewTitle, tradingData, brandData} = this.state;
+        const tradingKeys = {
+            companyName: 'companyName',
+            desc: 'companyDetailed',
+            imgurl: 'companyUrl'
+        };
+        const brandKeys = {
+            title: 'companyName',
+            imgUrl: 'companyUrl',
+        };
         return (
             <div className={style.trading_view_wrapper}>
                 <Row gutter={20}>
@@ -138,7 +76,7 @@ export default class TradingView extends Component {
                                         {rItem && rItem.map((cItem, cIndex) => {
                                             return (
                                                 <Col key={cIndex} span={6}>
-                                                    <TJQYCard data={cItem}/>
+                                                    <TJQYCard data={cItem} {...tradingKeys}/>
                                                 </Col>)
                                         })}
                                     </Row>)
@@ -156,7 +94,7 @@ export default class TradingView extends Component {
                                         {rItem && rItem.map((cItem, cIndex) => {
                                             return (
                                                 <Col key={cIndex} span={12} className={cIndex < 6 ? 'mb20' : ''}>
-                                                    <PPGCard data={cItem}/>
+                                                    <PPGCard data={cItem} {...brandKeys}/>
                                                 </Col>)
                                         })}
                                     </Row>)
