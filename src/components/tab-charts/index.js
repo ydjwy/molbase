@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Tabs} from 'antd';
-import  style from './index.scss'
+import AreaCharts from '../area-charts'
+import style from './index.scss'
 const {TabPane} = Tabs;
 // data: {
 //     list: [
@@ -15,8 +16,7 @@ const {TabPane} = Tabs;
 export default class TabCharts extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
@@ -24,7 +24,8 @@ export default class TabCharts extends Component {
     return (
       <div className={style.tab_charts_wrapper}>
         <Tabs tabBarExtraContent={<a href="#">更多></a>}>
-          {list.map(item => <TabPane tab={item.name} key={item.type}>{item.name}</TabPane>)}
+          {/*{list.map(item => <TabPane tab={item.name} key={item.type}>{item.name}</TabPane>)}*/}
+          {list.map(item => <TabPane tab={item.name} key={item.type}><AreaCharts/></TabPane>)}
         </Tabs>
       </div>
     )
