@@ -17,6 +17,11 @@ export default class SLSPCard extends Component {
         this.state = {};
     }
 
+    openGoods = () => {
+        const {data} = this.props;
+        window.open(window.location.origin + '/#/goods/' + data.id, '_blank')
+    };
+
     render() {
         // const {data: {title, list}} = this.props;
         const {
@@ -26,8 +31,9 @@ export default class SLSPCard extends Component {
             url = 'url',
             price = 'price',
             unit = 'unit',
-            name='name'
+            name = 'name'
         } = this.props;
+        console.log('data', data)
         return (
             <div className={style.slsp_card_wrapper}>
                 <Card bordered={false} size="small" title={data[title]} extra={<a href="#">更多></a>}>
@@ -35,14 +41,13 @@ export default class SLSPCard extends Component {
                     <Row type="flex" align="bottom">
                         <Col span={12}>
                             <div className="fs12 mt20">
-                                <Paragraph ellipsis>{data[name]}</Paragraph>
+                                <Paragraph ellipsis onClick={this.openGoods} className="cp">{data[name]}</Paragraph>
                             </div>
                             <p className="mt30 mb0">￥{data[price]}{data[unit]}</p>
                             <p className="mt5 mb0">在线支付</p>
                         </Col>
                         <Col span={12}>
-                            <img width="100%" height="84"
-                                 src={data[url]}
+                            <img width="100%" height="84" onClick={this.openGoods} className="cp" src={data[url]}
                                  alt=""/>
                         </Col>
                     </Row>

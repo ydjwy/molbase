@@ -16,7 +16,7 @@ import BusinessView from "./business-view";
 import style from './index.scss'
 @connect(({global}) => ({ ...global}), {...globalModel.actions})
 
-export default class Position extends Component {
+export default class Partial extends Component {
   constructor(props) {
     super(props);
     this.state = {

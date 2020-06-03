@@ -6,9 +6,17 @@ import HeaderNavLayout from "layout/header-nav-layout";
 import UserLayout from "layout/user-layout";
 import UserLogin from "pages/user/login";
 import {Exception403, Exception404, Exception500} from "components/exception";
-//工作台
+//首页
 const Partial = Loadable({
   loader: () => import("pages/partial"),
+  loading(){
+    // return <div>加载中</div>
+    return <div/>
+  }
+});
+//首页
+const Goods = Loadable({
+  loader: () => import("pages/goods"),
   loading(){
     // return <div>加载中</div>
     return <div/>
@@ -38,7 +46,8 @@ const Routes = () => (
       {/*name="系统管理"*/}
       {/*>*/}
       <Route path="/" redirect="/partial" exact={true}/>
-      <Route path="/partial" type="a" icon={Icon('icon-notebook')} name="工作台"  component={Partial}/>
+      <Route path="/partial" type="a" icon={Icon('icon-notebook')} name="首页"  component={Partial}/>
+      <Route path="/goods/:id"  type="a"  component={Goods}/>
       {/*<Route path="/manage/theme" component={() => <div>主题设置，conunselor角色可以访问</div>}*/}
       {/*// authority={["conunselor"]} name="主题设置"*/}
       {/*/>*/}
