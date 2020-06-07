@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Card, Row, Col, Typography, Divider} from "antd";
 import  style from './index.scss'
-const {Meta} = Card;
+// const {Meta} = Card;
 const {Paragraph} = Typography;
 // data: {
 //     title: '市场资讯',,

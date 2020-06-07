@@ -1,0 +1,25 @@
+.zysc_card_wrapper {
+  .zysc_img_box {
+    height: 120px;
+    padding: 20px;
+    border: 1px solid #eee;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  :global {
+    .ant-card {
+      .ant-card-body {
+        padding: 0 15px 15px 15px;
+        font-size: 12px;
+        p {
+          margin-bottom: 0;
+          font-size: 12px;
+          line-height: 2;
+
+        }
+      }
+    }
+  }
+}

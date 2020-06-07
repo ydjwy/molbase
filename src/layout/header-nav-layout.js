@@ -67,25 +67,25 @@ class Header extends PureComponent {
 
   render() {
     const {menuData, roles} = this.props;
-    const moreList = (<Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer"
-           href="http://erp.careerintlinc.com/SitePages/Recruitment/Myposition.aspx?selectpanel=p1&selectitem=10">
-          <span>旧版职位</span>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://track.careerintlinc.com:1238/">
-          <span>旧版候选人</span>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer"
-           href="http://erp.careerintlinc.com/_layouts/15/Career.Workflow2013/Report.aspx?module=My%20Report%20Center">
-          <span>旧版报表</span>
-        </a>
-      </Menu.Item>
-    </Menu>);
+    // const moreList = (<Menu>
+    //   <Menu.Item>
+    //     <a target="_blank" rel="noopener noreferrer"
+    //        href="http://erp.careerintlinc.com/SitePages/Recruitment/Myposition.aspx?selectpanel=p1&selectitem=10">
+    //       <span>旧版职位</span>
+    //     </a>
+    //   </Menu.Item>
+    //   <Menu.Item>
+    //     <a target="_blank" rel="noopener noreferrer" href="http://track.careerintlinc.com:1238/">
+    //       <span>旧版候选人</span>
+    //     </a>
+    //   </Menu.Item>
+    //   <Menu.Item>
+    //     <a target="_blank" rel="noopener noreferrer"
+    //        href="http://erp.careerintlinc.com/_layouts/15/Career.Workflow2013/Report.aspx?module=My%20Report%20Center">
+    //       <span>旧版报表</span>
+    //     </a>
+    //   </Menu.Item>
+    // </Menu>);
     const candidateDetHead = this.props.history.location.pathname && this.props.history.location.pathname.split('/')[1];
     return (
       <AntHeader style={{padding: 0}}>
@@ -99,11 +99,11 @@ class Header extends PureComponent {
               history={this.props.history}
               mode="horizontal"
             />
-            <Dropdown overlay={moreList} className="ml10">
-              <span className="header_more">
-                <i className={`iconfont icon-gengduo mr4`}/>更多 <Icon type="down"/>
-              </span>
-            </Dropdown>
+            {/*<Dropdown overlay={moreList} className="ml10">*/}
+              {/*<span className="header_more">*/}
+                {/*<i className={`iconfont icon-gengduo mr4`}/>更多 <Icon type="down"/>*/}
+              {/*</span>*/}
+            {/*</Dropdown>*/}
             <CustomHeader {...this.props}/>
           </div>
         </div>

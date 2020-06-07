@@ -1,0 +1,14 @@
+.dpkf_card_wrapper {
+  :global {
+    .ant-card {
+      .ant-card-head{
+        background-color: #f8f8f8;
+      }
+      .ant-card-body {
+        padding:15px;
+        font-size: 12px;
+      }
+    }
+
+  }
+}
