@@ -1,49 +1,41 @@
 import React, {Component} from "react";
-import {Card, Icon, Avatar, Typography,Tabs ,Row,Col} from "antd";
+import {Card, Icon, Avatar, Typography, Tabs, Row, Col} from "antd";
 import style from './index.scss'
-const { TabPane } = Tabs;
-
+const {TabPane} = Tabs;
+// data={
+//     image:'',主图片
+//     imageList:[],图片列表
+//     art:‘’,货号
+//     integral:‘’,积分
+// }
 export default class SPZSCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-    companyName: '郑州派尼化学试剂厂',
-        logo: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        address: '中国 河南 郑州',
-        abstract: '中原地区化学试剂批发生产厂家',
-        product: '六氟铝酸钠,钼酸钠,硅酸钠,硝普钠（亚硝基铁氰化钠）,硫酸铝钾,柠檬酸钾,氟铝酸钾,六氯铂酸钾,苯甲酸钾,钼酸钾',
-        isShowProduct: true,
-                imgUrl:'http://qawyn04ic.bkt.clouddn.com/10727.jpg'
-}
+            image: ''
         };
     }
 
-    componentDidMount() {
+    onTabChange = (key) => {
+        this.setState({image: key});
     }
 
-
     render() {
-        const {data: {companyName, address, abstract, product, logo, isShowProduct,imgUrl}} = this.state;
+        const {data: {imageList, art, integral}} = this.props;
+        const {image} = this.state;
         return (
             <div className={style.spzs_card_wrapper}>
-                <Card cover={<img src={imgUrl} />} bordered={false}>
-                    <Tabs defaultActiveKey="1">
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="1"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="2"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="3"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="4"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="5"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="6"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="7"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="8"/>
-                        <TabPane tab={<img width="30" height="30" src={imgUrl}/>} key="9"/>
+                <Card cover={<img src={image || this.props.data.image}/>} bordered={false}>
+                    <Tabs activeKey={image || this.props.data.image} onChange={this.onTabChange}>
+                        {imageList && imageList.map(item => {
+                            return <TabPane tab={<img width="30" height="30" src={item}/>} key={item}/>
+                        })}
                     </Tabs>
                     <Row gutter={10}>
-                        <Col span={18}>货号：1232432654765869</Col>
+                        <Col span={18}>货号：{art}</Col>
                         <Col span={6} align="right">收藏</Col>
                     </Row>
-                    <p>送摩贝积分 3 </p>
+                    <p>送大综积分 {integral} </p>
                 </Card>
             </div>
         );

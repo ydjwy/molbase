@@ -11,7 +11,7 @@ const {TabPane} = Tabs;
 //         {id: 2, name: '化工产品'},
 //         {id: 3, name: '现货商城'},
 //         {id: 4, name: '市场行情'},
-//         {id: 5, name: '摩贝百科'},
+//         {id: 5, name: '大综百科'},
 //         {id: 6, name: '买家手册'},
 //     ],
 //         sellerService: [//卖家服务
@@ -39,7 +39,7 @@ export default class WelcomeCard extends Component {
         return (
             <div className={style.welcome_wrapper}>
                 <Card>
-                    <h3 align="center">欢迎来到摩贝</h3>
+                    <h3 align="center">欢迎来到大综</h3>
                     <Row gutter={20} className='mb20 mt20'>
                         <Col span={12}>
                             <Button type="primary">请登录</Button>

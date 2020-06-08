@@ -32,7 +32,7 @@ export default class GoodsDetailClass extends Component {
                 <div style={{background:'#f7f7f7'}} className="pt10">
                     <Descriptions>
                         <Item label="市场价" span={3}>￥680.00/支</Item>
-                        <Item label="摩贝价"  span={3}>￥275.00 /支 （请登录查看专享价）</Item>
+                        <Item label="大综价"  span={3}>￥275.00 /支 （请登录查看专享价）</Item>
                     </Descriptions>
                 </div>
                 <Descriptions column={4}>

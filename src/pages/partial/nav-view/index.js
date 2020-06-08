@@ -27,7 +27,7 @@ export default class NavView extends Component {
                     {id: 2, name: '化工产品'},
                     {id: 3, name: '现货商城'},
                     {id: 4, name: '市场行情'},
-                    {id: 5, name: '摩贝百科'},
+                    {id: 5, name: '大综百科'},
                     {id: 6, name: '买家手册'},
                 ],
                 sellerService: [//卖家服务

@@ -3,13 +3,14 @@
  */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Divider,Row,Col} from 'antd'
+import {Divider, Row, Col} from 'antd'
 import globalModel from "../../store/reducers/global";
 import  SpzsCard from '../../components/spzs-card'
 import  ZYSCCard from '../../components/zysc-card'
 import  DPKFCard from '../../components/dpkf-card'
 import  GoodsDetailClass from '../../components/goods-detail-class'
 import  GoodsDetail from '../../components/goods-detail'
+import  {getGoodsDetailInfo} from '../../services/api1'
 import style from './index.scss'
 @connect(({global}) => ({...global}), {...globalModel.actions})
 
@@ -17,7 +18,10 @@ export default class Goods extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goodsId: ''
+            goodsInfo: {
+                product:{},
+                productAttr:{}
+            }
         }
     }
 
@@ -27,8 +31,11 @@ export default class Goods extends Component {
 
     //组件装载完成
     componentDidMount() {
-        this.init();
-        console.log('this.props', this.props)
+        getGoodsDetailInfo({id: this.props.match.params.id}).then(res => {
+            console.log('res', res);
+            this.setState({goodsInfo: res.data})
+        })
+        // this.init();
     }
 
     //组件更新
@@ -40,17 +47,28 @@ export default class Goods extends Component {
     init = (props) => {
 
     };
+    getSpzsCardData = () => {
+        const {goodsInfo} = this.state;
+        console.log()
+        const data = {
+            image: goodsInfo.product.image,
+            imageList: goodsInfo.product.sliderImage ? goodsInfo.product.sliderImage.split(',') : [],
+            art: goodsInfo.product.barCode,
+            integral: goodsInfo.product.giveIntegral,
+        };
+        return data
+    };
 
 
     render() {
-        const {goodsId}=this.state;
+        const {goodsInfo} = this.state;
+        const spzsCardData = this.getSpzsCardData();
         return (<div id={style.goods_wrapper}>
             <div className={style.goods_box}>
                 <Row gutter={10}>
                     <Col span={6}>
                         <div id={style.partial_nav_wrapper}>
-                            {/*{goodsId}*/}
-                            <SpzsCard/>
+                            <SpzsCard data={spzsCardData}/>
                             {/*<NavView/>*/}
                         </div>
                     </Col>
@@ -63,7 +81,6 @@ export default class Goods extends Component {
                 <Row gutter={10}>
                     <Col span={5}>
                         <div id={style.partial_nav_wrapper}>
-                            {/*{goodsId}*/}
                             <div>
                                 <ZYSCCard/>
                             </div>
