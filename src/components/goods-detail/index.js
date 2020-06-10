@@ -62,12 +62,13 @@ export default class GoodsDetail extends Component {
 
     render() {
         const {data: {name, phone, imgUrl}, selectTab} = this.state;
+        const {goodsInfo} = this.props;
         const title = this.getCardTitle()
-        const showDetialContent=this.getGoodsDetialContent();
+        const showDetialContent = this.getGoodsDetialContent();
         return (
             <div className={style.goods_detail_wrapper}>
                 <Card title={title} size="small" extra={<small>信息更新时间：2020.05.07</small>}>
-                    {selectTab === '1' ? showDetialContent : null}
+                    {selectTab === '1' ? <div dangerouslySetInnerHTML={{__html: goodsInfo.product && goodsInfo.product.description}}/> : null}
                     {selectTab === '2' ? '商品评价' : null}
                 </Card>
             </div>

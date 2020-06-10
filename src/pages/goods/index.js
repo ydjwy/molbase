@@ -74,7 +74,7 @@ export default class Goods extends Component {
                     </Col>
                     <Col span={18}>
                         <div id={style.partial_data_wrapper}>
-                            <GoodsDetailClass/>
+                            <GoodsDetailClass goodsInfo={goodsInfo}/>
                         </div>
                     </Col>
                 </Row>
@@ -91,7 +91,7 @@ export default class Goods extends Component {
                     </Col>
                     <Col span={19}>
                         <div id={style.partial_data_wrapper}>
-                            <GoodsDetail/>
+                            <GoodsDetail goodsInfo={goodsInfo}/>
                         </div>
                     </Col>
                 </Row>

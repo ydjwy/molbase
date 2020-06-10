@@ -1,14 +1,15 @@
 .goods_detail_class_wrapper {
   :global {
-    .ant-radio-group{
-      .ant-radio-button-wrapper{
+    .ant-radio-group {
+      .ant-radio-button-wrapper {
+        margin: 4px;
         border-radius: 2px;
-        margin-right: 10px;
+        //margin-right: 10px;
         border: 1px solid #d9d9d9;
       }
-      .ant-radio-button-wrapper-checked{
+      .ant-radio-button-wrapper-checked {
         border-color: #1890ff;
-        box-shadow:none;
+        box-shadow: none;
       }
     }
 

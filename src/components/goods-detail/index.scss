@@ -33,6 +33,16 @@
           }
         }
       }
+      .ant-card-body{
+        table {
+          border-collapse: collapse;
+        }
+
+        table, td, th {
+          border: 1px solid black;
+          text-align: center;
+        }
+      }
     }
 
   }
