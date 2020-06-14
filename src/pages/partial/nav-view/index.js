@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Carousel, Row, Col} from "antd";
-import NavMenu from '../../../components/nav-menu'
-import WelcomeCard from '../../../components/welcome-card'
+import NavMenu from '../../../components/partial/nav-menu'
+import WelcomeCard from '../../../components/partial/welcome-card'
 import {getStoreCategory, getSystemGroupData} from '../../../services/api1'
 import style from './index.scss'
 

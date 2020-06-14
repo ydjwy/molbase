@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Card, Divider,  Row, Col} from "antd";
-import RMSJCard from '../../../components/rmsj-card'
-import DPFWCard from '../../../components/dpfw-card'
+import RMSJCard from '../../../components/partial/rmsj-card'
+import DPFWCard from '../../../components/partial/dpfw-card'
 import  style from './index.scss'
 
 

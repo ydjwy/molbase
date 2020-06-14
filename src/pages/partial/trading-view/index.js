@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Card, Divider, List, Typography, Row, Col, Carousel} from "antd";
-import ViewTitle from '../../../components/view-title'
-import TJQYCard from '../../../components/tjqy-card'
-import PPGCard from '../../../components/ppg-card'
+import {Card, Divider, Row, Col, Carousel} from "antd";
+import ViewTitle from '../../../components/partial/view-title'
+import TJQYCard from '../../../components/partial/tjqy-card'
+import PPGCard from '../../../components/partial/ppg-card'
 import {getShopBrandsData, getShopEnterprises} from '../../../services/api1'
 import  style from './index.scss'
 

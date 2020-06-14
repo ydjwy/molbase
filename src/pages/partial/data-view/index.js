@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Card, List, Typography, Row, Col} from "antd";
-import SCZXCard from '../../../components/sczx-card'
-import BDZZCard from '../../../components/bdzz-card'
-import TabCharts from '../../../components/tab-charts'
+import SCZXCard from '../../../components/partial/sczx-card'
+import BDZZCard from '../../../components/partial/bdzz-card'
+import TabCharts from '../../../components/partial/tab-charts'
 import  style from './index.scss'
 
 

@@ -3,13 +3,13 @@
  */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Divider, Row, Col} from 'antd'
+import { Row, Col} from 'antd'
 import globalModel from "../../store/reducers/global";
-import  SpzsCard from '../../components/spzs-card'
-import  ZYSCCard from '../../components/zysc-card'
-import  DPKFCard from '../../components/dpkf-card'
-import  GoodsDetailClass from '../../components/goods-detail-class'
-import  GoodsDetail from '../../components/goods-detail'
+import  SpzsCard from '../../components/goods/spzs-card'
+import  ZYSCCard from '../../components/goods/zysc-card'
+import  DPKFCard from '../../components/goods/dpkf-card'
+import  GoodsDetailClass from '../../components/goods/goods-detail-class'
+import  GoodsDetail from '../../components/goods/goods-detail'
 import  {getGoodsDetailInfo} from '../../services/api1'
 import style from './index.scss'
 @connect(({global}) => ({...global}), {...globalModel.actions})

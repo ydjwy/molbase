@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Row, Col} from "antd";
-import ViewTitle from '../../../components/view-title'
-import CPFLCard from '../../../components/cpfl-card'
+import ViewTitle from '../../../components/partial/view-title'
+import CPFLCard from '../../../components/partial/cpfl-card'
 import style from './index.scss'
 
 

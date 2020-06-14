@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Card, Divider, Row, Col} from "antd";
-import SLSPCard from '../../../components/slsp-card'
+import SLSPCard from '../../../components/partial/slsp-card'
 import {getStoreProduct} from '../../../services/api1'
 
 import  style from './index.scss'
