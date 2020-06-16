@@ -30,8 +30,14 @@ const {TabPane} = Tabs;
 export default class WelcomeCard extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
+    }
+
+
+    //跳转登录页
+    onLogin = () => {
+        const {history} = this.props;
+        history.push('/user/login')
     }
 
     render() {
@@ -42,7 +48,7 @@ export default class WelcomeCard extends Component {
                     <h3 align="center">欢迎来到大综</h3>
                     <Row gutter={20} className='mb20 mt20'>
                         <Col span={12}>
-                            <Button type="primary">请登录</Button>
+                            <Button type="primary" onClick={this.onLogin}>请登录</Button>
                         </Col>
                         <Col span={12}>
                             <Button>免费注册</Button>
@@ -52,14 +58,16 @@ export default class WelcomeCard extends Component {
                         <TabPane tab="买家服务" key="1">
                             <Row gutter={10}>
                                 {buyerService && buyerService.map(item => {
-                                    return (<Col span={8} key={item.id} className='mb10'><Button className='fs12'>{item.name}</Button></Col>)
+                                    return (<Col span={8} key={item.id} className='mb10'><Button
+                                        className='fs12'>{item.name}</Button></Col>)
                                 })}
                             </Row>
                         </TabPane>
                         <TabPane tab="卖家服务" key="2">
                             <Row gutter={10}>
                                 {sellerService && sellerService.map(item => {
-                                    return (<Col span={8} key={item.id} className='mb10'><Button className='fs12'>{item.name}</Button></Col>)
+                                    return (<Col span={8} key={item.id} className='mb10'><Button
+                                        className='fs12'>{item.name}</Button></Col>)
                                 })}
                             </Row>
                         </TabPane>

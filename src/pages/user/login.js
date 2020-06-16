@@ -147,7 +147,7 @@ class Login extends PureComponent {
             </Button>
           </FormItem>
         </Form>
-        <p className='login-copyright' align="center">Copyright © 2017 荐客极聘网络技术（苏州）有限公司</p>
+        {/*<p className='login-copyright' align="center">Copyright © 2017 荐客极聘网络技术（苏州）有限公司</p>*/}
         <Modal
           title='绑定账号'
           width={700}

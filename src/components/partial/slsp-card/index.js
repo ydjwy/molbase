@@ -33,7 +33,6 @@ export default class SLSPCard extends Component {
             unit = 'unit',
             name = 'name'
         } = this.props;
-        console.log('data', data)
         return (
             <div className={style.slsp_card_wrapper}>
                 <Card bordered={false} size="small" title={data[title]} extra={<a href="#">更多></a>}>

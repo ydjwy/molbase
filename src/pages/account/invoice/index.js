@@ -5,11 +5,22 @@ import React, {Component} from "react";
 import {Empty} from "antd";
 import PageTitle from '../../../components/account/page-title'
 import BaseInfo from '../../../components/account/base-info'
+import OrdinaryModal from './ordinary-modal'
+import SpecialModal from './special-modal'
 import style from "./index.scss";
 export default class AccountInvoice extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            ordinaryModal: {//普通发票弹框
+                visible: false,
+                isEdit: false
+            },
+            specialModal: {//专项发票弹框
+                visible: false,
+                isEdit: false
+            }
+        };
         this.info = {
             ordinary: {
                 title: '增值税普通发票',
@@ -31,15 +42,23 @@ export default class AccountInvoice extends Component {
 
     //完善增值税普通发票
     onPerfectOrdinary = () => {
-        console.log('onPerfectOrdinary');
+        this.setState({ordinaryModal: {visible: true, isEdit: false}});
     };
     //完善增值税专项发票
     onPerfectSpecial = () => {
-        console.log('onPerfectSpecial');
+        this.setState({specialModal: {visible: true, isEdit: false}});
+    };
+    //关闭普通发票弹框
+    onCloseOrdinaryModal = () => {
+        this.setState({ordinaryModal: {visible: false, isEdit: false}});
+    };
+    //关闭专项发票弹框
+    onCloseSpecialModal = () => {
+        this.setState({specialModal: {visible: false, isEdit: false}});
     };
 
-
     render() {
+        const {ordinaryModal, specialModal} = this.state;
         const info = this.info;
         return (<div id={style.account_invoice_wrapper}>
             <div className="mb20">
@@ -57,6 +76,10 @@ export default class AccountInvoice extends Component {
                     <Empty description="暂无收票信息"/>
                 </div>
             </div>
+            {ordinaryModal.visible ?
+                <OrdinaryModal ordinaryModal={ordinaryModal} onClose={this.onCloseOrdinaryModal}/> : null}
+            {specialModal.visible ?
+                <SpecialModal specialModal={specialModal} onClose={this.onCloseSpecialModal}/> : null}
         </div>);
     }
 }

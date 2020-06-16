@@ -39,7 +39,6 @@ export default class TradingView extends Component {
             }
         });
         getShopEnterprises(enterprisesCondition).then(res => {
-            console.log('resddfg', res)
             if (res.data.content && res.data.content.length > 0) {
                 let result = [];
                 for (let i = 0; i < res.data.content.length; i += 8) {

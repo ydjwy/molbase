@@ -63,6 +63,7 @@ export default class NavView extends Component {
     }
 
     render() {
+        const {history} = this.props;
         const {navData, carouselData, welcomeData} = this.state;
         return (
             <div className={style.nav_view_wrapper}>
@@ -80,7 +81,7 @@ export default class NavView extends Component {
                         </Carousel>
                     </Col>
                     <Col span={6} className='pt20'>
-                        <WelcomeCard data={welcomeData}/>
+                        <WelcomeCard data={welcomeData} history={history}/>
                     </Col>
                 </Row>
             </div>
