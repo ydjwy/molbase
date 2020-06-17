@@ -2,27 +2,8 @@
  * Created by YD on 2020/6/14.
  */
 import React, {Component} from "react";
-import {
-    Modal,
-    Form,
-    Select,
-    Input,
-    DatePicker,
-    Cascader,
-    InputNumber,
-    Switch,
-    Radio,
-    Slider,
-    Button,
-    Upload,
-    Icon,
-    Rate,
-    Checkbox,
-    Row,
-    Col
-} from "antd";
+import {Modal, Form, Select, Input, DatePicker, Cascader, Radio} from "antd";
 import style from "./index.scss";
-const {Option} = Select;
 class BaseModal extends Component {
     constructor(props) {
         super(props);
@@ -105,21 +86,23 @@ class BaseModal extends Component {
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
                 afterClose={this.handleAfterClose}>
-                <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Form {...formItemLayout}>
                     <Form.Item {...formItemLayout} label="昵称">
                         {getFieldDecorator('name', {
                             rules: [{required: true, message: '请输入昵称'},],
                         })(<Input placeholder="请输入昵称"/>)}
                     </Form.Item>
-                    <Form.Item label="性别">
-                        {getFieldDecorator('gender')(
+                    <Form.Item {...formItemLayout} label="性别">
+                        {getFieldDecorator('gender', {
+                            rules: [{required: true, message: '请选择性别'}],
+                        })(
                             <Radio.Group>
                                 <Radio value="1">男</Radio>
                                 <Radio value="0">女</Radio>
                             </Radio.Group>,
                         )}
                     </Form.Item>
-                    <Form.Item label="生日">
+                    <Form.Item {...formItemLayout} label="生日">
                         {getFieldDecorator('birthday', {
                             rules: [{type: 'object', required: true, message: '请选择生日!'}],
                         })(<DatePicker />)}
