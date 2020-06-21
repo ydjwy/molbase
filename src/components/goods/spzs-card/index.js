@@ -35,7 +35,7 @@ export default class SPZSCard extends Component {
                         <Col span={18}>货号：{art}</Col>
                         <Col span={6} align="right">收藏</Col>
                     </Row>
-                    <p>送大综积分 {integral} </p>
+                    <p>送大宗积分 {integral} </p>
                 </Card>
             </div>
         );

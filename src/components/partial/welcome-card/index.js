@@ -11,7 +11,7 @@ const {TabPane} = Tabs;
 //         {id: 2, name: '化工产品'},
 //         {id: 3, name: '现货商城'},
 //         {id: 4, name: '市场行情'},
-//         {id: 5, name: '大综百科'},
+//         {id: 5, name: '大宗百科'},
 //         {id: 6, name: '买家手册'},
 //     ],
 //         sellerService: [//卖家服务
@@ -39,27 +39,32 @@ export default class WelcomeCard extends Component {
         const {history} = this.props;
         history.push('/user/login')
     }
+    //跳转注册页
+    onRegister = () => {
+        const {history} = this.props;
+        history.push('/user/register')
+    }
 
     render() {
         const {data: {imgUrl, list, buyerService, sellerService}} = this.props;
         return (
             <div className={style.welcome_wrapper}>
                 <Card>
-                    <h3 align="center">欢迎来到大综</h3>
+                    <h3 align="center">欢迎来到辽西大宗</h3>
                     <Row gutter={20} className='mb20 mt20'>
                         <Col span={12}>
                             <Button type="primary" onClick={this.onLogin}>请登录</Button>
                         </Col>
                         <Col span={12}>
-                            <Button>免费注册</Button>
+                            <Button onClick={this.onRegister}>免费注册</Button>
                         </Col>
                     </Row>
                     <Tabs defaultActiveKey="1" size="small">
                         <TabPane tab="买家服务" key="1">
                             <Row gutter={10}>
                                 {buyerService && buyerService.map(item => {
-                                    return (<Col span={8} key={item.id} className='mb10'><Button
-                                        className='fs12'>{item.name}</Button></Col>)
+                                    return (<Col span={8} key={item.id} className='mb10'>
+                                        <Button className='fs12'>{item.name}</Button></Col>)
                                 })}
                             </Row>
                         </TabPane>
@@ -73,11 +78,11 @@ export default class WelcomeCard extends Component {
                         </TabPane>
                     </Tabs>
                     <img width="100%" height="76" className='mt10 mb10' src={imgUrl} alt=""/>
-                    <List
-                        size="small"
-                        dataSource={list}
-                        renderItem={item => <List.Item><Paragraph ellipsis>{item.title}</Paragraph></List.Item>}
-                    />
+                    {/*<List*/}
+                        {/*size="small"*/}
+                        {/*dataSource={list}*/}
+                        {/*renderItem={item => <List.Item><Paragraph ellipsis>{item.title}</Paragraph></List.Item>}*/}
+                    {/*/>*/}
                 </Card>
             </div>
         )

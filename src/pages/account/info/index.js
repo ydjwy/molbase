@@ -37,7 +37,7 @@ export default class AccountInfo extends Component {
             company: {
                 title: '公司信息',
                 text: '完善公司信息后，您可获得以下权益',
-                textList: ['免费开通摩贝店铺 ', ' 免费开通SaaS功能'],
+                textList: ['免费开通大宗店铺 ', ' 免费开通SaaS功能'],
                 btnText: '立即完善公司信息'
             }
         };

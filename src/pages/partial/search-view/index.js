@@ -43,8 +43,8 @@ export default class SearchView extends Component {
                 {id: 4, name: '品牌馆'},
                 {id: 5, name: '化工企业'},
                 {id: 6, name: '化工产品'},
-                {id: 7, name: '大综百科'},
-                {id: 8, name: '大综行情'},
+                {id: 7, name: '大宗百科'},
+                {id: 8, name: '大宗行情'},
                 {id: 9, name: '产业链地图'},
             ],
 

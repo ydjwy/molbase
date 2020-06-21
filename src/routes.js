@@ -6,6 +6,7 @@ import HeaderNavLayout from "layout/header-nav-layout";
 import UserLayout from "layout/user-layout";
 import AccountLayout from "layout/account-layout";
 import UserLogin from "pages/user/login";
+import UserRegister from "pages/user/register";
 import {Exception403, Exception404, Exception500} from "components/exception";
 //首页
 const Partial = Loadable({
@@ -57,6 +58,7 @@ const Routes = () => (
         <Route path="/user" component={UserLayout}>
             <Route path="/user" redirect="/user/login" exact={true}/>
             <Route path="/user/login" component={UserLogin}/>
+            <Route path="/user/register" component={UserRegister}/>
         </Route>
         <Route path="/403" component={Exception403}/>
         <Route path="/404" component={Exception404}/>
