@@ -27,12 +27,14 @@ class Login extends PureComponent {
 
     handleSubmit = e => {
         e.preventDefault();
+        const {setUser} = this.props;
         this.setState({loginLoading: true});
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 localStorage.removeItem('currentUser');
                 login(values).then(res => {
                     localStorage.setItem('currentUser', JSON.stringify(res.data));
+                    setUser(res.data);
                     const {history} = this.props;
                     history.push('/partial');
                     this.setState({loginLoading: false});

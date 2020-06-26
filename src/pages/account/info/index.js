@@ -2,12 +2,17 @@
  * Created by YD on 2020/6/14.
  */
 import React, {Component} from "react";
-import {} from "antd";
+import {connect} from "react-redux";
+import userModel from "store/reducers/user";
+import {Descriptions} from "antd";
 import PageTitle from '../../../components/account/page-title'
 import BaseInfo from '../../../components/account/base-info'
+import {getUserData, getUserApplicant} from '../../../services/api2'
 import BaseModal from './base-modal'
 import CompanyModal from './company-modal'
+import ContactModal from './contact-modal'
 import style from "./index.scss";
+@connect(({user}) => ({...user}), {...userModel.actions})
 export default class AccountInfo extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +24,9 @@ export default class AccountInfo extends Component {
             companyModal: {//公司信息弹框
                 visible: false,
                 isEdit: false
-            }
+            },
+            baseInfo: {},//账户信息
+            companyInfo: {},//公司信息
         };
         this.info = {
             base: {
@@ -44,11 +51,28 @@ export default class AccountInfo extends Component {
     }
 
     componentDidMount() {
+        this.initBase();
+        this.initCompany();
+    }
+
+    initBase = () => {
+        const {userInfo: {user}} = this.props;
+        getUserData({uid: user.uid}).then(res => this.setState({baseInfo: res.data || {}}));
+    };
+    initCompany = () => {
+        const {userInfo: {user}} = this.props;
+        getUserApplicant({uid: user.uid}).then(res => this.setState({companyInfo: res.data || {}}));
     }
 
     //完善基本信息
-    onPerfectBase = () => {
-        this.setState({baseModal: {visible: true, isEdit: false}});
+    onPerfectBase = (type) => {
+        const {userInfo: {user}} = this.props;
+        const {baseInfo} = this.state;
+        if (type === 'new') {
+            this.setState({baseModal: {visible: true, isEdit: false, uid: user.uid}});
+        } else if (type === 'edit') {
+            this.setState({baseModal: {visible: true, isEdit: true, data: baseInfo, uid: user.uid}});
+        }
     };
     //完善联系方式
     onPerfectContact = () => {
@@ -59,7 +83,10 @@ export default class AccountInfo extends Component {
         this.setState({companyModal: {visible: true, isEdit: false}});
     };
     //关闭基本信息弹框
-    onCloseBaseModal = () => {
+    onCloseBaseModal = (isSave) => {
+        if (isSave) {
+            this.initBase();
+        }
         this.setState({baseModal: {visible: false, isEdit: false}});
     };
     //关闭公司信息弹框
@@ -69,18 +96,24 @@ export default class AccountInfo extends Component {
 
 
     render() {
-        const {baseModal, companyModal} = this.state;
+        const {baseModal, companyModal, baseInfo: {isExist}} = this.state;
         const info = this.info;
         return (<div id={style.account_info_wrapper}>
             <div className="mb20">
                 <PageTitle title="账户资料"/>
             </div>
             <div className="mb20">
-                <BaseInfo {...info.base} onOpen={this.onPerfectBase}/>
+                <BaseInfo {...info.base} isHaveContent={isExist} isEdit={isExist} onOpen={this.onPerfectBase}>
+                    <BaseInfoShow {...this.state.baseInfo}/>
+                </BaseInfo>
             </div>
-            <div className="mb20">
-                <BaseInfo {...info.contact} onOpen={this.onPerfectContact}/>
-            </div>
+            {isExist ? (
+                <div className="mb20">
+                    <BaseInfo {...info.contact} isHaveContent={isExist} isEdit={false} onOpen={this.onPerfectContact}>
+                        <BaseInfoContactShow {...this.state.baseInfo} initBase={this.initBase}/>
+                    </BaseInfo>
+                </div>
+            ) : null}
             <div className="mb20">
                 <BaseInfo {...info.company} onOpen={this.onPerfectCompany}/>
             </div>
@@ -90,3 +123,78 @@ export default class AccountInfo extends Component {
         </div>);
     }
 }
+
+class BaseInfoContactShow extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            baseModal: {//基本信息弹框
+                visible: false,
+            }
+        }
+
+    }
+
+    //打开修改手机号弹框
+    onShowEditModal = (type) => {
+        const {userData} = this.props;
+        const key = (type === 'phone') ? 'phone' : 'mailbox';
+        this.setState({baseModal: {visible: true, data: userData, key, uid: userData.uid,}});
+    };
+    //取消或更新手机号
+    onCloseModal = (isSave) => {
+        const {initBase} = this.props;
+        if (isSave) {
+            initBase();
+        }
+        this.setState({baseModal: {visible: false}});
+    }
+
+    render() {
+        const {isExist, userData} = this.props;
+        const {baseModal} = this.state;
+        return (<React.Fragment>
+            {isExist ? (<Descriptions>
+                <Descriptions.Item label="手机号码">
+                    <span className="mr10">{userData.phone}</span>
+                    <span className="mr10">{'已验证'}</span>
+                    <a onClick={() => this.onShowEditModal('phone')}>修改</a>
+                </Descriptions.Item>
+                <Descriptions.Item label="电子邮箱">
+                    <span>{userData.mailbox}</span>
+                    <a onClick={() => this.onShowEditModal('email')}>修改</a>
+                </Descriptions.Item>
+            </Descriptions>) : null}
+            {baseModal.visible ? <ContactModal baseModal={baseModal} onClose={this.onCloseModal}/> : null}
+        </React.Fragment>);
+    }
+}
+
+class BaseInfoShow extends Component {
+    render() {
+        const {isExist, userData} = this.props;
+        return (<React.Fragment>
+            {isExist ? (<Descriptions>
+                <Descriptions.Item label="昵称">{userData.userName}</Descriptions.Item>
+                <Descriptions.Item label="性别">{userData.genderName}</Descriptions.Item>
+                <Descriptions.Item label="生日">{userData.year}</Descriptions.Item>
+                <Descriptions.Item label="所在地">{userData.detailedAddress}</Descriptions.Item>
+            </Descriptions>) : null}
+        </React.Fragment>);
+    }
+}
+
+//
+// class CompanyInfoShow extends Component {
+//     render() {
+//         const {isExist, userData} = this.props;
+//         return (<React.Fragment>
+//             {isExist ? (<Descriptions>
+//                 <Descriptions.Item label="昵称">{userData.userName}</Descriptions.Item>
+//                 <Descriptions.Item label="性别">{userData.genderName}</Descriptions.Item>
+//                 <Descriptions.Item label="生日">{userData.year}</Descriptions.Item>
+//                 <Descriptions.Item label="所在地">{userData.detailedAddress}</Descriptions.Item>
+//             </Descriptions>) : null}
+//         </React.Fragment>);
+//     }
+// }

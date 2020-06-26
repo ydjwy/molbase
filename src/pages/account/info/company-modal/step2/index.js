@@ -3,60 +3,34 @@
  */
 import React, {Component} from "react";
 import {Form, Select, Input, DatePicker, Cascader} from "antd";
+import {getCitys} from '../../../../../services/api2'
 import style from "./index.scss";
 const {Option} = Select;
 export default class CompanyModal extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            cityInfo: [],//地区信息
+        };
         this.formItemLayout = {
             labelCol: {span: 6},
             wrapperCol: {span: 14},
         };
-        this.options = [
-            {
-                value: 'zhejiang',
-                label: 'Zhejiang',
-                children: [
-                    {
-                        value: 'hangzhou',
-                        label: 'Hangzhou',
-                        children: [
-                            {
-                                value: 'xihu',
-                                label: 'West Lake',
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
-                value: 'jiangsu',
-                label: 'Jiangsu',
-                children: [
-                    {
-                        value: 'nanjing',
-                        label: 'Nanjing',
-                        children: [
-                            {
-                                value: 'zhonghuamen',
-                                label: 'Zhong Hua Men',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ];
     }
 
     componentDidMount() {
+        getCitys().then(res => {
+            if (res.status === 200) {
+                this.setState({cityInfo: (res.data && res.data.city && res.data.city.options) || []})
+            }
+        });
     }
 
 
     render() {
         const {form: {getFieldDecorator}} = this.props;
+        const {cityInfo} = this.state;
         const formItemLayout = this.formItemLayout;
-        const options = this.options;
         return (<div id={style.company_modal_step2_wrapper} className="mt20">
             <Form.Item {...formItemLayout} label="公司名称">
                 {getFieldDecorator('name', {
@@ -76,7 +50,7 @@ export default class CompanyModal extends Component {
             <Form.Item {...formItemLayout} label="所在地区">
                 {getFieldDecorator('area', {
                     rules: [{required: true, message: '请选择所在地区'},],
-                })(<Cascader options={options} placeholder="请选择所在地区"/>)}
+                })(<Cascader options={cityInfo} placeholder="请选择所在地区"/>)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="详细地址">
                 {getFieldDecorator('address', {
@@ -99,17 +73,6 @@ export default class CompanyModal extends Component {
                     <Option value="female">female</Option>
                 </Select>)}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="生日">
-                {getFieldDecorator('birthday', {
-                    rules: [{type: 'object', required: true, message: '请选择生日!'}],
-                })(<DatePicker />)}
-            </Form.Item>
-            <Form.Item {...formItemLayout} label="QQ号">
-                {getFieldDecorator('qq', {
-                    rules: [{required: true, message: '请输入QQ号'},],
-                })(<Input placeholder="请输入QQ号"/>)}
-            </Form.Item>
-
         </div>);
     }
 }

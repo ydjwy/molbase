@@ -60,10 +60,51 @@ export async function register(params) {
 }
 //获取注册验证码
 export async function getRegisterVerify(params) {
-    console.log(params,1234)
     return XHR({
         url: prefix + '/api/web/register/verify',
         body: params,
         method: 'POST'
+    });
+}
+//获取城市信息
+export async function getCitys(params) {
+    return XHR({
+        url: prefix + '/api/web/portal/city/getCitys',
+        method: 'GET'
+    });
+}
+
+//获取账号信息
+export async function getUserData(params) {
+    return XHR({
+        url: prefix + '/api/web/user/getUserData',
+        body: params,
+        method: 'GET'
+    });
+}
+
+//保存账号信息
+export async function saveUserData(params) {
+    return XHR({
+        url: prefix + '/api/web/user/save',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//更新账号信息
+export async function updateUserData(params) {
+    return XHR({
+        url: prefix + '/api/web/user/update',
+        body: params,
+        method: 'POST'
+    });
+}
+//获取公司信息
+export async function getUserApplicant(params) {
+    return XHR({
+        url: prefix + '/api/web/applicant/getUserApplicant',
+        body: params,
+        method: 'GET'
     });
 }
