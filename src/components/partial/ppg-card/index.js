@@ -23,7 +23,7 @@ export default class PPGCard extends Component {
         return (
             <div className={style.ppg_card_wrapper}>
                 <Card style={{width: '100%', height: 98}}
-                      cover={<img style={{width: '100%', height: 98}} src={data[imgUrl]}/>}>
+                      cover={<img style={{width: '100%', height: 98}} src={data[imgUrl]} alt=""/>}>
                     <div className='ppg_card_mask'>
                         <div className='ppg_card_mask_content'>
                             <h4>{data[title]}</h4>

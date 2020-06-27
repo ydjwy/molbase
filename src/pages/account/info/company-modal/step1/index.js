@@ -16,6 +16,11 @@ export default class CompanyModal extends Component {
     }
 
     componentDidMount() {
+        const {data, form: {setFieldsValue}, isEdit} = this.props;
+        if (isEdit) {
+            const {userName, phone, identity, proveUrl, idCardHeadUrl, idCardNationalUrl} = data.applicant;
+            setFieldsValue({userName, phone, identity, proveUrl, idCardHeadUrl, idCardNationalUrl});
+        }
     }
 
 
@@ -24,30 +29,25 @@ export default class CompanyModal extends Component {
         const formItemLayout = this.formItemLayout;
         return (<div id={style.company_modal_step1_wrapper} className="mt20">
             <Form.Item {...formItemLayout} label="您的姓名">
-                {getFieldDecorator('name', {
+                {getFieldDecorator('userName', {
                     rules: [{required: true, message: '请输入您的真实姓名'},],
                 })(<Input placeholder="请输入您的真实姓名"/>)}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="手机号码">
-                {getFieldDecorator('mobile', {
-                    rules: [{required: true, message: '请输入您的手机号码'},],
-                })(<Input placeholder="固定电话和手机号码必填一项"/>)}
-            </Form.Item>
-            <Form.Item {...formItemLayout} label="固定电话">
+            <Form.Item {...formItemLayout} label="联系方式">
                 {getFieldDecorator('phone', {
-                    rules: [{required: true, message: '请输入您的固定电话'},],
-                })(<Input placeholder="固定电话和手机号码必填一项"/>)}
+                    rules: [{required: true, message: '请输入您的电话或手机号码'},],
+                })(<Input placeholder="请输入您的电话或手机号码"/>)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="您的身份">
-                {getFieldDecorator('qq', {
+                {getFieldDecorator('identity', {
                     rules: [{required: true, message: '请选择您的身份'}],
                 })(<Select placeholder="请选择您的身份">
-                    <Option value="male">male</Option>
-                    <Option value="female">female</Option>
+                    <Option value='1'>机构法人代表</Option>
+                    <Option value='2'>机构委托人</Option>
                 </Select>)}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="法人代表证明">
-                {getFieldDecorator('upload', {
+            <Form.Item {...formItemLayout} label="身份证明">
+                {getFieldDecorator('proveUrl', {
                     valuePropName: 'fileList',
                 })(
                     <Upload name="logo" action="/upload.do" listType="picture">
@@ -58,7 +58,7 @@ export default class CompanyModal extends Component {
                 )}
             </Form.Item>
             <Form.Item {...formItemLayout} label="身份证头像面">
-                {getFieldDecorator('upload', {
+                {getFieldDecorator('idCardHeadUrl', {
                     valuePropName: 'fileList',
                 })(
                     <Upload name="logo" action="/upload.do" listType="picture">
@@ -69,7 +69,7 @@ export default class CompanyModal extends Component {
                 )}
             </Form.Item>
             <Form.Item {...formItemLayout} label="身份证国徽面">
-                {getFieldDecorator('upload', {
+                {getFieldDecorator('idCardNationalUrl', {
                     valuePropName: 'fileList',
                 })(
                     <Upload name="logo" action="/upload.do" listType="picture">

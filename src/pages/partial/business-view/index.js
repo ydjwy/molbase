@@ -58,7 +58,7 @@ export default class BusinessView extends Component {
                 <Row gutter={20}>
                     <Col span={18}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">热门商家</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <Row gutter={20}>
                                 {businessData && businessData.map((rItem, rIndex) => {
                                     return (<Col key={rIndex} className={rIndex < 2 ? '' : 'mt20'} span={rIndex < 2 ? 12 : 8}>
@@ -70,7 +70,7 @@ export default class BusinessView extends Component {
                     </Col>
                     <Col span={6}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">店铺服务</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <DPFWCard/>
                         </Card>
                     </Col>

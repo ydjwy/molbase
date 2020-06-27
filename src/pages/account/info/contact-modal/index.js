@@ -2,11 +2,9 @@
  * Created by YD on 2020/6/14.
  */
 import React, {Component} from "react";
-import {Modal, Form, Select, Input, DatePicker, Cascader, Radio} from "antd";
-import moment from "moment";
-import {getCitys, saveUserData, updateUserData} from '../../../../services/api2'
+import {Modal, Form, Input} from "antd";
+import {updateUserData} from '../../../../services/api2'
 import style from "./index.scss";
-const df = 'YYYY-MM-DD';
 class ContactModal extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +23,9 @@ class ContactModal extends Component {
 
     componentDidMount() {
         const {baseModal = {}, form: {setFieldsValue}} = this.props;
-        setFieldsValue({[baseModal.key]: baseModal.data[baseModal.key]});
-        this.setState({baseModal});
+        this.setState({baseModal}, () => {
+            setFieldsValue({[baseModal.key]: baseModal.data[baseModal.key]});
+        });
     }
 
     //确定操作

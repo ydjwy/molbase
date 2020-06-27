@@ -22,7 +22,7 @@ export default class FWDTCard extends Component {
         return (
             <div className={style.fwdt_card_wrapper}>
                 <Card style={{height: 321}}
-                      cover={<img style={{ height: 321}} src={data.imgUrl}/>}>
+                      cover={<img style={{ height: 321}} src={data.imgUrl} alt=""/>}>
                     <div className={style.fwdt_card_mask}>
                         <div className={style.fwdt_card_mask_content}>
                             <h3>{data.title}</h3>

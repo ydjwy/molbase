@@ -74,13 +74,16 @@ export default class AccountInfo extends Component {
             this.setState({baseModal: {visible: true, isEdit: true, data: baseInfo, uid: user.uid}});
         }
     };
-    //完善联系方式
-    onPerfectContact = () => {
-        console.log('onPerfectContact');
-    };
     //完善公司信息
-    onPerfectCompany = () => {
-        this.setState({companyModal: {visible: true, isEdit: false}});
+    onPerfectCompany = (type) => {
+        const {userInfo: {user}} = this.props;
+        const {companyInfo} = this.state;
+        if (type === 'new') {
+            this.setState({companyModal: {visible: true, isEdit: false, uid: user.uid}});
+        } else if (type === 'edit') {
+            this.setState({companyModal: {visible: true, isEdit: true, data: companyInfo, uid: user.uid}});
+        }
+
     };
     //关闭基本信息弹框
     onCloseBaseModal = (isSave) => {
@@ -90,32 +93,40 @@ export default class AccountInfo extends Component {
         this.setState({baseModal: {visible: false, isEdit: false}});
     };
     //关闭公司信息弹框
-    onCloseCompanyModal = () => {
+    onCloseCompanyModal = (isSave) => {
+        console.log(213215423,isSave)
+        if (isSave) {
+            this.initCompany();
+        }
         this.setState({companyModal: {visible: false, isEdit: false}});
     };
 
 
     render() {
-        const {baseModal, companyModal, baseInfo: {isExist}} = this.state;
+        const {baseModal, companyModal, baseInfo, companyInfo} = this.state;
         const info = this.info;
         return (<div id={style.account_info_wrapper}>
             <div className="mb20">
                 <PageTitle title="账户资料"/>
             </div>
             <div className="mb20">
-                <BaseInfo {...info.base} isHaveContent={isExist} isEdit={isExist} onOpen={this.onPerfectBase}>
-                    <BaseInfoShow {...this.state.baseInfo}/>
+                <BaseInfo {...info.base} isHaveContent={baseInfo.isExist} isEdit={baseInfo.isExist}
+                          onOpen={this.onPerfectBase}>
+                    <BaseInfoShow {...baseInfo}/>
                 </BaseInfo>
             </div>
-            {isExist ? (
+            {baseInfo.isExist ? (
                 <div className="mb20">
-                    <BaseInfo {...info.contact} isHaveContent={isExist} isEdit={false} onOpen={this.onPerfectContact}>
-                        <BaseInfoContactShow {...this.state.baseInfo} initBase={this.initBase}/>
+                    <BaseInfo {...info.contact} isHaveContent={baseInfo.isExist} isEdit={false}>
+                        <BaseInfoContactShow {...baseInfo} initBase={this.initBase}/>
                     </BaseInfo>
                 </div>
             ) : null}
             <div className="mb20">
-                <BaseInfo {...info.company} onOpen={this.onPerfectCompany}/>
+                <BaseInfo {...info.company} isHaveContent={companyInfo.isExist} isEdit={companyInfo.isExist}
+                          onOpen={this.onPerfectCompany}>
+                    <CompanyInfoShow {...companyInfo}/>
+                </BaseInfo>
             </div>
             {baseModal.visible ? <BaseModal baseModal={baseModal} onClose={this.onCloseBaseModal}/> : null}
             {companyModal.visible ?
@@ -161,7 +172,7 @@ class BaseInfoContactShow extends Component {
                     <a onClick={() => this.onShowEditModal('phone')}>修改</a>
                 </Descriptions.Item>
                 <Descriptions.Item label="电子邮箱">
-                    <span>{userData.mailbox}</span>
+                    <span className="mr10">{userData.mailbox}</span>
                     <a onClick={() => this.onShowEditModal('email')}>修改</a>
                 </Descriptions.Item>
             </Descriptions>) : null}
@@ -173,28 +184,37 @@ class BaseInfoContactShow extends Component {
 class BaseInfoShow extends Component {
     render() {
         const {isExist, userData} = this.props;
-        return (<React.Fragment>
-            {isExist ? (<Descriptions>
-                <Descriptions.Item label="昵称">{userData.userName}</Descriptions.Item>
-                <Descriptions.Item label="性别">{userData.genderName}</Descriptions.Item>
-                <Descriptions.Item label="生日">{userData.year}</Descriptions.Item>
-                <Descriptions.Item label="所在地">{userData.detailedAddress}</Descriptions.Item>
-            </Descriptions>) : null}
-        </React.Fragment>);
+        return (isExist ? (<Descriptions>
+            <Descriptions.Item label="昵称">{userData.userName}</Descriptions.Item>
+            <Descriptions.Item label="性别">{userData.genderName}</Descriptions.Item>
+            <Descriptions.Item label="生日">{userData.year}</Descriptions.Item>
+            <Descriptions.Item label="所在地">{userData.detailedAddress}</Descriptions.Item>
+        </Descriptions>) : null);
     }
 }
 
-//
-// class CompanyInfoShow extends Component {
-//     render() {
-//         const {isExist, userData} = this.props;
-//         return (<React.Fragment>
-//             {isExist ? (<Descriptions>
-//                 <Descriptions.Item label="昵称">{userData.userName}</Descriptions.Item>
-//                 <Descriptions.Item label="性别">{userData.genderName}</Descriptions.Item>
-//                 <Descriptions.Item label="生日">{userData.year}</Descriptions.Item>
-//                 <Descriptions.Item label="所在地">{userData.detailedAddress}</Descriptions.Item>
-//             </Descriptions>) : null}
-//         </React.Fragment>);
-//     }
-// }
+
+class CompanyInfoShow extends Component {
+    render() {
+        const {isExist, applicant, company} = this.props;
+        return (<React.Fragment>
+            {isExist ? (<React.Fragment>
+                <Descriptions title="申请人信息">
+                    <Descriptions.Item label="姓名">{applicant.userName}</Descriptions.Item>
+                    <Descriptions.Item label="联系方式">{applicant.phone}</Descriptions.Item>
+                    <Descriptions.Item label="身份">{applicant.identity}</Descriptions.Item>
+                    <Descriptions.Item label="身份证明">{applicant.proveUrl}</Descriptions.Item>
+                    <Descriptions.Item label="身份证头像面">{applicant.idCardHeadUrl}</Descriptions.Item>
+                    <Descriptions.Item label="身份证国徽面">{applicant.idCardNationalUrl}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions title="公司信息">
+                    <Descriptions.Item label="公司名称">{company.companyName}</Descriptions.Item>
+                    <Descriptions.Item label="联系方式">{company.telephone}</Descriptions.Item>
+                    <Descriptions.Item label="所在地">{company.address}</Descriptions.Item>
+                    <Descriptions.Item label="公司类型">{company.companyType}</Descriptions.Item>
+                    <Descriptions.Item label="企业证照">{company.enterpriseLicenseUrl}</Descriptions.Item>
+                </Descriptions>
+            </React.Fragment>) : null}
+        </React.Fragment>);
+    }
+}

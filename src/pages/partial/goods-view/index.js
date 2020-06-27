@@ -40,7 +40,7 @@ export default class GoodsView extends Component {
                 <Row gutter={20}>
                     <Col span={18}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">实力商品</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <Row gutter={20}>
                                 {goodsData && goodsData.map((rItem, rIndex) => {
                                     return (<Col key={rIndex} span={6} className='mb20'>
@@ -52,7 +52,7 @@ export default class GoodsView extends Component {
                     </Col>
                     <Col span={6}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">采购服务</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <img width="100%" src="http://img.molbase.net/4e/5a/fg/10291.png" alt=""/>
                         </Card>
                     </Col>

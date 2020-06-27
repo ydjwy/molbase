@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Row, Col, Typography, Divider} from "antd";
+import {Card, Row, Col, Typography} from "antd";
 import  style from './index.scss'
 // const {Meta} = Card;
 const {Paragraph} = Typography;
@@ -35,7 +35,7 @@ export default class SLSPCard extends Component {
         } = this.props;
         return (
             <div className={style.slsp_card_wrapper}>
-                <Card bordered={false} size="small" title={data[title]} extra={<a href="#">更多></a>}>
+                <Card bordered={false} size="small" title={data[title]} extra={<a>更多></a>}>
                     <small><Paragraph ellipsis>{data[summary]}</Paragraph></small>
                     <Row type="flex" align="bottom">
                         <Col span={12}>

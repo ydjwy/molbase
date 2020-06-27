@@ -2,7 +2,7 @@
  * Created by YD on 2020/6/14.
  */
 import React, {Component} from "react";
-import {Modal, Form, Select, Input, DatePicker, Cascader, Radio} from "antd";
+import {Modal, Form, Input, DatePicker, Cascader, Radio} from "antd";
 import moment from "moment";
 import {getCitys, saveUserData, updateUserData} from '../../../../services/api2'
 import style from "./index.scss";
@@ -15,7 +15,8 @@ class BaseModal extends Component {
                 visible: false,
                 isEdit: false
             },
-            cityInfo: []
+            cityInfo: [],
+            isOnOk:false,//判断取消与保存操作，true保存，false取消
         };
         this.formItemLayout = {
             labelCol: {span: 6},

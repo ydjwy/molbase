@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Icon, Avatar, Typography, Tabs, Row, Col, Divider} from "antd";
+import {Card, Divider} from "antd";
 import style from './index.scss'
 
 export default class DPKFCard extends Component {
@@ -7,9 +7,9 @@ export default class DPKFCard extends Component {
         super(props);
         this.state = {
             data: {
-                title:'店铺客服',
+                title: '店铺客服',
                 name: '郑州派尼化学试剂厂',
-                phone:'1865846132465',
+                phone: '1865846132465',
                 imgUrl: 'http://r.molbase.net/mall_v2/product_detail/assets/images/logo-test.png'
             }
         };
@@ -20,16 +20,16 @@ export default class DPKFCard extends Component {
 
 
     render() {
-        const {data: {name, phone,title}} = this.state;
+        const {data: {title}} = this.state;
         return (
             <div className={style.dpkf_card_wrapper}>
-                <Card size="small" title={title} >
+                <Card size="small" title={title}>
                     <h3>工作时间</h3>
                     <p className="mt10">
                         <span>周一到周五 ：</span>
                         <span>9:00-18:00</span>
                     </p>
-                    <Divider dashed />
+                    <Divider dashed/>
                     <h3>联系方式</h3>
                     <p>
                         <span>电话：</span>

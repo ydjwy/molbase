@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, List, Typography, Row, Col} from "antd";
+import {Row, Col} from "antd";
 import SCZXCard from '../../../components/partial/sczx-card'
 import BDZZCard from '../../../components/partial/bdzz-card'
 import TabCharts from '../../../components/partial/tab-charts'
@@ -46,7 +46,7 @@ export default class DataView extends Component {
     }
 
     render() {
-        const {sevice,charts, information} = this.state;
+        const {sevice, charts, information} = this.state;
         return (
             <div className={style.data_view_wrapper}>
                 <Row gutter={20}>

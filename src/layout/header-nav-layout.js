@@ -24,14 +24,12 @@ export default layoutWrapper()(
                 children,
                 location,
                 route,
-                menuData,
-                userInfo
+                menuData
             } = this.props;
             return (
                 <Authorized
                     authority={route.authority}
-                    noMatch={<Redirect to="/user/login"/>}
-                >
+                    noMatch={<Redirect to="/user/login"/>}>
                     <Layout className={`${style['header-nav-layout']} ${className || ""}`}>
                         <Layout
                             style={{

@@ -2,7 +2,7 @@
  * Created by YD on 2020/5/18.
  */
 import React, {Component} from "react";
-import {Card, Menu, Button, Divider} from "antd";
+import {Menu, Button, Divider} from "antd";
 import style from './index.scss'
 const {Item} = Menu;
 // data: {

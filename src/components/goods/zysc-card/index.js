@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Icon, Avatar, Typography, Tabs, Row, Col, Divider} from "antd";
+import {Card, Divider} from "antd";
 import style from './index.scss'
 
 export default class ZYSCCard extends Component {

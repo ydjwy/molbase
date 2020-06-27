@@ -7,35 +7,6 @@ export default class SearchView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            viewTitle: {
-                title: '服务大厅',
-                url: 'https://r.molbase.net/mall_v2/home/assets/images/title-deal.png'
-            },
-            navData: {
-                list: [
-                    {id: '0', name: '目录1', children: [{id: '0-0', name: '目录1选项1'}, {id: '0-1', name: '目录1选项2'}]},
-                    {id: '2', name: '目录2', children: [{id: '2-0', name: '目录2选项1'}, {id: '2-1', name: '目录2选项2'}]},
-                    {id: '3', name: '目录3', children: [{id: '3-0', name: '目录3选项1'}, {id: '3-1', name: '目录3选项2'}]},
-                    {id: '4', name: '目录4', children: [{id: '4-0', name: '目录4选项1'}, {id: '4-1', name: '目录4选项2'}]}
-                ]
-            },
-            carouselData: [
-                {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                }, {
-                    title: '推广服务',
-                    imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                },
-
-            ],
-
             menuData: [
                 {id: 1, name: '现货商城'},
                 {id: 2, name: '实验室用品'},
@@ -46,8 +17,7 @@ export default class SearchView extends Component {
                 {id: 7, name: '大宗百科'},
                 {id: 8, name: '大宗行情'},
                 {id: 9, name: '产业链地图'},
-            ],
-
+            ]
         };
     }
 
@@ -55,7 +25,7 @@ export default class SearchView extends Component {
     };
 
     render() {
-        const {menuData, carouselData, welcomeData} = this.state;
+        const {menuData} = this.state;
         return (
             <div className={style.search_view_wrapper}>
                 <Row gutter={20}>

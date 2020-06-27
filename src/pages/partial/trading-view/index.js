@@ -68,7 +68,7 @@ export default class TradingView extends Component {
                     </Col>
                     <Col span={18}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">推荐企业</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <Carousel autoplay={true}>
                                 {tradingData && tradingData.map((rItem, rIndex) => {
                                     return ( <Row key={rIndex} gutter={20}>
@@ -86,7 +86,7 @@ export default class TradingView extends Component {
                     </Col>
                     <Col span={6}>
                         <Card bordered={false} size="small" title={<Divider orientation="left">品牌馆</Divider>}
-                              extra={ <a href="#">更多></a>}>
+                              extra={ <a>更多></a>}>
                             <Carousel autoplay={true}>
                                 {brandData && brandData.map((rItem, rIndex) => {
                                     return ( <Row key={rIndex} gutter={20}>

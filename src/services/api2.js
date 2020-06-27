@@ -108,3 +108,21 @@ export async function getUserApplicant(params) {
         method: 'GET'
     });
 }
+
+//保存公司信息
+export async function saveUserApplicantData(params) {
+    return XHR({
+        url: prefix + '/api/web/applicant/save',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//更新公司信息
+export async function updateUserApplicantData(params) {
+    return XHR({
+        url: prefix + '/api/web/applicant/update',
+        body: params,
+        method: 'POST'
+    });
+}

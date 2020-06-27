@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Icon, Avatar, Typography, Tabs, Row, Col} from "antd";
+import {Card, Tabs, Row, Col} from "antd";
 import style from './index.scss'
 const {TabPane} = Tabs;
 // data={
@@ -25,10 +25,10 @@ export default class SPZSCard extends Component {
         const {image} = this.state;
         return (
             <div className={style.spzs_card_wrapper}>
-                <Card cover={<img src={image || this.props.data.image}/>} bordered={false}>
+                <Card cover={<img src={image || this.props.data.image} alt=""/>}  bordered={false}>
                     <Tabs activeKey={image || this.props.data.image} onChange={this.onTabChange}>
                         {imageList && imageList.map(item => {
-                            return <TabPane tab={<img width="30" height="30" src={item}/>} key={item}/>
+                            return <TabPane tab={<img width="30" height="30" src={item} alt=""/>} key={item}/>
                         })}
                     </Tabs>
                     <Row gutter={10}>

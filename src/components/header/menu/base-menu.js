@@ -25,20 +25,10 @@ export default class BaseMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      roleObj: {}
     }
   }
 
   componentWillMount() {
-    const {userInfo} = this.props;
-    let roleObj = {};
-    let roleArr = [];
-    if (!!localStorage.getItem('currentUser')) {
-    } else {
-      // window.location.href = '/#/user/login';
-    }
-
-    this.setState({roleObj})
   }
 
   flatMenuKeys = this.getFlatMenuKeys(this.props.menuData);

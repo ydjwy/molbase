@@ -22,7 +22,7 @@ export default class BDZZCard extends Component {
     const {data: {title, list}} = this.props;
     return (
       <div className={style.zzs_wrapper}>
-        <Card bordered={false} size="small" title={title} extra={<a href="#">更多></a>}>
+        <Card bordered={false} size="small" title={title} extra={<a>更多></a>}>
           <Row gutter={10}>
             {list.map((item, index) => (
               <Col key={index} span={12} className={index < 2 ? '' : 'mt10'}><img src={item.url} width='100%' alt=""/></Col>))}

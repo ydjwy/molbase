@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Divider, Row, Col} from "antd";
+import {Row, Col} from "antd";
 import ViewTitle from '../../../components/partial/view-title'
 import FWDTCard from '../../../components/partial/fwdt-card'
 import style from './index.scss'

@@ -131,7 +131,6 @@ const xhr = ({url, body = null, method = "POST", dataType = "json"}) => {
         if (method === "get" || method === "GET") {
             url = `${url}?${urlEncode(body)}`
         } else {
-            console.log('body', body)
             param.body = body
         }
     }

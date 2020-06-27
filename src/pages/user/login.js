@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Form, Icon, Input, Button, Checkbox} from "antd";
+import {Form, Icon, Input, Button} from "antd";
 import {connect} from "react-redux";
 import userModel from "store/reducers/user";
 import {getCookie} from "../../utils/cookie";

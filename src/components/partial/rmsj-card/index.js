@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Icon, Avatar, Typography} from "antd";
+import {Card, Avatar, Typography} from "antd";
 import style from './index.scss'
 const {Meta} = Card;
 const {Paragraph} = Typography;

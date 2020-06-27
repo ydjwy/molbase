@@ -2,7 +2,7 @@
  * Created by YD on 2020/6/14.
  */
 import React, {Component} from "react";
-import {Layout, Menu, Breadcrumb, Icon} from 'antd';
+import {Layout, Menu, Icon} from 'antd';
 import "./account-layout.scss";
 
 const {SubMenu} = Menu;
