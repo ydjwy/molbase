@@ -50,7 +50,14 @@ class CompanyModal extends Component {
         const {companyModal} = this.state;
         this.setState({companyModal: {...companyModal, visible: false}, isOnOk: false});
     };
-
+    //处理上传的文件
+    fileFormat = (files) => {
+        let url = null;
+        if (files && files.fileList[0]) {
+            url = files.fileList[0].response.link
+        }
+        return url;
+    }
     //下一步
     handleNext = () => {
         const {current, companyModal} = this.state;
@@ -59,6 +66,9 @@ class CompanyModal extends Component {
                 const applicant = {
                     ...values,
                     uid: companyModal.uid,
+                    idCardHeadUrl: this.fileFormat(values.idCardHeadUrl),
+                    idCardNationalUrl: this.fileFormat(values.idCardNationalUrl),
+                    proveUrl: this.fileFormat(values.proveUrl)
                 };
                 this.setState({current: current + 1, applicant: {...this.state.applicant, ...applicant}});
             }
@@ -86,6 +96,7 @@ class CompanyModal extends Component {
                     province: values.region[0],
                     city: values.region[1],
                     area: values.region[2],
+                    enterpriseLicenseUrl: this.fileFormat(values.enterpriseLicenseUrl),
                 };
                 delete company.region;
                 this.setState({company}, () => {
@@ -110,7 +121,7 @@ class CompanyModal extends Component {
         const footer = (<React.Fragment>
             {current < 2 ? (<Button onClick={this.handleCancel}>取消</Button>) : null}
             {current < 1 ? (<Button type="primary" onClick={this.handleNext}>下一步</Button>) : null}
-            {current === 1 ? (<Button type="primary" onClick={this.handlePrev}>上一步</Button>) : null}
+            {/*{current === 1 ? (<Button type="primary" onClick={this.handlePrev}>上一步</Button>) : null}*/}
             {current === 1 ? (<Button type="primary" onClick={this.handleSubmit}>提交</Button>) : null}
             {current === 2 ? (<Button type="primary" onClick={this.handleOk}>完成</Button>) : null}
         </React.Fragment>);

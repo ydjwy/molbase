@@ -4,6 +4,7 @@
 import React, {Component} from "react";
 import {Form, Select, Input, Cascader, Button, Upload, Icon} from "antd";
 import {getCitys} from '../../../../../services/api2'
+import {API_UPLOAD, USER_TOKEN} from '../../../../../contants'
 import style from "./index.scss";
 const {Option} = Select;
 export default class CompanyModal extends Component {
@@ -11,6 +12,9 @@ export default class CompanyModal extends Component {
         super(props);
         this.state = {
             cityInfo: [],//地区信息
+            files: {
+                enterpriseLicenseUrl: [],
+            }
         };
         this.formItemLayout = {
             labelCol: {span: 6},
@@ -26,18 +30,59 @@ export default class CompanyModal extends Component {
                     if (isEdit) {
                         const {companyName, telephone, address, province, city, area, companyType, enterpriseLicenseUrl} = data.company;
                         const region = [province, city, area];
-                        setFieldsValue({companyName, telephone, address, region, companyType, enterpriseLicenseUrl});
+                        const enterpriseLicenseUrlObj = this.showFileFormat(enterpriseLicenseUrl);
+                        this.setState({
+                            files: {
+                                enterpriseLicenseUrl: (enterpriseLicenseUrlObj && enterpriseLicenseUrlObj.fileList) || [],
+                            }
+                        })
+                        setFieldsValue({
+                            companyName,
+                            telephone,
+                            address,
+                            region,
+                            companyType,
+                            enterpriseLicenseUrl: enterpriseLicenseUrlObj
+                        });
                     }
                 })
             }
         });
     }
 
+    showFileFormat = (url) => {
+        let arr = [];
+        const obj = {
+            response: {link: url},
+            status: "done"
+        };
+        if (url) {
+            arr = [obj]
+            return {file: obj, fileList: arr}
+        } else {
+            return undefined;
+        }
+    }
+
+    handleChange = ({file, fileList}, type) => {
+        const {files} = this.state;
+        if (file.status === 'done') {
+            this.setState({files: {...files, [type]: fileList}});
+        }
+
+    };
+    //展示图片
+    showImg = (url) => {
+        return <img src={url} width="100" height="100" alt=""/>
+    };
 
     render() {
         const {form: {getFieldDecorator}} = this.props;
-        const {cityInfo} = this.state;
+        const {cityInfo, files} = this.state;
         const formItemLayout = this.formItemLayout;
+        const uploadButton = (<div>
+            <Button size="small"><Icon type="plus"/>Upload</Button>
+        </div>);
         return (<div id={style.company_modal_step2_wrapper} className="mt20">
             <Form.Item {...formItemLayout} label="公司名称">
                 {getFieldDecorator('companyName', {
@@ -70,14 +115,14 @@ export default class CompanyModal extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="企业证照">
                 {getFieldDecorator('enterpriseLicenseUrl', {
-                    valuePropName: 'fileList',
-                })(
-                    <Upload name="logo" action="/upload.do" listType="picture">
-                        <Button>
-                            <Icon type="upload"/>上传
-                        </Button>
-                    </Upload>,
-                )}
+                    rules: [{required: false, type: 'object', message: '请选上传企业证照'}],
+                })(<Upload
+                    action={API_UPLOAD}
+                    headers={{token: USER_TOKEN}}
+                    showUploadList={false}
+                    onChange={(value) => this.handleChange(value, 'enterpriseLicenseUrl')}>
+                    {files.enterpriseLicenseUrl.length >= 1 ? this.showImg(files.enterpriseLicenseUrl[0].response.link) : uploadButton}
+                </Upload>)}
             </Form.Item>
         </div>);
     }

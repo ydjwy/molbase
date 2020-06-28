@@ -94,7 +94,7 @@ export default class AccountInfo extends Component {
     };
     //关闭公司信息弹框
     onCloseCompanyModal = (isSave) => {
-        console.log(213215423,isSave)
+        console.log(213215423, isSave)
         if (isSave) {
             this.initCompany();
         }
@@ -195,6 +195,11 @@ class BaseInfoShow extends Component {
 
 
 class CompanyInfoShow extends Component {
+    //展示图片
+    showImg = (url) => {
+        return url ? <img src={url} width="50" height="50" alt=""/> : null
+    };
+
     render() {
         const {isExist, applicant, company} = this.props;
         return (<React.Fragment>
@@ -203,16 +208,16 @@ class CompanyInfoShow extends Component {
                     <Descriptions.Item label="姓名">{applicant.userName}</Descriptions.Item>
                     <Descriptions.Item label="联系方式">{applicant.phone}</Descriptions.Item>
                     <Descriptions.Item label="身份">{applicant.identity}</Descriptions.Item>
-                    <Descriptions.Item label="身份证明">{applicant.proveUrl}</Descriptions.Item>
-                    <Descriptions.Item label="身份证头像面">{applicant.idCardHeadUrl}</Descriptions.Item>
-                    <Descriptions.Item label="身份证国徽面">{applicant.idCardNationalUrl}</Descriptions.Item>
+                    <Descriptions.Item label="身份证明">{this.showImg(applicant.proveUrl)}</Descriptions.Item>
+                    <Descriptions.Item label="身份证头像面">{this.showImg(applicant.idCardHeadUrl)}</Descriptions.Item>
+                    <Descriptions.Item label="身份证国徽面">{this.showImg(applicant.idCardNationalUrl)}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="公司信息">
                     <Descriptions.Item label="公司名称">{company.companyName}</Descriptions.Item>
                     <Descriptions.Item label="联系方式">{company.telephone}</Descriptions.Item>
                     <Descriptions.Item label="所在地">{company.address}</Descriptions.Item>
                     <Descriptions.Item label="公司类型">{company.companyType}</Descriptions.Item>
-                    <Descriptions.Item label="企业证照">{company.enterpriseLicenseUrl}</Descriptions.Item>
+                    <Descriptions.Item label="企业证照">{this.showImg(company.enterpriseLicenseUrl)}</Descriptions.Item>
                 </Descriptions>
             </React.Fragment>) : null}
         </React.Fragment>);
