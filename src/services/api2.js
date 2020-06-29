@@ -126,3 +126,84 @@ export async function updateUserApplicantData(params) {
         method: 'POST'
     });
 }
+
+//获取增值税普通发票信息
+export async function getOrdinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/ordinvoice/getInvoice',
+        body: params,
+        method: 'GET'
+    });
+}
+
+//保存增值税普通发票信息
+export async function saveOrdinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/ordinvoice/save',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//更新增值税普通发票信息
+export async function updateOrdinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/ordinvoice/update',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//获取增值税专项发票信息
+export async function getVatinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/vatinvoice/getVatinvoice',
+        body: params,
+        method: 'GET'
+    });
+}
+
+//保存增值税专项发票信息
+export async function saveVatinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/vatinvoice/save',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//更新增值税专项发票信息
+export async function updateVatinvoice(params) {
+    return XHR({
+        url: prefix + '/api/web/vatinvoice/update',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//获取发票接收方式信息
+export async function getReceiveAddress(params) {
+    return XHR({
+        url: prefix + '/api/web/receiveAddress/getAddress',
+        body: params,
+        method: 'GET'
+    });
+}
+
+//保存发票接收方式信息
+export async function saveReceiveAddress(params) {
+    return XHR({
+        url: prefix + '/api/web/receiveAddress/save',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//更新发票接收方式信息
+export async function updateReceiveAddress(params) {
+    return XHR({
+        url: prefix + '/api/web/receiveAddress/update',
+        body: params,
+        method: 'POST'
+    });
+}
