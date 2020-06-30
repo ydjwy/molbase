@@ -4,6 +4,7 @@
 import React, {Component} from "react";
 import {Modal, Form, Select, Input, Button, Upload, Icon} from "antd";
 import {API_UPLOAD, USER_TOKEN} from '../../../../contants'
+import {saveVatinvoice, updateVatinvoice} from '../../../../services/api2'
 import style from "./index.scss";
 const {Option} = Select;
 class SpecialModal extends Component {
@@ -16,7 +17,8 @@ class SpecialModal extends Component {
             },
             files: {
                 companyLicense: [],
-            }
+            },
+            isOnOK: false,//判断保存更新还是取消
         };
         this.formItemLayout = {
             labelCol: {span: 6},
@@ -25,24 +27,87 @@ class SpecialModal extends Component {
     }
 
     componentDidMount() {
-        const {specialModal = {}} = this.props;
+        const {specialModal = {}, form: {setFieldsValue}} = this.props;
+        if (specialModal.isEdit) {
+            const {companyName, invoiceDuty, companyAddress, companyPhone, depositBank, bankCard, companyLicense, receiptMethod} = specialModal.data.vatinvoice;
+            const companyLicenseObj = this.showFileFormat(companyLicense);
+            this.setState({
+                files: {
+                    companyLicense: (companyLicenseObj && companyLicenseObj.fileList) || [],
+                }
+            })
+            const data = {
+                companyName,
+                invoiceDuty,
+                companyAddress,
+                companyPhone,
+                depositBank,
+                bankCard,
+                companyLicense: companyLicenseObj,
+                receiptMethod
+            };
+            setFieldsValue(data);
+        }
         this.setState({specialModal});
     }
 
+    showFileFormat = (url) => {
+        let arr = [];
+        const obj = {
+            response: {link: url},
+            status: "done"
+        };
+        if (url) {
+            arr = [obj]
+            return {file: obj, fileList: arr}
+        } else {
+            return undefined;
+        }
+    }
     //确定操作
     handleOk = () => {
         const {specialModal} = this.state;
-        this.setState({specialModal: {...specialModal, visible: false}});
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                let data = {};
+                let api = saveVatinvoice
+                if (specialModal.isEdit) {
+                    api = updateVatinvoice;
+                    data = {...specialModal.data.vatinvoice}
+                }
+                data = {
+                    ...data,
+                    ...values,
+                    uid: specialModal.uid,
+                    companyLicense: this.fileFormat(values.companyLicense),
+                }
+                api(data).then(res => {
+                    if (res.status === 200) {
+                        this.setState({specialModal: {...specialModal, visible: false}, isOnOK: true});
+                    }
+                })
+            }
+        });
+
     };
+    //处理上传的文件
+    fileFormat = (files) => {
+        let url = null;
+        if (files && files.fileList[0]) {
+            url = files.fileList[0].response.link
+        }
+        return url;
+    }
     //取消操作
     handleCancel = () => {
         const {specialModal} = this.state;
-        this.setState({specialModal: {...specialModal, visible: false}});
+        this.setState({specialModal: {...specialModal, visible: false}, isOnOK: false});
     };
     //弹框关闭后回调
     handleAfterClose = () => {
         const {onClose} = this.props;
-        onClose();
+        const {isOnOK} = this.state;
+        onClose(isOnOK);
     };
     handleChange = ({file, fileList}, type) => {
         const {files} = this.state;

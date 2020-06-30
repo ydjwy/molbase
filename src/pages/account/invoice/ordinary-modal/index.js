@@ -3,6 +3,7 @@
  */
 import React, {Component} from "react";
 import {Modal, Form, Select, Input} from "antd";
+import {saveOrdinvoice, updateOrdinvoice} from '../../../../services/api2'
 import style from "./index.scss";
 const {Option} = Select;
 class OrdinaryModal extends Component {
@@ -12,7 +13,8 @@ class OrdinaryModal extends Component {
             ordinaryModal: {
                 visible: false,
                 isEdit: false
-            }
+            },
+            isOnOk:false,//判断是保存更新还是取消
         };
         this.formItemLayout = {
             labelCol: {span: 6},
@@ -21,24 +23,49 @@ class OrdinaryModal extends Component {
     }
 
     componentDidMount() {
-        const {ordinaryModal = {}} = this.props;
+        const {ordinaryModal = {}, form: {setFieldsValue}} = this.props;
+        if (ordinaryModal.isEdit) {
+            const {invoiceType, invoiceTitle, invoiceDuty, receiptMethod} = ordinaryModal.data.ordInvoice;
+            const data = {invoiceType, invoiceTitle, invoiceDuty, receiptMethod};
+            setFieldsValue(data);
+        }
         this.setState({ordinaryModal});
     }
 
     //确定操作
     handleOk = () => {
         const {ordinaryModal} = this.state;
-        this.setState({ordinaryModal: {...ordinaryModal, visible: false}});
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                let api = saveOrdinvoice;
+                let data = {};
+                if (ordinaryModal.isEdit) {
+                    api = updateOrdinvoice;
+                    data = {...ordinaryModal.data.ordInvoice}
+                }
+                data = {
+                    ...data,
+                    ...values,
+                    uid: ordinaryModal.uid
+                }
+                api(data).then(res => {
+                    if (res.status === 200) {
+                        this.setState({ordinaryModal: {...ordinaryModal, visible: false},isOnOk:true});
+                    }
+                })
+            }
+        });
     };
     //取消操作
     handleCancel = () => {
         const {ordinaryModal} = this.state;
-        this.setState({ordinaryModal: {...ordinaryModal, visible: false}});
+        this.setState({ordinaryModal: {...ordinaryModal, visible: false},isOnOk:false});
     };
     //弹框关闭后回调
     handleAfterClose = () => {
         const {onClose} = this.props;
-        onClose();
+        const {isOnOk}=this.state;
+        onClose(isOnOk);
     };
 
     render() {

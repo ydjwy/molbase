@@ -4,6 +4,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import userModel from "store/reducers/user";
+import {Descriptions, Card, Row, Col} from 'antd'
 import PageTitle from '../../../components/account/page-title'
 import BaseInfo from '../../../components/account/base-info'
 import OrdinaryModal from './ordinary-modal'
@@ -49,7 +50,8 @@ export default class AccountInvoice extends Component {
                 title: '发票接收方式',
                 text: '暂无接收信息',
                 textList: [],
-                btnText: '立即添加'
+                btnText: '立即添加',
+                handleText: '新增'
             },
 
         };
@@ -59,7 +61,6 @@ export default class AccountInvoice extends Component {
         this.initOrdinvoice();
         this.initVatinvoice();
         this.initReceiveAddress();
-
     }
 
     //获取普通发票信息
@@ -91,27 +92,57 @@ export default class AccountInvoice extends Component {
     }
 
     //完善增值税普通发票
-    onPerfectOrdinary = () => {
-        this.setState({ordinaryModal: {visible: true, isEdit: false}});
+    onPerfectOrdinary = (type) => {
+        const {userInfo: {user}} = this.props;
+        const {ordinvoiceInfo} = this.state;
+        if (type === 'new') {
+            this.setState({ordinaryModal: {visible: true, isEdit: false, uid: user.uid}});
+        } else if (type === 'edit') {
+            this.setState({ordinaryModal: {visible: true, isEdit: true, data: ordinvoiceInfo, uid: user.uid}});
+        }
+
     };
     //完善增值税专项发票
-    onPerfectSpecial = () => {
-        this.setState({specialModal: {visible: true, isEdit: false}});
+    onPerfectSpecial = (type) => {
+        const {userInfo: {user}} = this.props;
+        const {vatinvoiceInfo} = this.state;
+        if (type === 'new') {
+            this.setState({specialModal: {visible: true, isEdit: false, uid: user.uid}});
+        } else if (type === 'edit') {
+            this.setState({specialModal: {visible: true, isEdit: true, data: vatinvoiceInfo, uid: user.uid}});
+        }
+
     };
     //添加发票接收信息
-    onPerfectAddress = () => {
-        this.setState({addressModal: {visible: true, isEdit: false}});
+    onPerfectAddress = (type, data) => {
+        const {userInfo: {user}} = this.props;
+        const addTypes = ['new', 'edit'];
+        if (addTypes.includes(type)) {
+            this.setState({addressModal: {visible: true, isEdit: false, uid: user.uid}});
+        } else if (type === 'isEdit') {
+            this.setState({addressModal: {visible: true, isEdit: true, data, uid: user.uid}});
+        }
+
     };
     //关闭普通发票弹框
-    onCloseOrdinaryModal = () => {
+    onCloseOrdinaryModal = (isSave) => {
+        if (isSave) {
+            this.initOrdinvoice();
+        }
         this.setState({ordinaryModal: {visible: false, isEdit: false}});
     };
     //关闭专项发票弹框
-    onCloseSpecialModal = () => {
+    onCloseSpecialModal = (isSave) => {
+        if (isSave) {
+            this.initVatinvoice();
+        }
         this.setState({specialModal: {visible: false, isEdit: false}});
     };
     //关闭发票接收信息弹框
-    onCloseAddressModal = () => {
+    onCloseAddressModal = (isSave) => {
+        if (isSave) {
+            this.initReceiveAddress();
+        }
         this.setState({addressModal: {visible: false, isEdit: false}});
     };
 
@@ -124,15 +155,21 @@ export default class AccountInvoice extends Component {
             </div>
             <div className="mb20">
                 <BaseInfo {...info.ordinary} isHaveContent={ordinvoiceInfo.isExist}
-                          isEdit={ordinvoiceInfo.isExist} onOpen={this.onPerfectOrdinary}>普通发票</BaseInfo>
+                          isEdit={ordinvoiceInfo.isExist} onOpen={this.onPerfectOrdinary}>
+                    <OrdinaryInfoShow {...ordinvoiceInfo}/>
+                </BaseInfo>
             </div>
             <div className="mb20">
                 <BaseInfo {...info.special} isHaveContent={vatinvoiceInfo.isExist}
-                          isEdit={vatinvoiceInfo.isExist} onOpen={this.onPerfectSpecial}>专项发票</BaseInfo>
+                          isEdit={vatinvoiceInfo.isExist} onOpen={this.onPerfectSpecial}>
+                    <VatinvoiceInfoShow {...vatinvoiceInfo}/>
+                </BaseInfo>
             </div>
             <div className="mb20">
                 <BaseInfo {...info.address} isHaveContent={receiveAddressInfo.isExist}
-                          isEdit={receiveAddressInfo.isExist} onOpen={this.onPerfectAddress}>接收方式</BaseInfo>
+                          isEdit={receiveAddressInfo.isExist} onOpen={this.onPerfectAddress}>
+                    <AddressInfoShow {...receiveAddressInfo} onOpen={this.onPerfectAddress}/>
+                </BaseInfo>
             </div>
             {ordinaryModal.visible ?
                 <OrdinaryModal ordinaryModal={ordinaryModal} onClose={this.onCloseOrdinaryModal}/> : null}
@@ -141,5 +178,65 @@ export default class AccountInvoice extends Component {
             {addressModal.visible ?
                 <AddressModal addressModal={addressModal} onClose={this.onCloseAddressModal}/> : null}
         </div>);
+    }
+}
+//普通发票信息展示
+class OrdinaryInfoShow extends Component {
+    render() {
+        const {isExist, ordInvoice} = this.props;
+        return (isExist ? (<Descriptions>
+            <Descriptions.Item label="发票类型">{ordInvoice.invoiceType}</Descriptions.Item>
+            <Descriptions.Item label="发票抬头">{ordInvoice.invoiceTitle}</Descriptions.Item>
+            <Descriptions.Item label="发票税号/信用代码">{ordInvoice.invoiceDuty}</Descriptions.Item>
+            <Descriptions.Item label="收票方式">{ordInvoice.receiptMethod}</Descriptions.Item>
+        </Descriptions>) : null);
+    }
+}
+//专项发票信息展示
+class VatinvoiceInfoShow extends Component {
+    //展示图片
+    showImg = (url) => {
+        return url ? <img src={url} width="50" height="50" alt=""/> : null
+    };
+
+    render() {
+        const {isExist, vatinvoice} = this.props;
+        return (isExist ? (<Descriptions>
+            <Descriptions.Item label="公司名称">{vatinvoice.companyName}</Descriptions.Item>
+            <Descriptions.Item label="发票税号/信用代码">{vatinvoice.invoiceDuty}</Descriptions.Item>
+            <Descriptions.Item label="公司注册地址">{vatinvoice.companyAddress}</Descriptions.Item>
+            <Descriptions.Item label="公司电话">{vatinvoice.companyPhone}</Descriptions.Item>
+            <Descriptions.Item label="开户银行">{vatinvoice.depositBank}</Descriptions.Item>
+            <Descriptions.Item label="银行账号">{vatinvoice.bankCard}</Descriptions.Item>
+            <Descriptions.Item label="企业证照">{this.showImg(vatinvoice.companyLicense)}</Descriptions.Item>
+        </Descriptions>) : null);
+    }
+}
+//接收地址信息展示
+class AddressInfoShow extends Component {
+    //展示图片
+    showImg = (url) => {
+        return url ? <img src={url} width="50" height="50" alt=""/> : null
+    };
+
+    render() {
+        const {isExist, receiveAddress, onOpen} = this.props;
+        return (isExist ? (<Row gutter={32}>
+            {receiveAddress && receiveAddress.map((item, index) => {
+                return ( <Col span={8} key={index}>
+                    <Card size="small" extra={<a onClick={() => onOpen('isEdit', item)}>修改</a>}>
+                        <Descriptions column={1}>
+                            <Descriptions.Item label="收票方式">{item.receiptMethod}</Descriptions.Item>
+                            <Descriptions.Item label="收票类型">{item.invoiceType}</Descriptions.Item>
+                            <Descriptions.Item label="收票人">{item.name}</Descriptions.Item>
+                            <Descriptions.Item label="收票人手机号">{item.phone}</Descriptions.Item>
+                            <Descriptions.Item label="收票人地址">{item.address}</Descriptions.Item>
+                            <Descriptions.Item label="是否默认地址">{item.isDefault === 1 ? '是' : '否'}</Descriptions.Item>
+                        </Descriptions>
+                    </Card>
+                </Col>);
+            })}
+
+        </Row>) : null);
     }
 }

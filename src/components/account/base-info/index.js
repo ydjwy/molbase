@@ -12,12 +12,11 @@ export default class BaseInfo extends Component {
     }
 
     render() {
-        const {title, text, textList, btnText, onOpen, children, isHaveContent = false, isEdit} = this.props;
-
+        const {title, text, textList, btnText, handleText, onOpen, children, isHaveContent = false, isEdit} = this.props;
         return (
             <div className={style.account_base_info_wrapper}>
                 <Card size="small" title={title}
-                      extra={isEdit ? (<a onClick={() => onOpen('edit')}>修改信息</a>) : undefined}>
+                      extra={isEdit ? (<a onClick={() => onOpen('edit')}>{handleText || '修改信息'}</a>) : undefined}>
                     {isHaveContent ? (children) : ( <Empty description={
                         <React.Fragment>
                             <span>{text}</span>
