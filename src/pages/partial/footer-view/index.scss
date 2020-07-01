@@ -1,0 +1,9 @@
+.footer_view_wrapper {
+  :global{
+    .ant-card {
+      .ant-card-head{
+        border-bottom: none;
+      }
+    }
+  }
+}

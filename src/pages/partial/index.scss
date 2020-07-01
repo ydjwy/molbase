@@ -13,10 +13,12 @@
   #partial_nav_wrapper {
     width: 1200px;
     margin: 0 auto;
+    margin-bottom: 22px;
   }
   #partial_data_wrapper {
     width: 1200px;
     margin: 0 auto;
+
     background-color: #ffffff;
   }
   #partial_trading_wrapper {
@@ -42,7 +44,17 @@
     width: 1200px;
     margin: 0 auto;
   }
-  #partial_new_wrapper {
+  #partial_footer_wrapper {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #e8e8e8;
+    .partial_footer_box {
+      width: 1200px;
+      margin: 0 auto;
+    }
+
+  }
+  #partial_other_wrapper {
     width: 1200px;
     margin: 0 auto;
   }

@@ -1,10 +1,16 @@
 .tab_charts_wrapper {
   :global {
     .ant-tabs {
+      .ant-tabs-tab{
+        padding: 10px;
+        font-size: 18px;
+        margin-right: 10px;
+      }
       .ant-tabs-bar {
         margin: 0;
       }
       .ant-tabs-content {
+        height: 246px;
         padding: 20px;
         border: 1px solid #e8e8e8;
         border-top: none;

@@ -101,7 +101,7 @@ class Header extends PureComponent {
 
 class CustomHeader extends PureComponent {
     render() {
-        const {userInfo, logout} = this.props;
+        const {/*userInfo,*/ logout} = this.props;
         // console.log('userInfo', userInfo)
         // const {name, avatar, logout} = this.props;
         // const menu = (
@@ -122,22 +122,35 @@ class CustomHeader extends PureComponent {
         //   </Menu>
         // );
         // window.location.href = '/#/user/login';
-        let showName;
-        if (userInfo.roleType === 'superadmin') {
-            if (userInfo.bindAccount) {
-                showName = `${userInfo.englishName} (${userInfo.name}) （${userInfo.bindAccount.englishName} (${userInfo.bindAccount.name})）`;
-            } else {
-                // window.location.href = '/#/user/login';
-            }
-        } else {
-            showName = `${userInfo.englishName} (${userInfo.name})`;
-        }
+        // let showName;
+        // if (userInfo.roleType === 'superadmin') {
+        //     if (userInfo.bindAccount) {
+        //         showName = `${userInfo.englishName} (${userInfo.name}) （${userInfo.bindAccount.englishName} (${userInfo.bindAccount.name})）`;
+        //     } else {
+        //         // window.location.href = '/#/user/login';
+        //     }
+        // } else {
+        //     showName = `${userInfo.englishName} (${userInfo.name})`;
+        // }
+
+        const menu1 = (
+            <Menu>
+                <Menu.Item key="0">购物车</Menu.Item>
+                <Menu.Item key="1">购物车</Menu.Item>
+            </Menu>
+        );
         return (
             <React.Fragment>
                 <div className="right">
-                    <span className="name vam mr10 show_name">{showName}</span>
+                    {/*<span className="name vam mr10 show_name">{showName}</span>*/}
+                    <span className="mr20" style={{color:"#fff"}}>我的辽西大宗</span>
+                    <Dropdown overlay={menu1} className="mr20">
+                        <span  style={{color:"#fff"}} className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                            购物车<Icon type="down" />
+                        </span>
+                    </Dropdown>
                     <Popconfirm placement="bottomRight" title="确定退出登录?" onConfirm={logout} okText="确定" cancelText="取消">
-            <span className={`cp color_text vam ${style.logout_icon}`} title="退出登录">
+            <span className={`cp color_text  ${style.logout_icon}`} title="退出登录">
             <i className="iconfont icon-poweroff fs18 vam"/>
           </span>
                     </Popconfirm>

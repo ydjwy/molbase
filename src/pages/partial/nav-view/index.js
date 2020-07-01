@@ -71,16 +71,16 @@ export default class NavView extends Component {
                     <Col span={5}>
                         <NavMenu data={navData}/>
                     </Col>
-                    <Col span={13} className='pt20'>
+                    <Col span={13} style={{paddingTop:'16px'}}>
                         <Carousel autoplay>
                             {carouselData && carouselData.map((item, index) => {
                                 return (<div key={index}>
-                                    <img src={item.map.pic} width="100%" height="420" alt=""/>
+                                    <img src={item.map.pic} width="100%" height="510" alt=""/>
                                 </div>)
                             })}
                         </Carousel>
                     </Col>
-                    <Col span={6} className='pt20'>
+                    <Col span={6}style={{paddingTop:'16px'}}>
                         <WelcomeCard data={welcomeData} history={history}/>
                     </Col>
                 </Row>

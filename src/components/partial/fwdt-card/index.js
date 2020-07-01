@@ -2,7 +2,7 @@
  * Created by YD on 2020/5/18.
  */
 import React, {Component} from "react";
-import {Card, Typography} from "antd";
+import {Card, Typography,Button} from "antd";
 import style from './index.scss'
 // data: {
 //     title: '推广服务',
@@ -21,13 +21,14 @@ export default class FWDTCard extends Component {
         const {data} = this.props;
         return (
             <div className={style.fwdt_card_wrapper}>
-                <Card style={{height: 321}}
-                      cover={<img style={{ height: 321}} src={data.imgUrl} alt=""/>}>
+                <Card style={{height:366}}
+                      cover={<img style={{ height: 366}} src={data.imgUrl} alt=""/>}>
                     <div className={style.fwdt_card_mask}>
                         <div className={style.fwdt_card_mask_content}>
                             <h3>{data.title}</h3>
                             <Typography.Paragraph ellipsis>{data.text}</Typography.Paragraph>
                             <p>{data.hoverText}</p>
+                            <p className="pt10"><Button>查看详情</Button></p>
                         </div>
                     </div>
                 </Card>

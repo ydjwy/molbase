@@ -8,7 +8,7 @@ export default class ZYSCCard extends Component {
         this.state = {
             data: {
                 name: '郑州派尼化学试剂厂',
-                phone:'1865846132465',
+                phone: '1865846132465',
                 imgUrl: 'http://r.molbase.net/mall_v2/product_detail/assets/images/logo-test.png'
             }
         };
@@ -19,13 +19,13 @@ export default class ZYSCCard extends Component {
 
 
     render() {
-        const {data: {name, phone,imgUrl}} = this.state;
+        const {data: {name, phone/*,imgUrl*/}} = this.state;
         return (
             <div className={style.zysc_card_wrapper}>
                 <Card>
                     <Divider dashed>自营商城</Divider>
                     <div className={style.zysc_img_box}>
-                        <img src={imgUrl} alt=""/>
+                        <img src={require("../../../assets/imgs/logo.png")} alt=""/>
                     </div>
                     <p className="mt10">
                         <span>商家名称</span>

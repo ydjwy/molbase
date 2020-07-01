@@ -20,13 +20,16 @@ export default class NavMenu extends Component {
     }
 
     render() {
-        const {data: {list,id='id',name='name'}} = this.props;
+        const {data: {list, id = 'id', name = 'name'}} = this.props;
         return (
             <div className={style.nav_menu_wrapper}>
-                <Menu mode="vertical" theme="dark" overflowedIndicator={false}>
+                <Menu mode="vertical" theme="dark" selectedKeys={[]} overflowedIndicator={false}>
                     {list && list.map(sItem => {
                         return (<Item key={sItem[id]}>
-                            {sItem[name]}
+                            <div>
+                                <span className="dib w80" >{sItem[name]}</span>
+                                <span className="dib w20"align="center">></span>
+                            </div>
                             <div className='nav_detail_box'>
                                 <h3>{sItem[name]}</h3>
                                 <Divider/>

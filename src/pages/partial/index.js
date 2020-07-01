@@ -12,7 +12,9 @@ import TradingView from "./trading-view";
 import ServiceView from "./service-view";
 import ProductView from "./product-view";
 import GoodsView from "./goods-view";
-import BusinessView from "./business-view";
+import FooterView from "./footer-view";
+import OtherView from "./other-view";
+// import BusinessView from "./business-view";
 import style from './index.scss'
 @connect(({global}) => ({...global}), {...globalModel.actions})
 
@@ -53,17 +55,17 @@ export default class Partial extends Component {
                 <DataView/>
             </div>
             <div id={style.partial_trading_wrapper}>
-                {/*交易大厅*/}
+                {/*合作企业*/}
                 <TradingView/>
             </div>
             <div id={style.partial_goods_wrapper}>
                 {/*实力商品*/}
                 <GoodsView/>
             </div>
-            <div id={style.partial_business_wrapper}>
-                {/*推荐企业*/}
-                <BusinessView/>
-            </div>
+            {/*<div id={style.partial_business_wrapper}>*/}
+                {/*/!*热门商家*!/*/}
+                {/*<BusinessView/>*/}
+            {/*</div>*/}
             <div id={style.partial_service_wrapper}>
                 {/*服务大厅*/}
                 <ServiceView/>
@@ -72,8 +74,13 @@ export default class Partial extends Component {
                 {/*产品分类*/}
                 <ProductView/>
             </div>
-            <div id={style.partial_new_wrapper}>
-                新手
+            <div id={style.partial_footer_wrapper}>
+                <div id={style.partial_footer_box}>
+                    <FooterView/>
+                </div>
+            </div>
+            <div id={style.partial_other_wrapper}>
+                <OtherView/>
             </div>
 
         </div>);

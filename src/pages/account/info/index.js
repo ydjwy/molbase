@@ -207,7 +207,7 @@ class CompanyInfoShow extends Component {
                 <Descriptions title="申请人信息">
                     <Descriptions.Item label="姓名">{applicant.userName}</Descriptions.Item>
                     <Descriptions.Item label="联系方式">{applicant.phone}</Descriptions.Item>
-                    <Descriptions.Item label="身份">{applicant.identity}</Descriptions.Item>
+                    <Descriptions.Item label="身份">{applicant.identityName}</Descriptions.Item>
                     <Descriptions.Item label="身份证明">{this.showImg(applicant.proveUrl)}</Descriptions.Item>
                     <Descriptions.Item label="身份证头像面">{this.showImg(applicant.idCardHeadUrl)}</Descriptions.Item>
                     <Descriptions.Item label="身份证国徽面">{this.showImg(applicant.idCardNationalUrl)}</Descriptions.Item>
@@ -215,7 +215,7 @@ class CompanyInfoShow extends Component {
                 <Descriptions title="公司信息">
                     <Descriptions.Item label="公司名称">{company.companyName}</Descriptions.Item>
                     <Descriptions.Item label="联系方式">{company.telephone}</Descriptions.Item>
-                    <Descriptions.Item label="所在地">{company.address}</Descriptions.Item>
+                    <Descriptions.Item label="所在地">{company.detailedAddress}</Descriptions.Item>
                     <Descriptions.Item label="公司类型">{company.companyType}</Descriptions.Item>
                     <Descriptions.Item label="企业证照">{this.showImg(company.enterpriseLicenseUrl)}</Descriptions.Item>
                 </Descriptions>

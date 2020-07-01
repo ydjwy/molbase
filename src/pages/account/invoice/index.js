@@ -185,10 +185,10 @@ class OrdinaryInfoShow extends Component {
     render() {
         const {isExist, ordInvoice} = this.props;
         return (isExist ? (<Descriptions>
-            <Descriptions.Item label="发票类型">{ordInvoice.invoiceType}</Descriptions.Item>
+            <Descriptions.Item label="发票类型">{ordInvoice.invoiceTypeName}</Descriptions.Item>
             <Descriptions.Item label="发票抬头">{ordInvoice.invoiceTitle}</Descriptions.Item>
             <Descriptions.Item label="发票税号/信用代码">{ordInvoice.invoiceDuty}</Descriptions.Item>
-            <Descriptions.Item label="收票方式">{ordInvoice.receiptMethod}</Descriptions.Item>
+            <Descriptions.Item label="收票方式">{ordInvoice.receiptMethodName}</Descriptions.Item>
         </Descriptions>) : null);
     }
 }
@@ -226,8 +226,8 @@ class AddressInfoShow extends Component {
                 return ( <Col span={8} key={index}>
                     <Card size="small" extra={<a onClick={() => onOpen('isEdit', item)}>修改</a>}>
                         <Descriptions column={1}>
-                            <Descriptions.Item label="收票方式">{item.receiptMethod}</Descriptions.Item>
-                            <Descriptions.Item label="收票类型">{item.invoiceType}</Descriptions.Item>
+                            <Descriptions.Item label="收票方式">{item.receiptMethodName}</Descriptions.Item>
+                            <Descriptions.Item label="收票类型">{item.invoiceTypeName}</Descriptions.Item>
                             <Descriptions.Item label="收票人">{item.name}</Descriptions.Item>
                             <Descriptions.Item label="收票人手机号">{item.phone}</Descriptions.Item>
                             <Descriptions.Item label="收票人地址">{item.address}</Descriptions.Item>

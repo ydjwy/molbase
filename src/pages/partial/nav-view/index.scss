@@ -1,15 +1,17 @@
 .nav_view_wrapper {
   :global {
-    .ant-carousel .slick-slide {
-      text-align: center;
-      height: 420px;
-      line-height: 420px;
-      background: #364d79;
-      overflow: hidden;
-    }
-
-    .ant-carousel .slick-slide h3 {
-      color: #fff;
+    .ant-carousel {
+      border: 1px solid rgb(8, 92, 160);
+      .slick-slide {
+        text-align: center;
+        height: 510px;
+        line-height: 510px;
+        background: #364d79;
+        overflow: hidden;
+        .slick-slide h3 {
+          color: #fff;
+        }
+      }
     }
   }
 }

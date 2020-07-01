@@ -1,8 +1,9 @@
-#bdzz_wrapper {
+.bdzz_wrapper {
   :global {
     .ant-card {
       .ant-card-body {
         padding: 0;
+        padding-top: 10px;
         img{
           cursor: pointer;
         }
@@ -10,7 +11,7 @@
       .ant-card-head{
         padding: 0;
         border: none;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: bold;
       }
     }

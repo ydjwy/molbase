@@ -10,8 +10,8 @@ export default class ServiceView extends Component {
         super(props);
         this.state = {
             viewTitle: {
-                title: '服务大厅',
-                url: 'https://r.molbase.net/mall_v2/home/assets/images/title-deal.png'
+                // title: '服务大厅',
+                url: require('../../../assets/imgs/服务大厅.png')
             },
             serviceData: [
                 {
@@ -34,7 +34,7 @@ export default class ServiceView extends Component {
                     text: '精准的化学品客群流量、丰富的化学品推广渠道。',
                     hoverText: '推广服务精准的化学品客群流量、丰富的化学品推广渠道。精准的化学品客群流量、丰富的化学品推广渠道。',
                     imgUrl: 'http://img.molbase.net/vp/9n/s2/10309.jpeg',
-                },
+                }
 
             ],
         };

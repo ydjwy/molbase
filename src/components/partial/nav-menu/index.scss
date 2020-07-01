@@ -1,18 +1,29 @@
 .nav_menu_wrapper {
   position: relative;
   :global {
-    .ant-menu{
-      height: 440px;
-      padding:10px 0;
+    .ant-menu {
+      height: 528px;
+      background-color: #ffffff;
+      border: 1px solid rgb(8, 92, 160);
+      overflow: hidden;
     }
-    .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
-      background-color: inherit
-    }
+    //.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    //  background-color: inherit
+    //}
     .ant-menu-vertical .ant-menu-item, .ant-menu .ant-menu-item {
       white-space: normal;
       position: inherit;
       overflow: visible;
       margin: 0;
+      height: 46px;
+      line-height: 46px;
+      color: rgb(8, 92, 160);
+      border-bottom: 1px solid rgb(237,237,237);
+      &:hover {
+        color: #ffffff;
+        background-color: rgb(8, 92, 160);
+      }
+
       .nav_detail_box {
         position: absolute;
         padding: 10px;
@@ -37,7 +48,7 @@
         }
       }
       &:hover {
-        background-color: #1890ff;
+        //background-color: #1890ff;
         .nav_detail_box {
           display: block;
           z-index: 100;

@@ -23,7 +23,7 @@ export default class SCZXCard extends Component {
     const {data: {title, list}} = this.props;
     return (
       <div className={style.sczx_wrapper}>
-        <Card bordered={false} size="small" title={title} extra={<a>更多></a>}>
+        <Card bordered={false} size="small" title={title} extra={<a className="fs14">更多></a>}>
           <List
             bordered={false}
             dataSource={list||[]}

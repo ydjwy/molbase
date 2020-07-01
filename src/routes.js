@@ -73,7 +73,11 @@ const Routes = () => (
             {/*name="系统管理"*/}
             {/*>*/}
             <Route path="/" redirect="/partial" exact={true}/>
-            <Route path="/partial" type="a" icon={Icon('icon-notebook')} name="首页" component={Partial}/>
+            <Route path="/home" type="a" icon={Icon('icon-notebook')} name="首页" component={Partial}/>
+            <Route path="/shopping" type="a" icon={Icon('icon-notebook')} name="现货商城" component={Partial}/>
+            <Route path="/sever" type="a" icon={Icon('icon-notebook')} name="合作与服务" component={Partial}/>
+            <Route path="/info" type="a" icon={Icon('icon-notebook')} name="行业信息" component={Partial}/>
+            <Route path="/partial" type="a" icon={Icon('icon-notebook')} name="发布采购需求" component={Partial}/>
             <Route path="/goods/:id" type="a" component={Goods}/>
             <Route path='/account' component={AccountLayout}>
                 <Route path="/account" redirect="/account/info" exact={true}/>

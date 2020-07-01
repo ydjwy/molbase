@@ -23,7 +23,7 @@ export default class TabCharts extends Component {
     const {data: {list}} = this.props;
     return (
       <div className={style.tab_charts_wrapper}>
-        <Tabs tabBarExtraContent={<a>更多></a>}>
+        <Tabs tabBarExtraContent={<a className="fs14">更多></a>}>
           {/*{list.map(item => <TabPane tab={item.name} key={item.type}>{item.name}</TabPane>)}*/}
           {list.map(item => <TabPane tab={item.name} key={item.type}><AreaCharts/></TabPane>)}
         </Tabs>

@@ -16,8 +16,6 @@ export default class DataView extends Component {
                 list: [
                     {name: '市场分析', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'},
                     {name: '数据接口', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'},
-                    {name: '定制合成', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'},
-                    {name: '注册', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'}
                 ]
 
             },
