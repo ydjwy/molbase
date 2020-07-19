@@ -49,6 +49,16 @@ const AccountShippingAddress = Loadable({
     }
 });
 
+//购物车
+const ShoppingCart = Loadable({
+    loader: () => import("pages/shopping-cart"),
+    loading(){
+        // return <div>加载中</div>
+        return <div/>
+    }
+});
+
+
 // const authorities = ["admin"];
 const Icon = (name) => {
     return <i className={`iconfont ${name} mr4`}/>;
@@ -63,15 +73,7 @@ const Routes = () => (
         <Route path="/403" component={Exception403}/>
         <Route path="/404" component={Exception404}/>
         <Route path="/500" component={Exception500}/>
-        {/*<Route path="/" component={HeaderNavLayout} authority={authorities}>*/}
         <Route path="/" component={HeaderNavLayout}>
-            {/*<Route path="/position" redirect="/position/:type" exact={true}/>*/}
-            {/*<Route*/}
-            {/*path="/manage"*/}
-            {/*authority={authorities}*/}
-            {/*icon="setting"*/}
-            {/*name="系统管理"*/}
-            {/*>*/}
             <Route path="/" redirect="/partial" exact={true}/>
             <Route path="/home" type="a" icon={Icon('icon-notebook')} name="首页" component={Partial}/>
             <Route path="/shopping" type="a" icon={Icon('icon-notebook')} name="现货商城" component={Partial}/>
@@ -85,24 +87,7 @@ const Routes = () => (
                 <Route path="/account/invoice" component={AccountInvoice}/>
                 <Route path="/account/shipping-address" component={AccountShippingAddress}/>
             </Route>
-            {/*<Route path="/manage/theme" component={() => <div>主题设置，conunselor角色可以访问</div>}*/}
-            {/*// authority={["conunselor"]} name="主题设置"*/}
-            {/*/>*/}
-            {/*</Route>*/}
-            {/*<Route path="/cc" authority={authorities} icon="user" name="客户管理">*/}
-            {/*<Route path="/cc" redirect="/manage/personal" exact={true} />*/}
-            {/*<Route*/}
-            {/*path="/cc/personal"*/}
-            {/*component={() => <p>个人信息页，admin角色可以访问</p>}*/}
-            {/*name="客户信息"*/}
-            {/*/>*/}
-            {/*<Route*/}
-            {/*path="/cc/theme"*/}
-            {/*component={() => <div>主题设置，conunselor角色可以访问</div>}*/}
-            {/*authority={["conunselor"]}*/}
-            {/*name="客户设置"*/}
-            {/*/>*/}
-            {/*</Route>*/}
+            <Route path='/shopping-cart' component={ShoppingCart}/>
             <Route component={Exception404}/>
         </Route>
     </Switch>
