@@ -32,7 +32,6 @@ export default class Goods extends Component {
     //组件装载完成
     componentDidMount() {
         getGoodsDetailInfo({id: this.props.match.params.id}).then(res => {
-            console.log('res', res);
             this.setState({goodsInfo: res.data})
         })
         // this.init();

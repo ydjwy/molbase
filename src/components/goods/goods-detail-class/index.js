@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Descriptions, Radio, InputNumber, Button} from "antd";
+// import {shoppingCartAddEdit} from '../../../services/api2'
 import style from './index.scss'
 const {Item} = Descriptions;
 
@@ -7,11 +8,6 @@ export default class GoodsDetailClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-                name: '郑州派尼化学试剂厂',
-                phone: '1865846132465',
-                imgUrl: 'http://r.molbase.net/mall_v2/product_detail/assets/images/logo-test.png'
-            },
             price: '',
             count: 1,
         };
@@ -26,14 +22,21 @@ export default class GoodsDetailClass extends Component {
         this.setState({price: productAttr.value[0].price})
     }
 
+    //选择数量
     onSelectCount = (count) => {
         this.setState({count})
     };
+    //选择规格
     onChangeAttr = (attr) => {
         const {goodsInfo: {productAttr}} = this.props;
         this.setState({price: productAttr.value[attr.target.sort].price})
-        //
-        console.log('attr', attr)
+    };
+    //加入购物车
+    onJoinShoppingCart = () => {
+console.log('this.props',this.props)
+    };
+    //立即购买
+    onBuyNow = () => {
     }
 
     render() {
@@ -73,8 +76,8 @@ export default class GoodsDetailClass extends Component {
                     <Item label="商品总价" span={4}>￥{price * count}元</Item>
                 </Descriptions>
                 <InputNumber min={1} defaultValue={1} precision={0} className='vam' onChange={this.onSelectCount}/>
-                <Button type="primary" className='vam ml10'>立即购买</Button>
-                <Button className='vam ml10'>加入购物车</Button>
+                <Button type="primary" className='vam ml10' onClick={this.onBuyNow}>立即购买</Button>
+                <Button className='vam ml10' onClick={this.onJoinShoppingCart}>加入购物车</Button>
                 <Descriptions>
                     <Item label="支付方式" span={3}>线下转账 在线支付</Item>
                     <Item label="发票服务" span={3}>增税普票 增税专票</Item>

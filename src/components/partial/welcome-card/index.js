@@ -8,7 +8,6 @@ const {TabPane} = Tabs;
 @connect(({user}) => ({...user}), {...userModel.actions})
 
 // data: {
-//     imgUrl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
 //         buyerService: [//买家服务
 //         {id: 1, name: '发布需求'},
 //         {id: 2, name: '化工产品'},
@@ -56,7 +55,7 @@ export default class WelcomeCard extends Component {
         return (
             <div className={style.welcome_wrapper}>
                 <Card>
-                    {user&&user.uname ? <LoggedIn {...this.props}/> : <NotLoggedIn {...this.props}/>}
+                    {user && user.uname ? <LoggedIn {...this.props}/> : <NotLoggedIn {...this.props}/>}
                 </Card>
             </div>
         )
@@ -81,7 +80,7 @@ class NotLoggedIn extends Component {
     };
 
     render() {
-        const {data: {imgUrl, /*list,*/ buyerService, sellerService}} = this.props;
+        const {data: {/*list,*/ buyerService, sellerService, images}} = this.props;
         return (
             <React.Fragment>
                 <h3 align="center" className="fs16">欢迎来到辽西大宗</h3>
@@ -111,12 +110,15 @@ class NotLoggedIn extends Component {
                         </Row>
                     </TabPane>
                 </Tabs>
-                <img width="100%" height="76" className='mt10 mb10' src={imgUrl} alt=""/>
+                {images && images.map((item, index) => {
+                    return <img width='100%' key={index} src={item} className="mt20" alt=""/>
+                })}
                 {/*<List*/}
                 {/*size="small"*/}
                 {/*dataSource={list}*/}
                 {/*renderItem={item => <List.Item><Paragraph ellipsis>{item.title}</Paragraph></List.Item>}*/}
                 {/*/>*/}
+
             </React.Fragment>)
     }
 }
@@ -135,10 +137,10 @@ class LoggedIn extends Component {
     }
 
     render() {
-        const {userInfo: {user}} = this.props;
+        const {userInfo: {user}, data: {images}} = this.props;
         return (
             <React.Fragment>
-                <h3 align="center">{user&&user.uname}，欢迎您回来</h3>
+                <h3 align="center">{user && user.uname}，欢迎您回来</h3>
                 <Row className=' mt40'>
                     <Col span={12} align="center">
                         <h3 align="center">
@@ -160,7 +162,7 @@ class LoggedIn extends Component {
                         <Button type="primary" onClick={this.goAccountCenter}>进入用户中心</Button>
                     </Col>
                 </Row>
-                <Row gutter={20} className='mb40  mt40'>
+                <Row gutter={20} className='mb30  mt40'>
                     <Col span={12}>
                         <Button>采购信息</Button>
                     </Col>
@@ -168,6 +170,9 @@ class LoggedIn extends Component {
                         <Button>商城订单</Button>
                     </Col>
                 </Row>
+                {images && images.map((item, index) => {
+                    return <img width='100%' key={index} src={item} className="mt20" alt=""/>
+                })}
                 {/*<List*/}
                 {/*size="small"*/}
                 {/*dataSource={list}*/}

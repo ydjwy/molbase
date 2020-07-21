@@ -4,8 +4,6 @@ import SCZXCard from '../../../components/partial/sczx-card'
 import BDZZCard from '../../../components/partial/bdzz-card'
 import TabCharts from '../../../components/partial/tab-charts'
 import  style from './index.scss'
-
-
 export default class DataView extends Component {
     constructor(props) {
         super(props);
@@ -14,8 +12,8 @@ export default class DataView extends Component {
 
                 title: '百度增值服务',
                 list: [
-                    {name: '市场分析', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'},
-                    {name: '数据接口', url: 'http://img.molbase.net/0s/r2/ua/10327.jpeg'},
+                    {name: '市场分析', url: require("../../../assets/imgs/qiyejieshao.jpg")},
+                    {name: '数据接口', url: require("../../../assets/imgs/shichangfenxi.jpg")},
                 ]
 
             },

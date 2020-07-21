@@ -21,7 +21,6 @@ export default class NavView extends Component {
             },
             carouselData: [],
             welcomeData: {
-                imgUrl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
                 buyerService: [//买家服务
                     {id: 1, name: '发布需求'},
                     {id: 2, name: '化工产品'},
@@ -38,6 +37,7 @@ export default class NavView extends Component {
                     {id: 5, name: 'SGS认证'},
                     {id: 6, name: '供应链服务'},
                 ],
+                images: [require("../../../assets/imgs/gongyinglianjinrong.jpg"), require("../../../assets/imgs/wangshangcangchu.jpg")],
                 list: [
                     {id: 1, title: '摩库数据登陆纳斯达克，股票代码：MKD。[查看登陆纳斯达克，股票代码：MKD。[查看', url: ''},
                     {id: 2, title: '摩库数据登陆纳斯达克，股票代码：MKD。[查看登陆纳斯达克，股票代码：MKD。[查看', url: ''},
@@ -71,7 +71,7 @@ export default class NavView extends Component {
                     <Col span={5}>
                         <NavMenu data={navData}/>
                     </Col>
-                    <Col span={13} style={{paddingTop:'16px'}}>
+                    <Col span={13} style={{paddingTop: '16px'}}>
                         <Carousel autoplay>
                             {carouselData && carouselData.map((item, index) => {
                                 return (<div key={index}>
@@ -80,7 +80,7 @@ export default class NavView extends Component {
                             })}
                         </Carousel>
                     </Col>
-                    <Col span={6}style={{paddingTop:'16px'}}>
+                    <Col span={6} style={{paddingTop: '16px'}}>
                         <WelcomeCard data={welcomeData} history={history}/>
                     </Col>
                 </Row>

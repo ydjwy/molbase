@@ -207,3 +207,21 @@ export async function updateReceiveAddress(params) {
         method: 'POST'
     });
 }
+
+//收货地址 新增修改
+export async function shippingAddressSaveOrUpdate(params) {
+    return XHR({
+        url: prefix + '/api/web/address/saveOrUpdate',
+        body: params,
+        method: 'POST'
+    });
+}
+
+// 账号收获地址列表查询
+export async function getShippingAddressList(params) {
+    return XHR({
+        url: prefix + '/api/web/address/getUserAddress',
+        body: params,
+        method: 'GET'
+    });
+}

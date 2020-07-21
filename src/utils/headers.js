@@ -33,14 +33,14 @@ export const getHeaders = (dataType) => {
     const currentUser = getCurrentUser();
     //username中文编码
     // let obj = {username: currentUser && encodeURI(currentUser.userName), token: currentUser && currentUser.token};
-    let obj = {username: currentUser && currentUser.userName, token: currentUser && currentUser.token};
-    if (obj.username && obj.token) {
+    let obj = {token: currentUser && currentUser.token, Authorization: 'Bearer ' + (currentUser && currentUser.token)};
+    if (obj.token && obj.Authorization) {
         Headers = {...Headers, ...obj};
         //username中文编码
         // Headers.username = encodeURI(decodeURI(Headers.username));
     } else if (Headers.token) {
-        delete Headers.username;
         delete Headers.token;
+        delete Headers.Authorization;
     }
     Headers["Content-Type"] = _dataType;
     return Headers;
