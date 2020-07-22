@@ -55,7 +55,7 @@ export default class AccountLayout extends Component {
         return (
             <div id="account_layout_wrapper">
                 <Layout>
-                    <Content style={{padding: '0 50px'}}>
+                    <Content>
                         <Layout style={{padding: '24px 0', background: '#fff'}}>
                             <Sider width={200} style={{background: '#fff'}}>
                                 <Menu mode="inline"

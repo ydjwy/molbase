@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {Layout, Popconfirm, Menu, Dropdown, Icon} from "antd";
+import {Layout, Menu, Dropdown, Icon, message} from "antd";
 import Authorized from "utils/authorized";
 import BaseMenu from "components/header/menu/base-menu";
 import HeaderMenu from "components/header/header-menu";
@@ -11,6 +11,7 @@ import layoutWrapper from "./layout-wrapper";
 import style from "./header-nav-layout.scss";
 import userModel from "../store/reducers/user";
 import {showPageTitle} from '../utils/util'
+import {logout} from '../services/api2'
 const {Header: AntHeader} = Layout;
 @connect(({user}) => ({...user}), {...userModel.actions})
 export default layoutWrapper()(
@@ -91,18 +92,30 @@ class Header extends PureComponent {
 }
 
 class CustomHeader extends PureComponent {
+    onHandle = (data) => {
+        if (data.key === '0') {
+            logout().then(res => {
+                    if (res.status === 200) {
+                        message.success(res.msg);
+                        this.props.history.replace('/user/login');
+                    }
+
+                }
+            )
+        }
+    };
+
     render() {
-        const {/*userInfo,*/ logout} = this.props;
+        const menu = (
+            <Menu onClick={this.onHandle}>
+                <Menu.Item key="0">退出登录</Menu.Item>
+            </Menu>
+        );
         return (
             <React.Fragment>
                 <div className="right">
-                    <span className="mr20" style={{color: "#fff"}}>我的辽西大宗</span>
                     <HeaderCart/>
-                    <Popconfirm placement="bottomRight" title="确定退出登录?" onConfirm={logout} okText="确定" cancelText="取消">
-                        <span className={`cp color_text  ${style.logout_icon}`} title="退出登录">
-                            <i className="iconfont icon-poweroff fs18 vam"/>
-                        </span>
-                    </Popconfirm>
+                    <Dropdown className="ml20" overlay={menu}><span style={{color: '#fff'}}>我的辽西大宗</span></Dropdown>
                 </div>
             </React.Fragment>
         );

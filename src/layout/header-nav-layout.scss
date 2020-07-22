@@ -5,7 +5,7 @@
   }
   .header-nav-layout-content {
     //min-width: 1200px;
-    width: 100%;
+    width: 1200px;
     //min-height: calc(100vh - 200px);
     margin: 0 auto;
     background-color: #f0f2f5;
@@ -14,11 +14,6 @@
     font-size: 13px;
     color: #bdc2c7;
     min-width: 1200px;
-  }
-  .logout_icon {
-    &:hover {
-      color: #ff4d4f;
-    }
   }
   :global {
     .ant-menu-horizontal > .ant-menu-item > a::before {

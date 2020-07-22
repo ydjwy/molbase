@@ -50,6 +50,13 @@ export async function login(params) {
         method: 'POST'
     });
 }
+//退出登录
+export async function logout() {
+    return XHR({
+        url: prefix + '/api/web/auth/logout',
+        method: 'GET'
+    });
+}
 //注册
 export async function register(params) {
     return XHR({
@@ -222,6 +229,23 @@ export async function getShippingAddressList(params) {
     return XHR({
         url: prefix + '/api/web/address/getUserAddress',
         body: params,
+        method: 'GET'
+    });
+}
+
+// 删除账号收获地址
+export async function deleteShippingAddress(params) {
+    return XHR({
+        url: prefix + '/api/web/address/del/' + params,
+        method: 'GET'
+    });
+}
+
+
+// 导航栏我的购物车
+export async function navMyCart(params) {
+    return XHR({
+        url: prefix + '/api/web/cart/myCart',
         method: 'GET'
     });
 }

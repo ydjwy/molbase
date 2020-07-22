@@ -3,6 +3,7 @@
  */
 import React, {Component} from "react";
 import {Popover, Badge, Button} from "antd";
+import {navMyCart} from '../../../services/api2'
 import style from './index.scss'
 export default class HeaderCart extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ export default class HeaderCart extends Component {
 
     //装载完成
     componentDidMount() {
-
+        navMyCart().then(res => {
+            console.log('res', res);
+        })
     }
 
     //组件更新
