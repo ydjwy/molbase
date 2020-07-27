@@ -9,6 +9,14 @@ import UserLogin from "pages/user/login";
 import UserRegister from "pages/user/register";
 import {Exception403, Exception404, Exception500} from "components/exception";
 //首页
+const Home = Loadable({
+    loader: () => import("pages/home"),
+    loading(){
+        // return <div>加载中</div>
+        return <div/>
+    }
+});
+//商品列表
 const Partial = Loadable({
     loader: () => import("pages/partial"),
     loading(){
@@ -16,7 +24,7 @@ const Partial = Loadable({
         return <div/>
     }
 });
-//首页
+//商品详情
 const Goods = Loadable({
     loader: () => import("pages/goods"),
     loading(){
@@ -58,11 +66,6 @@ const ShoppingCart = Loadable({
     }
 });
 
-
-// const authorities = ["admin"];
-const Icon = (name) => {
-    return <i className={`iconfont ${name} mr4`}/>;
-};
 const Routes = () => (
     <Switch>
         <Route path="/user" component={UserLayout}>
@@ -74,12 +77,12 @@ const Routes = () => (
         <Route path="/404" component={Exception404}/>
         <Route path="/500" component={Exception500}/>
         <Route path="/" component={HeaderNavLayout}>
-            <Route path="/" redirect="/partial" exact={true}/>
-            <Route path="/home" type="a" icon={Icon('icon-notebook')} name="首页" component={Partial}/>
-            <Route path="/shopping" type="a" icon={Icon('icon-notebook')} name="现货商城" component={Partial}/>
-            <Route path="/sever" type="a" icon={Icon('icon-notebook')} name="合作与服务" component={Partial}/>
-            <Route path="/info" type="a" icon={Icon('icon-notebook')} name="行业信息" component={Partial}/>
-            <Route path="/partial" type="a" icon={Icon('icon-notebook')} name="发布采购需求" component={Partial}/>
+            <Route path="/" redirect="/home" exact={true}/>
+            <Route path="/home" type="a" name="首页" component={Home}/>
+            <Route path="/shopping" type="a" name="现货交易市场" component={Partial}/>
+            <Route path="/sever" type="a" name="合作与服务" component={Partial}/>
+            <Route path="/info" type="a" name="行业信息" component={Partial}/>
+            <Route path="/partial" type="a" name="发布采购需求" component={Partial}/>
             <Route path="/goods/:id" type="a" component={Goods}/>
             <Route path='/account' component={AccountLayout}>
                 <Route path="/account" redirect="/account/info" exact={true}/>

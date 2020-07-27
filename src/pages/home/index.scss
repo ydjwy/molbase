@@ -1,0 +1,8 @@
+#home_wrapper {
+  min-width:1200px;
+  :global{
+    img{
+      width: 100%;
+    }
+  }
+}

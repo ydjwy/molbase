@@ -56,6 +56,7 @@ class Header extends PureComponent {
     }
 
     render() {
+        const currentUser = localStorage.getItem('currentUser')
         const {menuData, roles} = this.props;
         const moreList = (<Menu>
             <Menu.Item>
@@ -74,12 +75,12 @@ class Header extends PureComponent {
                             history={this.props.history}
                             mode="horizontal"
                         />
-                        <Dropdown overlay={moreList} className="ml10">
-              <span className="header_more">
-                <i className={`iconfont icon-gengduo mr4`}/>更多 <Icon type="down"/>
-              </span>
-                        </Dropdown>
-                        <CustomHeader {...this.props}/>
+                        {currentUser ? (<Dropdown overlay={moreList} className="ml10">
+                          <span className="header_more">
+                            更多 <Icon type="down"/>
+                          </span>
+                        </Dropdown>) : null}
+                        {currentUser ? (<CustomHeader {...this.props}/>) : null}
                     </div>
                 </div>
                 <div id="header_menu" style={{paddingLeft: 'calc(100vw - 100%)'}}
@@ -97,9 +98,9 @@ class CustomHeader extends PureComponent {
             logout().then(res => {
                     if (res.status === 200) {
                         message.success(res.msg);
+                        localStorage.removeItem('currentUser');
                         this.props.history.replace('/user/login');
                     }
-
                 }
             )
         }
