@@ -242,10 +242,28 @@ export async function deleteShippingAddress(params) {
 }
 
 
+// 购物车 单件商品 新增修改
+export async function joinCart(params) {
+    return XHR({
+        url: prefix + '/api/web/cart/add',
+        body: params,
+        method: 'POST'
+    });
+}
+
 // 导航栏我的购物车
 export async function navMyCart(params) {
     return XHR({
         url: prefix + '/api/web/cart/myCart',
+        method: 'GET'
+    });
+}
+
+
+// 商品详情
+export async function findGoodsDetail(params) {
+    return XHR({
+        url: prefix + '/api/web/product/detail/' + params,
         method: 'GET'
     });
 }

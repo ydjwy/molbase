@@ -3,14 +3,14 @@
  */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import { Row, Col} from 'antd'
+import {Row, Col} from 'antd'
 import globalModel from "../../store/reducers/global";
 import  SpzsCard from '../../components/goods/spzs-card'
 import  ZYSCCard from '../../components/goods/zysc-card'
 import  DPKFCard from '../../components/goods/dpkf-card'
 import  GoodsDetailClass from '../../components/goods/goods-detail-class'
 import  GoodsDetail from '../../components/goods/goods-detail'
-import  {getGoodsDetailInfo} from '../../services/api1'
+import  {findGoodsDetail} from '../../services/api2'
 import style from './index.scss'
 @connect(({global}) => ({...global}), {...globalModel.actions})
 
@@ -19,8 +19,9 @@ export default class Goods extends Component {
         super(props);
         this.state = {
             goodsInfo: {
-                product:{},
-                productAttr:{}
+                storeInfo:{},
+                productAttr: [],
+                productValue:{}
             }
         }
     }
@@ -31,7 +32,7 @@ export default class Goods extends Component {
 
     //组件装载完成
     componentDidMount() {
-        getGoodsDetailInfo({id: this.props.match.params.id}).then(res => {
+        findGoodsDetail(this.props.match.params.id || '').then(res => {
             this.setState({goodsInfo: res.data})
         })
         // this.init();
@@ -42,18 +43,13 @@ export default class Goods extends Component {
 
     }
 
-    //初始化
-    init = (props) => {
-
-    };
     getSpzsCardData = () => {
         const {goodsInfo} = this.state;
-        console.log()
         const data = {
-            image: goodsInfo.product.image,
-            imageList: goodsInfo.product.sliderImage ? goodsInfo.product.sliderImage.split(',') : [],
-            art: goodsInfo.product.barCode,
-            integral: goodsInfo.product.giveIntegral,
+            image: goodsInfo.storeInfo.image,
+            imageList: goodsInfo.storeInfo.sliderImageArr|| [],
+            art: goodsInfo.storeInfo.barCode,
+            integral: goodsInfo.storeInfo.giveIntegral,
         };
         return data
     };
