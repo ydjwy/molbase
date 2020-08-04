@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Descriptions, Radio, InputNumber, Button} from "antd";
+import {Descriptions, Radio, InputNumber, Button,message} from "antd";
 import {joinCart} from '../../../services/api2'
 import style from './index.scss'
 const {Item} = Descriptions;
@@ -39,9 +39,13 @@ export default class GoodsDetailClass extends Component {
             productId: storeInfo.id,  //商品id
             cartNum:count,     //商品数量
             new: 0,         //默认是否立即购买   0 是 不立即购买 1是立即购买
-            uniqueId: selectedAttr.id  // 商品规格id  从商品详情接口里去拿
+            uniqueId: selectedAttr.unique  // 商品规格id  从商品详情接口里去拿
         }
-        joinCart(data).then()
+        joinCart(data).then(res=>{
+            if(res.status===200){
+                message.success(res.msg)
+            }
+        })
     };
     //立即购买
     onBuyNow = () => {

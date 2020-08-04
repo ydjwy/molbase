@@ -241,6 +241,13 @@ export async function deleteShippingAddress(params) {
     });
 }
 
+// 商品详情
+export async function findGoodsDetail(params) {
+    return XHR({
+        url: prefix + '/api/web/product/detail/' + params,
+        method: 'GET'
+    });
+}
 
 // 购物车 单件商品 新增修改
 export async function joinCart(params) {
@@ -259,11 +266,13 @@ export async function navMyCart(params) {
     });
 }
 
-
-// 商品详情
-export async function findGoodsDetail(params) {
+// 导航栏我的购物车
+export async function delMyCartGoods(params) {
     return XHR({
-        url: prefix + '/api/web/product/detail/' + params,
-        method: 'GET'
+        url: prefix + '/api/web/cart/del',
+        body:params,
+        method: 'POST'
     });
 }
+
+

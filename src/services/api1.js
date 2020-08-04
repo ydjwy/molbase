@@ -72,11 +72,3 @@ export async function getShopEnterprises(params) {
         body: params
     })
 }
-//商品详情
-export async function getGoodsDetailInfo(params) {
-    return XHR({
-        url: prefix + '/api/portal/getLxdzStoreProduct',
-        method: 'GET',
-        body: params
-    })
-}
