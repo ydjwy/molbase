@@ -92,7 +92,7 @@ class CartInfo extends Component {
                             </span>
                             <small className="dib w20 pr10 ellipsis">{item.suk}</small>
                             <small className="dib w30 ellipsis" align="right"
-                                   title={`￥${item.price}/单位 X ${item.cartNum}`}>{`￥${item.price}/单位 X ${item.cartNum}`}</small>
+                                   title={`￥${item.price}/单位 X ${item.cartNum}`}>{`￥${item.price}/${item.unitName} X ${item.cartNum}`}</small>
                             <small className="dib w10 ellipsis">&nbsp; <a className="fs12"
                                                                           onClick={() => this.onDeleteCart(item)}>删除</a>
                             </small>

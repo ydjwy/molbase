@@ -266,10 +266,26 @@ export async function navMyCart(params) {
     });
 }
 
-// 导航栏我的购物车
+// 删除我的购物车商品
 export async function delMyCartGoods(params) {
     return XHR({
         url: prefix + '/api/web/cart/del',
+        body:params,
+        method: 'POST'
+    });
+}
+// 我的购物车商品
+export async function myCartGoodsList(params) {
+    return XHR({
+        url: prefix + '/api/web/cart/list',
+        method: 'GET'
+    });
+}
+
+// 购物车 修改单件产品数量
+export async function modifyMyCartGoodsNum(params) {
+    return XHR({
+        url: prefix + '/api/web/cart/num',
         body:params,
         method: 'POST'
     });

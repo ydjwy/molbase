@@ -3,6 +3,7 @@ import {Divider, Steps} from "antd";
 import  CartStep1 from './cart-step1'
 import  CartStep2 from './cart-step2'
 import  CartStep3 from './cart-step3'
+
 import  style from './index.scss'
 const {Step} = Steps;
 const logo = require("../../assets/imgs/logo.png");
@@ -15,6 +16,7 @@ export default class ShoppingCart extends Component {
             currentStep: 0,//当前所在流程
         };
     }
+
 
     //返回购物车
     onBackCart = () => {
