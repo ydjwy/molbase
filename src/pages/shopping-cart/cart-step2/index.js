@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Radio, Table, Button} from 'antd'
+import {Radio, Table, Button} from 'antd';
+import {getShippingAddressList, modifyDefaultAddress} from '../../../services/api2';
 import  style from './index.scss'
 
 
@@ -7,6 +8,7 @@ export default class ShoppingCartStep2 extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.selectedShipAddress = null;
     }
 
     //提交订单
@@ -14,13 +16,18 @@ export default class ShoppingCartStep2 extends Component {
         const {onSubmit} = this.props;
         onSubmit();
     };
+    //选择收货人信息
+    onSelectShipAddress = (value) => {
+        this.selectedShipAddress = value;
+    };
+
 
     render() {
-        const {onBack}=this.props;
+        const {onBack} = this.props;
         return (
             <div className={`${style.shopping_cart_step2_wrapper} clear`}>
                 <div className="pl15 pb15 pr15 pt15" style={{border: '1px solid #e8e8e8'}}>
-                    <ConsigneeInfo/>
+                    <ConsigneeInfo onSelectShipAddress={this.onSelectShipAddress}/>
                     <ShippingMethods/>
                     <InvoiceInfo/>
                     <ShoppingList onBack={onBack}/>
@@ -67,37 +74,84 @@ class Title extends Component {
 class ConsigneeInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            shipAddressModal: {//收货地址弹框
+                visible: false,
+                isEdit: false
+            },
+            shipAddressInfo: {},//收货地址信息
+            selectAddressId: '',//选择的收获地址id
+        };
     }
 
-    onChange = e => {
-        console.log('radio checked', e.target.value);
-        this.setState({
-            value: e.target.value,
+    componentWillMount() {
+        this.init();
+    }
+
+    //初始化，获取收货地址信息
+    init = () => {
+        const {onSelectShipAddress} = this.props;
+        const {selectAddressId} = this.state;
+        getShippingAddressList().then(res => {
+            if (res.status === 200) {
+                if (res.data.isExist) {
+                    res.data.uerAddress.forEach(item => {
+                        if ((!selectAddressId && item.isDefault === 1) || (!!selectAddressId && selectAddressId === item.id)) {
+                            onSelectShipAddress(item);
+                            this.setState({shipAddressInfo: res.data, selectAddressId: item.id});
+                        }
+                    })
+                } else {
+                    this.setState({shipAddressInfo: res.data});
+                }
+            }
         });
     };
+    //选择收获地址
+    onChange = (e) => {
+        const {onSelectShipAddress} = this.props;
+        onSelectShipAddress(e.target.data);
+        this.setState({selectAddressId: e.target.value});
+    };
+    //新增收获地址
+    onAddAddress = () => {
+
+    };
+    //编辑收获地址
+    onEditAddress = (item) => {
+        console.log('onEditAddress', item);
+    };
+    //设置默认
+    onSetDefault = (item) => {
+        modifyDefaultAddress(item.id).then(res => {
+            if (res.status === 200) {
+                this.init();
+            }
+        })
+    };
+
 
     render() {
+        const {shipAddressInfo, selectAddressId} = this.state;
         return (
             <div>
                 <Title title="收货人信息"/>
                 <div className="pt20 pl20 pb20 pr20">
-                    <Radio.Group onChange={this.onChange} value={this.state.value}>
-                        <p>
-                            <Radio value={1}/>
-                            姓名 手机号 地址 默认
-                        </p>
-                        <p>
-                            <Radio value={2}/>
-                            姓名 手机号 地址 设置默认
-                        </p>
-                        <p>
-                            <Radio value={3}/>
-                            姓名 手机号 地址 设置默认
-                        </p>
-                    </Radio.Group>
+                    {shipAddressInfo.isExist ? (
+                        <Radio.Group onChange={this.onChange} value={selectAddressId}>
+                            {shipAddressInfo.uerAddress && shipAddressInfo.uerAddress.map(item => {
+                                return ( <p key={item.id} className={style.edit_address_item}>
+                                    <Radio value={item.id} data={item}/>
+                                    {`${item.realName}  ${item.phone}  ${item.detailedAddress} `}
+                                    {item.isDefault ? '默认' : <a onClick={() => this.onSetDefault(item)}>设置默认</a>} &nbsp;
+                                    <a className={style.edit_address_btn}
+                                       onClick={() => this.onEditAddress(item)}>编辑</a>
+                                </p>)
+                            })}
+                        </Radio.Group>
+                    ) : null}
                     <div>
-                        <a>+新增地址</a>
+                        <a onClick={this.onAddAddress}>+新增地址</a>
                     </div>
                 </div>
             </div>
@@ -186,7 +240,7 @@ class ShoppingList extends Component {
     };
 
     render() {
-        const {onBack}=this.props;
+        const {onBack} = this.props;
         const columns = this.columns;
         const data = [];
         for (let i = 0; i < 3; ++i) {

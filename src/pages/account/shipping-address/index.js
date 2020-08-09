@@ -17,7 +17,7 @@ export default class AccountShippingAddress extends Component {
                 visible: false,
                 isEdit: false
             },
-            shipAddressInfo: {}
+            shipAddressInfo: {},//收货地址信息
         };
         this.info = {
             address: {

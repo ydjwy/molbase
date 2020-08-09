@@ -1,3 +1,13 @@
 .shopping_cart_step2_wrapper {
   padding: 20px;
+  .edit_address_item {
+    .edit_address_btn {
+      display: none;
+    }
+    &:hover {
+      .edit_address_btn {
+        display: inline-block;
+      }
+    }
+  }
 }

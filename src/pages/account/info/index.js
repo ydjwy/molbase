@@ -51,13 +51,20 @@ export default class AccountInfo extends Component {
     }
 
     componentDidMount() {
-        this.initBase();
-        this.initCompany();
+        const currentUser = localStorage.getItem('currentUser');
+        if (!!currentUser) {
+            this.initBase();
+            this.initCompany();
+        } else {
+            window.location.href = '/#/user/login';
+        }
+
     }
 
     initBase = () => {
         const {userInfo: {user}} = this.props;
         getUserData({uid: user.uid}).then(res => this.setState({baseInfo: res.data || {}}));
+
     };
     initCompany = () => {
         const {userInfo: {user}} = this.props;

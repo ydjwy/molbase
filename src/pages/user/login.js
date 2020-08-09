@@ -2,8 +2,6 @@ import React, {PureComponent} from "react";
 import {Form, Icon, Input, Button} from "antd";
 import {connect} from "react-redux";
 import userModel from "store/reducers/user";
-import {getCookie} from "../../utils/cookie";
-// import {showPageTitle} from '../../utils/util'
 import {login} from '../../services/api2'
 import "./login.scss";
 const FormItem = Form.Item;
@@ -18,11 +16,6 @@ class Login extends PureComponent {
     }
 
     componentDidMount() {
-        const {setFieldsValue} = this.props.form;
-        setFieldsValue({
-            userName: getCookie('userName'),
-        });
-        // showPageTitle(this.props.history.location.pathname);
     }
 
     handleSubmit = e => {
@@ -81,10 +74,6 @@ class Login extends PureComponent {
                         )}
                     </FormItem>
                     <FormItem>
-                        {/*{getFieldDecorator("autoLogin", {*/}
-                        {/*valuePropName: "checked",*/}
-                        {/*initialValue: true*/}
-                        {/*})(<Checkbox>自动登录</Checkbox>)}*/}
                         <Button
                             type="primary"
                             htmlType="submit"
@@ -101,7 +90,3 @@ class Login extends PureComponent {
     }
 }
 export default Form.create()(Login);
-// export default connect(
-//   ({user}) => ({...user}),
-//   {...userModel.actions}
-// )(LoginForm);

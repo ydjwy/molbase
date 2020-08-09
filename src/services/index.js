@@ -27,52 +27,21 @@ const xhr = ({url, body = null, method = "POST", dataType = "json"}) => {
         //     window.location.href = '/#/user/login';
         //     goLogin = true;
         //     // return false;
-        // } else if (response.code === 2001) {
-        //     !goLogin && Modal.warning({
-        //         title: '提示',
-        //         content: response.message,
-        //         okText: '去登录',
-        //         keyboard: false,
-        //         onOk: function () {
-        //             localStorage.removeItem("currentUser");
-        //             window.location.href = '/#/user/login';
-        //             window.location.reload(true);
-        //         }
-        //     });
-        //     goLogin = true;
-        // } else if (response.code === 3001) {
-        //     window.location.href = '/#/403';
-        // } else if (response.code === 4001) {
-        //     if (response.result.password || response.result.userName) {
-        //         let text = (response.result.password || '') + (response.result.userName || '');
-        //         message.warning(text);
-        //     }
-        //
-        // } else {
-        //     goLogin = false;
-        //     if (response.code === 500) {
-        //         const codes = ['002', '003', '004', '007', '008', '009', '010', '011', '012', 'Claim:001', 'Claim:002'];
-        //         if (!(response.result && (codes.indexOf(response.result.code) > -1))) {
-        //             message.error(response.message)
-        //         }
-        //     } else {
-        //         response.code !== 4001 && message.warning(response.message)
-        //     }
-        //     // return response;
         // }
         return response || {}
     }
 
     function checkStatus(response) {
-        // console.log('checkStatus',response)
         if (response.status >= 200 && response.status < 300) {
             return response;
         } else {
-            // let error = new Error(response.statusText);
-            // error.response = response;
-            // throw error;
-            // window.location.href = '/#/500';
-            message.warning('数据错误！');
+            if (response.status === 401) {
+                localStorage.removeItem('currentUser');
+                window.location.href = '/#/user/login';
+            } else {
+                message.warning('接口响应错误！');
+            }
+            return response;
         }
     }
 
@@ -86,28 +55,11 @@ const xhr = ({url, body = null, method = "POST", dataType = "json"}) => {
      * except url with 'state' param, it's three part login process
      * @param {*} response
      */
-        // function handleNoLogin(response) {
-        //   // judge app is logining status just now
-        //   if (response[API_STATUS_KEY] === USER_STATUS_NO_LOGIN) {
-        //     root.store.dispatch({type: 'user/setUser', payload: {}});
-        //     localStorage.removeItem('user');
-        //     history.replace('/user/login');
-        //   }
-        //   return response;
-        // }
 
-        // function log(response) {
-        //   return response;
-        // }
-
-        // let param = {
-        //     method: method,
-        //     headers: {'Content-Type': 'application/json', Accept: '*/*'},
-        //   };
     let param = {
-            method: method,
-            headers: getHeaders(dataType)
-        };
+        method: method,
+        headers: getHeaders(dataType)
+    };
 
     if (method === "post" || method === "POST") {
         switch (dataType) {
@@ -147,16 +99,6 @@ const xhr = ({url, body = null, method = "POST", dataType = "json"}) => {
             console.log(err);
             return err
         });
-    // .then(handleNoLogin)
-    // .then(log)
-    // .catch(response => {
-    // if (response[API_STATUS_KEY] === 404) {
-    //   history.push('/404');
-    // } else if (response[API_STATUS_KEY] === 500) {
-    //   history.push('/500');
-    // }
-    // throw response;
-    // });
 };
 
 export default xhr;

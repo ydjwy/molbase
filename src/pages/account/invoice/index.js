@@ -227,7 +227,6 @@ class AddressInfoShow extends Component {
                     <Card size="small" extra={<a onClick={() => onOpen('isEdit', item)}>修改</a>}>
                         <Descriptions column={1}>
                             <Descriptions.Item label="收票方式">{item.receiptMethodName}</Descriptions.Item>
-                            <Descriptions.Item label="收票类型">{item.invoiceTypeName}</Descriptions.Item>
                             <Descriptions.Item label="收票人">{item.name}</Descriptions.Item>
                             <Descriptions.Item label="收票人手机号">{item.phone}</Descriptions.Item>
                             <Descriptions.Item label="收票人地址">{item.address}</Descriptions.Item>

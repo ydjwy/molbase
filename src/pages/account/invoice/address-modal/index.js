@@ -25,10 +25,9 @@ class AddressModal extends Component {
     componentDidMount() {
         const {addressModal = {}, form: {setFieldsValue}} = this.props;
         if (addressModal.isEdit) {
-            const {receiptMethod, invoiceType, name, phone, address, isDefault} = addressModal.data;
+            const {receiptMethod, name, phone, address, isDefault} = addressModal.data;
             const data = {
                 receiptMethod,
-                invoiceType,
                 name,
                 phone,
                 address,
@@ -93,14 +92,6 @@ class AddressModal extends Component {
                             rules: [{required: true, message: '请选择收票方式'}],
                         })(<Select placeholder="请选择收票方式">
                             <Option value='1'>纸质发票</Option>
-                        </Select>)}
-                    </Form.Item>
-                    <Form.Item {...formItemLayout} label="收票类型">
-                        {getFieldDecorator('invoiceType', {
-                            rules: [{required: true, message: '请选择收票类型 '}],
-                        })(<Select placeholder="请选择收票类型 ">
-                            <Option value='1'>普通</Option>
-                            <Option value='2'>增值</Option>
                         </Select>)}
                     </Form.Item>
                     <Form.Item {...formItemLayout} label="收票人">

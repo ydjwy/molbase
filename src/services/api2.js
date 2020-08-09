@@ -240,6 +240,13 @@ export async function deleteShippingAddress(params) {
         method: 'GET'
     });
 }
+// 修改账号默认收获地址
+export async function modifyDefaultAddress(params) {
+    return XHR({
+        url: prefix + '/api/web/address/default/' + params,
+        method: 'GET'
+    });
+}
 
 // 商品详情
 export async function findGoodsDetail(params) {
