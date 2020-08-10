@@ -1,14 +1,15 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import userModel from "store/reducers/user";
 import {Divider, Steps} from "antd";
 import  CartStep1 from './cart-step1'
 import  CartStep2 from './cart-step2'
 import  CartStep3 from './cart-step3'
-
 import  style from './index.scss'
 const {Step} = Steps;
 const logo = require("../../assets/imgs/logo.png");
 
-
+@connect(({user}) => ({...user}), {...userModel.actions})
 export default class ShoppingCart extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +37,7 @@ export default class ShoppingCart extends Component {
     };
 
     render() {
+        const {userInfo} = this.props;
         const {currentStep} = this.state;
         return (
             <div className={style.shopping_cart_wrapper}>
@@ -54,7 +56,8 @@ export default class ShoppingCart extends Component {
                     </div>
                     <div className="shopping_cart_content">
                         {currentStep === 0 ? <CartStep1 onSubmit={this.onSettlement}/> : null}
-                        {currentStep === 1 ? <CartStep2 onSubmit={this.onSubmitOrder} onBack={this.onBackCart}/> : null}
+                        {currentStep === 1 ? <CartStep2 onSubmit={this.onSubmitOrder} onBack={this.onBackCart}
+                                                        userInfo={userInfo}/> : null}
                         {currentStep === 2 ? <CartStep3 onSubmit={this.onPayment}/> : null}
                     </div>
                 </div>

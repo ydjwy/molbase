@@ -67,7 +67,7 @@ export default class AccountShippingAddress extends Component {
             });
         }
     };
-    //关闭发票接收信息弹框
+    //关闭收获地址信息弹框
     onShipAddressModal = (isSave) => {
         if (isSave) {
             this.init();

@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {Radio, Table, Button} from 'antd';
-import {getShippingAddressList, modifyDefaultAddress} from '../../../services/api2';
+import {getShippingAddressList, modifyDefaultAddress, getReceiveAddress} from '../../../services/api2';
+import  ShipAddressModal from '../../account/shipping-address/ship-address-modal';
+import AddressModal from '../../account/invoice/address-modal'
 import  style from './index.scss'
 
 
@@ -23,13 +25,13 @@ export default class ShoppingCartStep2 extends Component {
 
 
     render() {
-        const {onBack} = this.props;
+        const {onBack, userInfo} = this.props;
         return (
             <div className={`${style.shopping_cart_step2_wrapper} clear`}>
                 <div className="pl15 pb15 pr15 pt15" style={{border: '1px solid #e8e8e8'}}>
                     <ConsigneeInfo onSelectShipAddress={this.onSelectShipAddress}/>
                     <ShippingMethods/>
-                    <InvoiceInfo/>
+                    <InvoiceInfo userInfo={userInfo}/>
                     <ShoppingList onBack={onBack}/>
                 </div>
                 <div className="pl15 pt15 pb15 pr15 right" align="right" style={{width: 400}}>
@@ -108,18 +110,18 @@ class ConsigneeInfo extends Component {
         });
     };
     //选择收获地址
-    onChange = (e) => {
+    onSelectAddress = (info) => {
         const {onSelectShipAddress} = this.props;
-        onSelectShipAddress(e.target.data);
-        this.setState({selectAddressId: e.target.value});
+        onSelectShipAddress(info.data);
+        this.setState({selectAddressId: info.selectAddressId});
     };
     //新增收获地址
-    onAddAddress = () => {
-
+    onAdd = () => {
+        this.setState({shipAddressModal: {visible: true, isEdit: false}});
     };
     //编辑收获地址
-    onEditAddress = (item) => {
-        console.log('onEditAddress', item);
+    onEdit = (item) => {
+        this.setState({shipAddressModal: {visible: true, isEdit: true, data: item}});
     };
     //设置默认
     onSetDefault = (item) => {
@@ -130,30 +132,34 @@ class ConsigneeInfo extends Component {
         })
     };
 
+//关闭收获地址信息弹框
+    onShipAddressModal = (isSave) => {
+        if (isSave) {
+            this.init();
+        }
+        this.setState({shipAddressModal: {visible: false, isEdit: false}});
+    };
 
     render() {
-        const {shipAddressInfo, selectAddressId} = this.state;
+        const {shipAddressInfo, selectAddressId, shipAddressModal} = this.state;
         return (
             <div>
                 <Title title="收货人信息"/>
                 <div className="pt20 pl20 pb20 pr20">
-                    {shipAddressInfo.isExist ? (
-                        <Radio.Group onChange={this.onChange} value={selectAddressId}>
-                            {shipAddressInfo.uerAddress && shipAddressInfo.uerAddress.map(item => {
-                                return ( <p key={item.id} className={style.edit_address_item}>
-                                    <Radio value={item.id} data={item}/>
-                                    {`${item.realName}  ${item.phone}  ${item.detailedAddress} `}
-                                    {item.isDefault ? '默认' : <a onClick={() => this.onSetDefault(item)}>设置默认</a>} &nbsp;
-                                    <a className={style.edit_address_btn}
-                                       onClick={() => this.onEditAddress(item)}>编辑</a>
-                                </p>)
-                            })}
-                        </Radio.Group>
-                    ) : null}
-                    <div>
-                        <a onClick={this.onAddAddress}>+新增地址</a>
-                    </div>
+                    <ShowAddressInfo info={{list: shipAddressInfo.uerAddress, isExist: shipAddressInfo.isExist}}
+                                     onEdit={this.onEdit}
+                                     onAdd={this.onAdd}
+                                     onSetDefault={this.onSetDefault}
+                                     onSelect={this.onSelectAddress}
+                                     selected={selectAddressId}
+                                     nameKey="realName"
+                                     phoneKey="phone"
+                                     addressKey="detailedAddress"
+                                     defaultValue='isDefault'
+                                     idKey='id'/>
                 </div>
+                {shipAddressModal.visible ? (
+                    <ShipAddressModal shipAddressModal={shipAddressModal} onClose={this.onShipAddressModal}/>) : null}
             </div>
         )
     }
@@ -190,16 +196,74 @@ class ShippingMethods extends Component {
 class InvoiceInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            receiveAddressInfo: {},//发票接收地址信息
+            selectAddressId: '',//选择的发票接收地址信息
+            addressModal: {//发票接收地址弹框
+                visible: false,
+                isEdit: false
+            },
+        };
     }
 
+    componentWillMount() {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!!currentUser) {
+            this.init();
+        } else {
+            window.location.href = '/#/user/login';
+        }
+    }
+
+    init = () => {
+        const {userInfo: {user}} = this.props;
+        const {selectAddressId} = this.state;
+        getReceiveAddress({uid: user.uid}).then(res => {
+            if (res.status === 200) {
+                if (res.data.isExist) {
+                    res.data.receiveAddress.forEach(item => {
+                        if ((!selectAddressId && item.isDefault === 1) || (!!selectAddressId && selectAddressId === item.id)) {
+                            this.setState({receiveAddressInfo: res.data, selectAddressId: item.id});
+                        }
+                    })
+                } else {
+                    this.setState({receiveAddressInfo: res.data});
+                }
+            }
+        })
+    }
     onChange = e => {
         this.setState({
             value: e.target.value,
         });
     };
+    //新建地址
+    onAdd = () => {
+        const {userInfo: {user}} = this.props;
+        this.setState({addressModal: {visible: true, isEdit: false, uid: user.uid}});
+    };
+    //编辑地址
+    onEdit = (data) => {
+        const {userInfo: {user}} = this.props;
+        this.setState({addressModal: {visible: true, isEdit: true, data, uid: user.uid}});
+    };
+    //设置默认地址
+    onSetDefault = () => {
+    };
+    //选择发票接收地址
+    onSelectAddress = (info) => {
+        this.setState({selectAddressId: info.selectAddressId});
+    };
+    //关闭发票接收信息弹框
+    onCloseAddressModal = (isSave) => {
+        if (isSave) {
+            this.init();
+        }
+        this.setState({addressModal: {visible: false, isEdit: false}});
+    };
 
     render() {
+        const {receiveAddressInfo, selectAddressId, addressModal} = this.state;
         return (
             <div>
                 <Title title="发票信息"/>
@@ -207,10 +271,28 @@ class InvoiceInfo extends Component {
                     <Radio.Group onChange={this.onChange} value={this.state.value}>
                         <Radio value={1}>增值税普通发票</Radio>
                         <Radio value={2}>增值税专项发票</Radio>
-
                     </Radio.Group>
                     <p className="mt10 fs12">尚未添加增值税普通发票 <a>立即添加</a></p>
                 </div>
+                <Title title="发票接收地址"/>
+                <div className="pt20 pl20 pb20 pr20">
+                    <ShowAddressInfo
+                        info={{list: receiveAddressInfo.receiveAddress, isExist: receiveAddressInfo.isExist}}
+                        onEdit={this.onEdit}
+                        onAdd={this.onAdd}
+                        onSetDefault={this.onSetDefault}
+                        onSelect={this.onSelectAddress}
+                        selected={selectAddressId}
+                        nameKey="name"
+                        phoneKey="phone"
+                        addressKey="address"
+                        defaultValue='isDefault'
+                        idKey='id'/>
+                    <div>
+                    </div>
+                </div>
+                {addressModal.visible ?
+                    <AddressModal addressModal={addressModal} onClose={this.onCloseAddressModal}/> : null}
             </div>
         )
     }
@@ -262,6 +344,37 @@ class ShoppingList extends Component {
                     <Table columns={columns} pagination={false} dataSource={data}/>
                 </div>
             </div>
+        )
+    }
+}
+
+
+//地址信息展示
+class ShowAddressInfo extends Component {
+    onChange = e => {
+        const {onSelect} = this.props;
+        onSelect({selectAddressId: e.target.value, data: e.target.data});
+    };
+
+    render() {
+        const {info: {list, isExist}, selected, onEdit, onAdd, onSetDefault, idKey = 'id', defaultValue = 'isDefault', nameKey = "name", phoneKey = "phone", addressKey = "address"} = this.props;
+        return (
+            <React.Fragment>
+                {isExist ? (<Radio.Group onChange={this.onChange} value={selected}>
+                    {list && list.map(item => {
+                        return ( <p key={item[idKey]} className={style.edit_address_item}>
+                            <Radio value={item[idKey]} data={item}/>
+                            {`${item[nameKey]}  ${item[phoneKey]}  ${item[addressKey]} `}
+                            {item[defaultValue] ? '默认' : <a onClick={() => onSetDefault(item)}>设置默认</a>} &nbsp;
+                            <a className={style.edit_address_btn}
+                               onClick={() => onEdit(item)}>编辑</a>
+                        </p>)
+                    })}
+                </Radio.Group>) : null}
+                <div>
+                    <a onClick={() => onAdd()}>+新增地址</a>
+                </div>
+            </React.Fragment>
         )
     }
 }
