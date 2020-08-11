@@ -15,6 +15,7 @@ export default class ShoppingCart extends Component {
         super(props);
         this.state = {
             currentStep: 0,//当前所在流程
+            selectedGoods: '',//选中的商品
         };
     }
 
@@ -24,8 +25,8 @@ export default class ShoppingCart extends Component {
         this.setState({currentStep: 0});
     };
     //立即结算
-    onSettlement = () => {
-        this.setState({currentStep: 1});
+    onSettlement = (goods) => {
+        this.setState({currentStep: 1, selectedGoods: goods.join(',')});
     };
     //提交订单
     onSubmitOrder = () => {
@@ -38,7 +39,7 @@ export default class ShoppingCart extends Component {
 
     render() {
         const {userInfo} = this.props;
-        const {currentStep} = this.state;
+        const {currentStep, selectedGoods} = this.state;
         return (
             <div className={style.shopping_cart_wrapper}>
                 <div className="shopping_cart_header">
@@ -57,7 +58,7 @@ export default class ShoppingCart extends Component {
                     <div className="shopping_cart_content">
                         {currentStep === 0 ? <CartStep1 onSubmit={this.onSettlement}/> : null}
                         {currentStep === 1 ? <CartStep2 onSubmit={this.onSubmitOrder} onBack={this.onBackCart}
-                                                        userInfo={userInfo}/> : null}
+                                                        userInfo={userInfo} goodsId={selectedGoods}/> : null}
                         {currentStep === 2 ? <CartStep3 onSubmit={this.onPayment}/> : null}
                     </div>
                 </div>

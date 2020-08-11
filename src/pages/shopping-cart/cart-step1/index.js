@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Table, Checkbox, Button, InputNumber} from 'antd';
+import {Table, Checkbox, Button, InputNumber, message} from 'antd';
 import  {myCartGoodsList, modifyMyCartGoodsNum, delMyCartGoods} from '../../../services/api2'
 import  style from './index.scss'
 let allGoods = [];//全部商品的id
@@ -10,7 +10,7 @@ export default class ShoppingCartStep1 extends Component {
         super(props);
         this.state = {
             cartGoodsInfo: {},//购物车商品信息
-            selectedGoods: [],//选中的商品id集合
+            selectedGoods: [],//选中的商品购物车id集合
             selectGoodsTotal: 0,//选中的商品总数
             selectGoodsTotalPrice: 0,//选择的商品总价
         };
@@ -102,7 +102,12 @@ export default class ShoppingCartStep1 extends Component {
     //立即结算
     onSettlement = () => {
         const {onSubmit} = this.props;
-        onSubmit();
+        const {selectedGoods} = this.state;
+        if (selectedGoods.length > 0) {
+            onSubmit(selectedGoods);
+        } else {
+            message.warning('请选择需要购买的商品！')
+        }
     };
     //选择商品
     onSelectGoods = (record, selected) => {
@@ -152,7 +157,7 @@ export default class ShoppingCartStep1 extends Component {
 
 
     render() {
-        const {selectGoodsTotal, selectedGoods,selectGoodsTotalPrice} = this.state;
+        const {selectGoodsTotal, selectedGoods, selectGoodsTotalPrice} = this.state;
         const showCartGoodsList = this.getShowCartGoodsList();
         const columns = [this.rowSelectionHeader(), ...this.columns];
         return (

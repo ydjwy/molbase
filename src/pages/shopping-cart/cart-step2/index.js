@@ -1,10 +1,44 @@
 import React, {Component} from "react";
 import {Radio, Table, Button} from 'antd';
-import {getShippingAddressList, modifyDefaultAddress, getReceiveAddress} from '../../../services/api2';
+import {
+    getShippingAddressList,
+    modifyDefaultAddress,
+    getReceiveAddress,
+    getOrdinvoice,
+    getVatinvoice,
+    confirmOrderInfo
+} from '../../../services/api2';
 import  ShipAddressModal from '../../account/shipping-address/ship-address-modal';
 import AddressModal from '../../account/invoice/address-modal'
+import OrdinaryModal from '../../account/invoice/ordinary-modal'
+import SpecialModal from '../../account/invoice/special-modal'
 import  style from './index.scss'
-
+const shipAddressShowKey = {
+    nameKey: "realName",
+    phoneKey: "phone",
+    addressKey: "detailedAddress",
+    defaultValue: 'isDefault',
+    idKey: 'id'
+};
+const invoiceAddressShowKey = {
+    nameKey: "name",
+    phoneKey: "phone",
+    addressKey: "address",
+    defaultValue: 'isDefault',
+    idKey: 'id'
+};
+const invoiceInfoShowKey = {
+    dataKey: 'ordInvoice',
+    nameKey: "invoiceTitle",
+    codeKey: "invoiceDuty",
+    type: '普通'
+};
+const vatInvoiceInfoShowKey = {
+    dataKey: 'vatinvoice',
+    nameKey: "companyName",
+    codeKey: "invoiceDuty",
+    type: '专项'
+};
 
 export default class ShoppingCartStep2 extends Component {
     constructor(props) {
@@ -25,41 +59,14 @@ export default class ShoppingCartStep2 extends Component {
 
 
     render() {
-        const {onBack, userInfo} = this.props;
+        const {onBack, userInfo, goodsId} = this.props;
         return (
             <div className={`${style.shopping_cart_step2_wrapper} clear`}>
                 <div className="pl15 pb15 pr15 pt15" style={{border: '1px solid #e8e8e8'}}>
                     <ConsigneeInfo onSelectShipAddress={this.onSelectShipAddress}/>
                     <ShippingMethods/>
                     <InvoiceInfo userInfo={userInfo}/>
-                    <ShoppingList onBack={onBack}/>
-                </div>
-                <div className="pl15 pt15 pb15 pr15 right" align="right" style={{width: 400}}>
-                    <p>
-                        <span className="dib w60">商品数量：</span>
-                        <span className="dib w40">1 件</span>
-                    </p>
-                    <p>
-                        <span className="dib w60">商品金额：</span>
-                        <span className="dib w40">￥0</span>
-                    </p>
-                    <p>
-                        <span className="dib w60">减免：</span>
-                        <span className="dib w40">￥0</span>
-                    </p>
-                    <p>
-                        <span className="dib w60">运费（估）：</span>
-                        <span className="dib w40">￥0</span>
-                    </p>
-                    <p>
-                        <span className="dib w60">可获积分：</span>
-                        <span className="dib w40">6</span>
-                    </p>
-                    <p>
-                        <span className="dib w60">应付总额：</span>
-                        <span className="dib w40">￥500.00</span>
-                    </p>
-                    <Button type="danger" className='w_200' onClick={this.onSubmitOrder}>提交订单</Button>
+                    <ShoppingList onBack={onBack} goodsId={goodsId}/>
                 </div>
             </div>
         )
@@ -152,11 +159,7 @@ class ConsigneeInfo extends Component {
                                      onSetDefault={this.onSetDefault}
                                      onSelect={this.onSelectAddress}
                                      selected={selectAddressId}
-                                     nameKey="realName"
-                                     phoneKey="phone"
-                                     addressKey="detailedAddress"
-                                     defaultValue='isDefault'
-                                     idKey='id'/>
+                                     {...shipAddressShowKey}/>
                 </div>
                 {shipAddressModal.visible ? (
                     <ShipAddressModal shipAddressModal={shipAddressModal} onClose={this.onShipAddressModal}/>) : null}
@@ -191,7 +194,6 @@ class ShippingMethods extends Component {
         )
     }
 }
-
 //发票信息
 class InvoiceInfo extends Component {
     constructor(props) {
@@ -203,19 +205,33 @@ class InvoiceInfo extends Component {
                 visible: false,
                 isEdit: false
             },
+            selectInvoiceType: 1,//选择的发票类型
+            ordinvoiceInfo: {},//普通发票信息
+            vatinvoiceInfo: {},//专项发票信息
+            ordinaryModal: {//普通发票弹框
+                visible: false,
+                isEdit: false
+            },
+            specialModal: {//专项发票弹框
+                visible: false,
+                isEdit: false
+            }
         };
     }
 
     componentWillMount() {
         const currentUser = localStorage.getItem('currentUser');
         if (!!currentUser) {
-            this.init();
+            this.initAddress();
+            this.initOrdinvoice();
+            this.initVatinvoice();
         } else {
             window.location.href = '/#/user/login';
         }
     }
 
-    init = () => {
+    //初始化地址
+    initAddress = () => {
         const {userInfo: {user}} = this.props;
         const {selectAddressId} = this.state;
         getReceiveAddress({uid: user.uid}).then(res => {
@@ -232,23 +248,40 @@ class InvoiceInfo extends Component {
             }
         })
     }
+    //初始化普通发票
+    initOrdinvoice = () => {
+        const {userInfo: {user}} = this.props;
+        getOrdinvoice({uid: user.uid}).then(res => {
+            if (res.status === 200) {
+                this.setState({ordinvoiceInfo: res.data})
+            }
+        })
+    };
+    //初始化专项发票
+    initVatinvoice = () => {
+        const {userInfo: {user}} = this.props;
+        getVatinvoice({uid: user.uid}).then(res => {
+            if (res.status === 200) {
+                this.setState({vatinvoiceInfo: res.data})
+            }
+        })
+    };
+    //选中发票类型
     onChange = e => {
-        this.setState({
-            value: e.target.value,
-        });
+        this.setState({selectInvoiceType: e.target.value,});
     };
     //新建地址
-    onAdd = () => {
+    onAddAddress = () => {
         const {userInfo: {user}} = this.props;
         this.setState({addressModal: {visible: true, isEdit: false, uid: user.uid}});
     };
     //编辑地址
-    onEdit = (data) => {
+    onEditAddress = (data) => {
         const {userInfo: {user}} = this.props;
         this.setState({addressModal: {visible: true, isEdit: true, data, uid: user.uid}});
     };
     //设置默认地址
-    onSetDefault = () => {
+    onSetDefaultAddress = () => {
     };
     //选择发票接收地址
     onSelectAddress = (info) => {
@@ -257,52 +290,84 @@ class InvoiceInfo extends Component {
     //关闭发票接收信息弹框
     onCloseAddressModal = (isSave) => {
         if (isSave) {
-            this.init();
+            this.initAddress();
         }
         this.setState({addressModal: {visible: false, isEdit: false}});
     };
+    //编辑发票信息
+    onEditInvoice = () => {
+        const {selectInvoiceType, ordinvoiceInfo, vatinvoiceInfo} = this.state;
+        const {userInfo: {user}} = this.props;
+        const ordinaryModal = {ordinaryModal: {visible: true, isEdit: true, data: ordinvoiceInfo, uid: user.uid}}
+        const specialModal = {specialModal: {visible: true, isEdit: true, data: vatinvoiceInfo, uid: user.uid}}
+        selectInvoiceType === 1 ? this.setState({...ordinaryModal}) : this.setState({...specialModal});
+    };
+    //新建发票信息
+    onAddInvoice = () => {
+        const {userInfo: {user}} = this.props;
+        const {selectInvoiceType} = this.state;
+        const ordinaryModal = {ordinaryModal: {visible: true, isEdit: false, uid: user.uid}};
+        const specialModal = {specialModal: {visible: true, isEdit: false, uid: user.uid}};
+        selectInvoiceType === 1 ? this.setState({...ordinaryModal}) : this.setState({...specialModal});
+    };
+    //关闭新建编辑发票弹框
+    onCloseInvoiceModal = (isSave) => {
+        const {selectInvoiceType} = this.state;
+        if (isSave) {
+            selectInvoiceType === 1 ? this.initOrdinvoice() : this.initVatinvoice();
+        }
+        const ordinaryModal = {ordinaryModal: {visible: false, isEdit: false}};
+        const specialModal = {specialModal: {visible: false, isEdit: false}};
+        selectInvoiceType === 1 ? this.setState({...ordinaryModal}) : this.setState({...specialModal});
+
+
+    };
 
     render() {
-        const {receiveAddressInfo, selectAddressId, addressModal} = this.state;
+        const {receiveAddressInfo, selectAddressId, addressModal, selectInvoiceType, ordinvoiceInfo, vatinvoiceInfo, ordinaryModal, specialModal} = this.state;
         return (
             <div>
                 <Title title="发票信息"/>
                 <div className="pt20 pl20 pb20 pr20">
-                    <Radio.Group onChange={this.onChange} value={this.state.value}>
+                    <Radio.Group onChange={this.onChange} value={selectInvoiceType}>
                         <Radio value={1}>增值税普通发票</Radio>
                         <Radio value={2}>增值税专项发票</Radio>
                     </Radio.Group>
-                    <p className="mt10 fs12">尚未添加增值税普通发票 <a>立即添加</a></p>
+                    <InvoiceDetail info={selectInvoiceType === 1 ? ordinvoiceInfo : vatinvoiceInfo}
+                                   keys={selectInvoiceType === 1 ? invoiceInfoShowKey : vatInvoiceInfoShowKey}
+                                   onEdit={this.onEditInvoice}
+                                   onAdd={this.onAddInvoice}/>
                 </div>
                 <Title title="发票接收地址"/>
                 <div className="pt20 pl20 pb20 pr20">
                     <ShowAddressInfo
                         info={{list: receiveAddressInfo.receiveAddress, isExist: receiveAddressInfo.isExist}}
-                        onEdit={this.onEdit}
-                        onAdd={this.onAdd}
-                        onSetDefault={this.onSetDefault}
+                        onEdit={this.onEditAddress}
+                        onAdd={this.onAddAddress}
+                        onSetDefault={this.onSetDefaultAddress}
                         onSelect={this.onSelectAddress}
                         selected={selectAddressId}
-                        nameKey="name"
-                        phoneKey="phone"
-                        addressKey="address"
-                        defaultValue='isDefault'
-                        idKey='id'/>
+                        {...invoiceAddressShowKey}/>
                     <div>
                     </div>
                 </div>
+                {ordinaryModal.visible ?
+                    <OrdinaryModal ordinaryModal={ordinaryModal} onClose={this.onCloseInvoiceModal}/> : null}
+                {specialModal.visible ?
+                    <SpecialModal specialModal={specialModal} onClose={this.onCloseInvoiceModal}/> : null}
                 {addressModal.visible ?
                     <AddressModal addressModal={addressModal} onClose={this.onCloseAddressModal}/> : null}
             </div>
         )
     }
 }
-
 //商品清单
 class ShoppingList extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            orderInfo: {order: {}},//订单商品信息
+        };
         this.columns = [
             {title: '产品名称', width: 200, dataIndex: 'name', key: 'name'},
             {title: '品牌|货号', dataIndex: 'name1', key: 'name1'},
@@ -311,8 +376,16 @@ class ShoppingList extends Component {
             {title: '单价', dataIndex: 'name1', key: 'nam'},
             {title: '数量', dataIndex: 'name1', key: 'nme1'},
             {title: '小计', dataIndex: 'name1', key: 'na1'},
-            {title: '操作', dataIndex: 'name1', key: 'ame1'}
         ];
+    }
+
+    componentWillMount() {
+        const {goodsId} = this.props;
+        confirmOrderInfo({cartId: goodsId}).then(res => {
+            if (res.status === 200) {
+                this.setState({orderInfo: res.data})
+            }
+        })
     }
 
     onChange = e => {
@@ -323,6 +396,7 @@ class ShoppingList extends Component {
 
     render() {
         const {onBack} = this.props;
+        const { orderInfo: {order}}=this.state;
         const columns = this.columns;
         const data = [];
         for (let i = 0; i < 3; ++i) {
@@ -343,12 +417,37 @@ class ShoppingList extends Component {
                     </h4>
                     <Table columns={columns} pagination={false} dataSource={data}/>
                 </div>
+                <div className="pl15 pt15 pb15 pr15 right" align="right" style={{width: 400}}>
+                    <p>
+                        <span className="dib w60">商品数量：</span>
+                        <span className="dib w40">{order.total} 件</span>
+                    </p>
+                    <p>
+                        <span className="dib w60">商品金额：</span>
+                        <span className="dib w40">￥{order.totalPic}</span>
+                    </p>
+                    <p>
+                        <span className="dib w60">减免：</span>
+                        <span className="dib w40">￥0</span>
+                    </p>
+                    <p>
+                        <span className="dib w60">运费（估）：</span>
+                        <span className="dib w40">￥0</span>
+                    </p>
+                    <p>
+                        <span className="dib w60">可获积分：</span>
+                        <span className="dib w40">6</span>
+                    </p>
+                    <p>
+                        <span className="dib w60">应付总额：</span>
+                        <span className="dib w40">￥{order.totalPic}</span>
+                    </p>
+                    <Button type="danger" className='w_200' onClick={this.onSubmitOrder}>提交订单</Button>
+                </div>
             </div>
         )
     }
 }
-
-
 //地址信息展示
 class ShowAddressInfo extends Component {
     onChange = e => {
@@ -375,6 +474,21 @@ class ShowAddressInfo extends Component {
                     <a onClick={() => onAdd()}>+新增地址</a>
                 </div>
             </React.Fragment>
+        )
+    }
+}
+//发票信息展示
+class InvoiceDetail extends Component {
+    render() {
+        const {info, onEdit, onAdd, keys: {dataKey = 'vatinvoice', nameKey = 'name', codeKey = 'code', type = "普通"}} = this.props;
+        return (
+            <div>
+                {info.isExist ? (<div className={`${style.edit_address_item} mt10 dib`}>
+                    <span className="mr10">{info[dataKey][nameKey]}</span>
+                    <span className="mr10">{info[dataKey][codeKey]}</span>
+                    <a className={style.edit_address_btn} onClick={onEdit}>编辑</a>
+                </div>) : (<p className="mt10 fs12">尚未添加增值税{type}发票<a onClick={onAdd}>立即添加</a></p>)}
+            </div>
         )
     }
 }

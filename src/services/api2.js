@@ -298,4 +298,13 @@ export async function modifyMyCartGoodsNum(params) {
     });
 }
 
+// 购物车 核对订单信息的商品列表
+export async function confirmOrderInfo(params) {
+    return XHR({
+        url: prefix + '/api/web/order/confirm',
+        body:params,
+        method: 'POST'
+    });
+}
+
 
