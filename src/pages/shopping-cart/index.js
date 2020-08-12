@@ -5,6 +5,7 @@ import {Divider, Steps} from "antd";
 import  CartStep1 from './cart-step1'
 import  CartStep2 from './cart-step2'
 import  CartStep3 from './cart-step3'
+import {createOrder} from '../../services/api2'
 import  style from './index.scss'
 const {Step} = Steps;
 const logo = require("../../assets/imgs/logo.png");
@@ -29,8 +30,12 @@ export default class ShoppingCart extends Component {
         this.setState({currentStep: 1, selectedGoods: goods.join(',')});
     };
     //提交订单
-    onSubmitOrder = () => {
-        this.setState({currentStep: 2});
+    onSubmitOrder = (data) => {
+        createOrder(data).then(res => {
+            if (res.status === 200) {
+                this.setState({currentStep: 2});
+            }
+        });
     };
     //付款
     onPayment = () => {

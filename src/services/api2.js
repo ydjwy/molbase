@@ -307,4 +307,13 @@ export async function confirmOrderInfo(params) {
     });
 }
 
+//购物车 创建订单
+export async function createOrder(params) {
+    return XHR({
+        url: prefix + '/api/web/order/create',
+        body:params,
+        method: 'POST'
+    });
+}
+
 

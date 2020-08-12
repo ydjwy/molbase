@@ -1,5 +1,21 @@
 .shopping_cart_step2_wrapper {
   padding: 20px;
+  :global {
+    //h3 {
+    //  color: #1890ff;
+    //}
+    h4 {
+      margin: 0;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 2px solid #e8e8e8;
+    }
+    .table_title_box {
+      .ant-table-placeholder {
+        display: none;
+      }
+    }
+  }
   .edit_address_item {
     .edit_address_btn {
       display: none;
