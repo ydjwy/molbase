@@ -32,6 +32,15 @@ export default class AccountLayout extends Component {
                     code: 'shipping-address',
                     title: '收货地址',
                 }]
+            }, {
+                id: 2,
+                code: '1',
+                title: '买家中心',
+                childList: [{
+                    id: 21,
+                    code: 'platform-order',
+                    title: '平台订单',
+                }]
             }
         ]
     }

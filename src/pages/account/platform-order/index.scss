@@ -1,0 +1,15 @@
+#platform_order_wrapper {
+  .table_header, .table_content {
+    width: 100%;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 10px;
+    tr:nth-child(1) {
+      background-color: #e8e8e8;
+    }
+  }
+  .table_content {
+    td {
+      padding: 10px 5px;
+    }
+  }
+}

@@ -277,7 +277,7 @@ export async function navMyCart(params) {
 export async function delMyCartGoods(params) {
     return XHR({
         url: prefix + '/api/web/cart/del',
-        body:params,
+        body: params,
         method: 'POST'
     });
 }
@@ -293,7 +293,7 @@ export async function myCartGoodsList(params) {
 export async function modifyMyCartGoodsNum(params) {
     return XHR({
         url: prefix + '/api/web/cart/num',
-        body:params,
+        body: params,
         method: 'POST'
     });
 }
@@ -302,7 +302,7 @@ export async function modifyMyCartGoodsNum(params) {
 export async function confirmOrderInfo(params) {
     return XHR({
         url: prefix + '/api/web/order/confirm',
-        body:params,
+        body: params,
         method: 'POST'
     });
 }
@@ -311,7 +311,16 @@ export async function confirmOrderInfo(params) {
 export async function createOrder(params) {
     return XHR({
         url: prefix + '/api/web/order/create',
-        body:params,
+        body: params,
+        method: 'POST'
+    });
+}
+
+//查询订单列表
+export async function getOrderList(params) {
+    return XHR({
+        url: prefix + '/api/web/order/list',
+        body: params,
         method: 'POST'
     });
 }

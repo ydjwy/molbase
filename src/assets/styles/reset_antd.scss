@@ -1,178 +1,178 @@
-@import "variable";
-
-:global {
-  .ant-input-sm,
-  .ant-btn-sm,
-  .ant-select,
-  textarea.ant-input,
-  .ant-input-suffix,
-  .ant-checkbox-wrapper,
-  .ant-dropdown-menu-item,
-  .ant-form-item-control .ant-input-number,
-  .ant-select-selection__placeholder {
-    font-size: $textFontSize;
-    border-radius: $borderRadius;
-  }
-
-  .ant-form-explain, .ant-form-extra,
-  .ant-modal-footer,
-  .ant-form label {
-    font-size: $textFontSize;
-  }
-
-  .ant-input-sm,
-  .ant-form-item-control .ant-input-number,
-  .ant-input-search-button {
-    height: $global-input-height;
-    line-height: $global-input-height;
-  }
-
-  .ant-select-sm .ant-select-selection--single {
-    height: $global-input-height;
-    border-radius: $borderRadius;
-  }
-
-  .ant-select-sm .ant-select-selection--multiple {
-    min-height: $global-input-height;
-    border-radius: $borderRadius;
-  }
-
-  .ant-form-item-control .ant-input-number-input {
-    height: calc(#{$global-input-height} - 2px);
-  }
-
-  .ant-form-item-control .ant-input-number-input,
-  .ant-select-sm .ant-select-selection__rendered {
-    line-height: calc(#{$global-input-height} - 2px);
-  }
-
-  .ant-select-sm .ant-select-selection--multiple .ant-select-selection__rendered li {
-    height: 20px;
-    line-height: 16px;
-  }
-
-  textarea.ant-input {
-    padding: 1px 7px;
-  }
-
-
-  .ant-drawer-header {
-    padding: 0 24px !important;
-    height: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    .ant-drawer-title {
-      line-height: inherit;
-    }
-  }
-
-  .ant-tabs-nav-container, .ant-card {
-    line-height: 1.3 !important;
-  }
-
-  .ant-form-item {
-    margin-bottom: 10px;
-    font-size: $textFontSize;
-
-    .has-error {
-      position: relative;
-
-      .ant-form-explain, .ant-form-split {
-        position: absolute;
-        bottom: -8px;
-        min-height: 10px;
-        line-height: 10px;
-        font-size: 10px;
-      }
-    }
-
-    .ant-form-item-label label {
-      font-size: $textFontSize;
-    }
-
-    .ant-form-item-control-wrapper {
-      input {
-        font-size: $textFontSize;
-      }
-
-      .ant-checkbox + span {
-        padding: 0;
-        padding-left: 4px;
-      }
-    }
-  }
-
-  .ant-table {
-    .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
-      font-size: $textFontSize;
-      padding: 10px;
-    }
-
-    .ant-table-thead > tr > th {
-      font-weight: bold;
-    }
-
-    .ant-table-expanded-row {
-      background-color: #ffffff;
-    }
-  }
-
-  .ant-table-fixed-header {
-    .ant-table-scroll {
-      .ant-table-body, .ant-table-header {
-        overflow-y: auto !important;
-      }
-    }
-  }
-
-  .ant-modal-content {
-    .ant-modal-header {
-      padding: 10px 24px;
-    }
-
-    .ant-modal-close-x {
-      height: 42px;
-      line-height: 42px;
-    }
-  }
-
-  .ant-tabs {
-    .ant-tabs-large-bar {
-      .ant-tabs-tab {
-        font-size: 14px;
-      }
-    }
-  }
-
-  .ant-drawer {
-    .ant-drawer-content-wrapper {
-      .ant-drawer-body {
-        padding: 0;
-      }
-    }
-  }
-
-  .ant-collapse {
-    .ant-collapse-content {
-      overflow: inherit;
-    }
-  }
-
-  .ant-back-top {
-    .ant-back-top-content {
-      background-color: #1890ff;
-
-      &:hover {
-        background-color: #40a9ff;
-      }
-    }
-  }
-
-  .ant-list-item-meta-description {
-    font-size: $textFontSize !important;
-  }
-
-  .ant-list {
-    font-size: $textFontSize !important;
-  }
-}
+//@import "variable";
+//
+//:global {
+//  .ant-input-sm,
+//  .ant-btn-sm,
+//  .ant-select,
+//  textarea.ant-input,
+//  .ant-input-suffix,
+//  .ant-checkbox-wrapper,
+//  .ant-dropdown-menu-item,
+//  .ant-form-item-control .ant-input-number,
+//  .ant-select-selection__placeholder {
+//    font-size: $textFontSize;
+//    border-radius: $borderRadius;
+//  }
+//
+//  .ant-form-explain, .ant-form-extra,
+//  .ant-modal-footer,
+//  .ant-form label {
+//    font-size: $textFontSize;
+//  }
+//
+//  .ant-input-sm,
+//  .ant-form-item-control .ant-input-number,
+//  .ant-input-search-button {
+//    height: $global-input-height;
+//    line-height: $global-input-height;
+//  }
+//
+//  .ant-select-sm .ant-select-selection--single {
+//    height: $global-input-height;
+//    border-radius: $borderRadius;
+//  }
+//
+//  .ant-select-sm .ant-select-selection--multiple {
+//    min-height: $global-input-height;
+//    border-radius: $borderRadius;
+//  }
+//
+//  .ant-form-item-control .ant-input-number-input {
+//    height: calc(#{$global-input-height} - 2px);
+//  }
+//
+//  .ant-form-item-control .ant-input-number-input,
+//  .ant-select-sm .ant-select-selection__rendered {
+//    line-height: calc(#{$global-input-height} - 2px);
+//  }
+//
+//  .ant-select-sm .ant-select-selection--multiple .ant-select-selection__rendered li {
+//    height: 20px;
+//    line-height: 16px;
+//  }
+//
+//  textarea.ant-input {
+//    padding: 1px 7px;
+//  }
+//
+//
+//  .ant-drawer-header {
+//    padding: 0 24px !important;
+//    height: 40px;
+//    line-height: 40px;
+//    overflow: hidden;
+//    .ant-drawer-title {
+//      line-height: inherit;
+//    }
+//  }
+//
+//  .ant-tabs-nav-container, .ant-card {
+//    line-height: 1.3 !important;
+//  }
+//
+//  .ant-form-item {
+//    margin-bottom: 10px;
+//    font-size: $textFontSize;
+//
+//    .has-error {
+//      position: relative;
+//
+//      .ant-form-explain, .ant-form-split {
+//        position: absolute;
+//        bottom: -8px;
+//        min-height: 10px;
+//        line-height: 10px;
+//        font-size: 10px;
+//      }
+//    }
+//
+//    .ant-form-item-label label {
+//      font-size: $textFontSize;
+//    }
+//
+//    .ant-form-item-control-wrapper {
+//      input {
+//        font-size: $textFontSize;
+//      }
+//
+//      .ant-checkbox + span {
+//        padding: 0;
+//        padding-left: 4px;
+//      }
+//    }
+//  }
+//
+//  .ant-table {
+//    .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+//      font-size: $textFontSize;
+//      padding: 10px;
+//    }
+//
+//    .ant-table-thead > tr > th {
+//      font-weight: bold;
+//    }
+//
+//    .ant-table-expanded-row {
+//      background-color: #ffffff;
+//    }
+//  }
+//
+//  .ant-table-fixed-header {
+//    .ant-table-scroll {
+//      .ant-table-body, .ant-table-header {
+//        overflow-y: auto !important;
+//      }
+//    }
+//  }
+//
+//  .ant-modal-content {
+//    .ant-modal-header {
+//      padding: 10px 24px;
+//    }
+//
+//    .ant-modal-close-x {
+//      height: 42px;
+//      line-height: 42px;
+//    }
+//  }
+//
+//  .ant-tabs {
+//    .ant-tabs-large-bar {
+//      .ant-tabs-tab {
+//        font-size: 14px;
+//      }
+//    }
+//  }
+//
+//  .ant-drawer {
+//    .ant-drawer-content-wrapper {
+//      .ant-drawer-body {
+//        padding: 0;
+//      }
+//    }
+//  }
+//
+//  .ant-collapse {
+//    .ant-collapse-content {
+//      overflow: inherit;
+//    }
+//  }
+//
+//  .ant-back-top {
+//    .ant-back-top-content {
+//      background-color: #1890ff;
+//
+//      &:hover {
+//        background-color: #40a9ff;
+//      }
+//    }
+//  }
+//
+//  .ant-list-item-meta-description {
+//    font-size: $textFontSize !important;
+//  }
+//
+//  .ant-list {
+//    font-size: $textFontSize !important;
+//  }
+//}
