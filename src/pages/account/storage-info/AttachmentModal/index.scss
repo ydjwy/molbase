@@ -1,0 +1,12 @@
+#attachment_modal_wrapper {
+  :global {
+    .ant-form {
+      .ant-form-item {
+        .ant-form-item-control {
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+    }
+  }
+}

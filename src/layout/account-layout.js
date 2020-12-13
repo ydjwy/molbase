@@ -41,6 +41,15 @@ export default class AccountLayout extends Component {
                     code: 'platform-order',
                     title: '平台订单',
                 }]
+            }, {
+                id: 3,
+                code: '1',
+                title: '网上仓储',
+                childList: [{
+                    id: 21,
+                    code: 'storage-info',
+                    title: '仓储信息',
+                }]
             }
         ]
     }

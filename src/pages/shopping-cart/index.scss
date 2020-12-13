@@ -4,4 +4,15 @@
   margin: 0 auto;
   padding: 16px 16px;
   background: #ffffff;
+  :global {
+    .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot {
+      background: #fe5601;
+    }
+    .ant-steps-item-finish > .ant-steps-item-tail::after {
+      background: #fe5601;
+    }
+    .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot{
+      background: #fe5601;
+    }
+  }
 }

@@ -65,6 +65,15 @@ const PlatformOrder = Loadable({
     }
 });
 
+//仓储信息
+const StorageInfo = Loadable({
+    loader: () => import("pages/account/storage-info"),
+    loading(){
+        // return <div>加载中</div>
+        return <div/>
+    }
+});
+
 //购物车
 const ShoppingCart = Loadable({
     loader: () => import("pages/shopping-cart"),
@@ -98,6 +107,7 @@ const Routes = () => (
                 <Route path="/account/invoice" component={AccountInvoice}/>
                 <Route path="/account/shipping-address" component={AccountShippingAddress}/>
                 <Route path="/account/platform-order" component={PlatformOrder}/>
+                <Route path="/account/storage-info" component={StorageInfo}/>
             </Route>
             <Route path='/shopping-cart' component={ShoppingCart}/>
             <Route component={Exception404}/>

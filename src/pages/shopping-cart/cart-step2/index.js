@@ -107,18 +107,17 @@ export default class ShoppingCartStep2 extends Component {
                                  onSelectInvoiceAddress={this.onSelectInvoiceAddress}/>
                     <ShoppingList onBack={onBack} goodsId={goodsId} getGoodsData={this.getGoodsData}/>
                     <div align="right">
+
+                        <Button type="link" className='w_200' onClick={onBack}>
+                            <img height="14" className="mr10" src={require("../../../assets/imgs/cart/back.png")}
+                                 alt=""/>
+                            返回购物车
+                        </Button>
                         <Button type="danger" className='w_200' onClick={this.onSubmitOrder}>提交订单</Button>
                     </div>
                 </div>
             </div>
         )
-    }
-}
-
-class Title extends Component {
-    render() {
-        const {title} = this.props;
-        return (<h3 style={{borderLeft: '3px solid #1890ff'}} className="pl5 mb0">{title}</h3>);
     }
 }
 //收货人信息
@@ -193,7 +192,7 @@ class ConsigneeInfo extends Component {
         const {shipAddressInfo, selectAddressId, shipAddressModal} = this.state;
         return (
             <div>
-                <Title title="收货人信息"/>
+                <h3 className="fs18">确认收货地址</h3>
                 <div className="pt20 pl20 pb20 pr20">
                     <ShowAddressInfo info={{list: shipAddressInfo.uerAddress, isExist: shipAddressInfo.isExist}}
                                      onEdit={this.onEdit}
@@ -225,12 +224,14 @@ class ShippingMethods extends Component {
         const {selectShipMethodsType} = this.props;
         return (
             <div>
-                <Title title="配送方式"/>
+                <h3 className="fs18">确认配送方式</h3>
                 <div className="pt20 pl20 pb20 pr20">
                     <Radio.Group onChange={this.onChange} value={selectShipMethodsType}>
-                        <Radio value='1'>物流配送</Radio>
+                        <Radio value='1'><span className="fs14">网上仓储</span></Radio>
+                        <Radio value='2'><span className="fs14">物流配送</span></Radio>
+                        <Radio value='3'><span className="fs14">自提</span></Radio>
                     </Radio.Group>
-                    <p className="mt10 fs12">您在大宗购买的商品将通过物流配送的形式送达目的地。</p>
+                    {/*<p className="mt10 fs12">您在大宗购买的商品将通过物流配送的形式送达目的地。</p>*/}
                 </div>
             </div>
         )
@@ -380,18 +381,18 @@ class InvoiceInfo extends Component {
         const {selectInvoiceType} = this.props;
         return (
             <div>
-                <Title title="发票信息"/>
+                <h3 className="fs18">确认发票信息</h3>
                 <div className="pt20 pl20 pb20 pr20">
                     <Radio.Group onChange={this.onChange} value={selectInvoiceType}>
-                        <Radio value='1'>增值税普通发票</Radio>
-                        <Radio value='2'>增值税专项发票</Radio>
+                        <Radio value='1'><span className="fs14">增值税普通发票</span></Radio>
+                        <Radio value='2'><span className="fs14">增值税专项发票</span></Radio>
                     </Radio.Group>
                     <InvoiceDetail info={selectInvoiceType === 1 ? ordinvoiceInfo : vatinvoiceInfo}
                                    keys={selectInvoiceType === 1 ? invoiceInfoShowKey : vatInvoiceInfoShowKey}
                                    onEdit={this.onEditInvoice}
                                    onAdd={this.onAddInvoice}/>
                 </div>
-                <Title title="发票接收地址"/>
+                <h3 className="fs18">发票接收地址</h3>
                 <div className="pt20 pl20 pb20 pr20">
                     <ShowAddressInfo
                         info={{list: receiveAddressInfo.receiveAddress, isExist: receiveAddressInfo.isExist}}
@@ -480,13 +481,16 @@ class ShoppingList extends Component {
     };
 
     render() {
-        const {onBack} = this.props;
+        // const {onBack} = this.props;
         const {orderInfo: {order}} = this.state;
         const showCartGoodsList = this.getShowCartGoodsList();
         const columns = this.columns;
         return (
             <div className="clear">
-                <Title title={<span>商品清单 <small><a onClick={onBack}>返回购物车修改</a></small></span>}/>
+                <h3 className="fs18">
+                    <span>确认订单信息</span>
+                    {/*<small><a onClick={onBack}>返回购物车修改</a></small>*/}
+                </h3>
                 <Table columns={columns} className='table_title_box mt10'/>
                 {showCartGoodsList}
                 <div className="pl15 pt15 pb15 pr15 right" align="right" style={{width: 400}}>
@@ -532,7 +536,14 @@ class ShowAddressInfo extends Component {
             <React.Fragment>
                 {isExist ? (<Radio.Group onChange={this.onChange} value={selected}>
                     {list && list.map(item => {
-                        return ( <p key={item[idKey]} className={style.edit_address_item}>
+                        return (<p key={item[idKey]}
+                                   className={`${style.edit_address_item} ${selected === item[idKey] ? style.edit_address_item_isSelected : ''} clear`}>
+                            {selected === item[idKey] ? (
+                                <span className="left" style={{marginLeft: -85}}>
+                            <img height="16" src={require("../../../assets/imgs/cart/address.png")} alt=""/>
+                            寄送至
+                            </span>
+                            ) : null}
                             <Radio value={item[idKey]} data={item}/>
                             {`${item[nameKey]}  ${item[phoneKey]}  ${item[addressKey]} `}
                             {item[defaultValue] ? '默认' : <a onClick={() => onSetDefault(item)}>设置默认</a>} &nbsp;
@@ -541,8 +552,8 @@ class ShowAddressInfo extends Component {
                         </p>)
                     })}
                 </Radio.Group>) : null}
-                <div>
-                    <a onClick={() => onAdd()}>+新增地址</a>
+                <div className="mt10">
+                    <a className="fs16" onClick={() => onAdd()}>+新增地址</a>
                 </div>
             </React.Fragment>
         )
@@ -557,8 +568,8 @@ class InvoiceDetail extends Component {
                 {info.isExist ? (<div className={`${style.edit_address_item} mt10 dib`}>
                     <span className="mr10">{info[dataKey][nameKey]}</span>
                     <span className="mr10">{info[dataKey][codeKey]}</span>
-                    <a className={style.edit_address_btn} onClick={onEdit}>编辑</a>
-                </div>) : (<p className="mt10 fs12">尚未添加增值税{type}发票<a onClick={onAdd}>立即添加</a></p>)}
+                    <a className={`${style.edit_address_btn} fs16`} onClick={onEdit}>编辑</a>
+                </div>) : (<p className="mt10 fs16">尚未添加增值税{type}发票<a onClick={onAdd}>立即添加</a></p>)}
             </div>
         )
     }

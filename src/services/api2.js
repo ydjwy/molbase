@@ -325,4 +325,30 @@ export async function getOrderList(params) {
     });
 }
 
+//查询入库凭证
+export async function getWarehouseList(params) {
+    return XHR({
+        url: prefix + '/api/web/warehouse/getWarehouseList',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//查询入库凭证
+export async function createAccessory(params) {
+    return XHR({
+        url: prefix + '/api/web/materials/createAccessory',
+        body: params,
+        method: 'POST'
+    });
+}
+//查询仓储资料
+export async function queryAccessory(params) {
+    return XHR({
+        url: prefix + '/api/web/materials/queryAccessory',
+        body: params,
+        method: 'POST'
+    });
+}
+
 
