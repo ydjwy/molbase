@@ -351,4 +351,39 @@ export async function queryAccessory(params) {
     });
 }
 
+//企业购买仓储货物(买入)
+export async function purchase(params) {
+    return XHR({
+        url: prefix + '/api/web/warehouse/purchase',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//确认出售
+export async function confirmationSell(params) {
+    return XHR({
+        url: prefix + '/api/web/warehouse/confirmationSell',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//取消出售
+export async function cancelPurchase(params) {
+    return XHR({
+        url: prefix + '/api/web/warehouse/cancelPurchase',
+        body: params,
+        method: 'POST'
+    });
+}
+
+//提取
+export async function extract(params) {
+    return XHR({
+        url: prefix + '/api/web/warehouse/extract',
+        body: params,
+        method: 'POST'
+    });
+}
 

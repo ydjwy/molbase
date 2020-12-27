@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Form, Icon, Input, Button} from "antd";
+import {Form, Icon, Input, Button, message} from "antd";
 import {connect} from "react-redux";
 import userModel from "store/reducers/user";
 import {login} from '../../services/api2'
@@ -26,10 +26,14 @@ class Login extends PureComponent {
             if (!err) {
                 localStorage.removeItem('currentUser');
                 login(values).then(res => {
-                    localStorage.setItem('currentUser', JSON.stringify(res.data));
-                    setUser(res.data);
-                    const {history} = this.props;
-                    history.push('/partial');
+                    if (res.status === 200) {
+                        localStorage.setItem('currentUser', JSON.stringify(res.data));
+                        setUser(res.data);
+                        const {history} = this.props;
+                        history.push('/partial');
+                    } else {
+                        message.warning(res.message);
+                    }
                     this.setState({loginLoading: false});
                 });
             } else {

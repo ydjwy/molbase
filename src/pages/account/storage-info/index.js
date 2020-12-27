@@ -4,11 +4,18 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import userModel from "store/reducers/user";
-import {Radio, Select, Input, Button, Table, Menu, Dropdown, Icon, Form, DatePicker, Row, Col} from 'antd';
+import {Radio, Select, Input, Button, Table, Menu, Dropdown, Icon, Form, DatePicker, Row, Col, Modal} from 'antd';
 import moment from 'moment'
 import PageTitle from '../../../components/account/page-title'
 import AttachmentModal from './AttachmentModal'
-import {getWarehouseList, createAccessory} from '../../../services/api2'
+import {
+    getWarehouseList,
+    createAccessory,
+    purchase,
+    extract,
+    confirmationSell,
+    cancelPurchase
+} from '../../../services/api2'
 import style from "./index.scss";
 const {Option} = Select;
 const {RangePicker} = DatePicker;
@@ -25,7 +32,10 @@ export default class StorageInfo extends Component {
             storageInfo: [],
             isOpen: false,//是否收起
             isShowAttachment: false,//操作弹框
-            attachmentData: {}
+            attachmentData: {},
+            sellModal: {
+                visible: false,
+            }
         };
         this.condition = {
             page: 1,
@@ -37,21 +47,25 @@ export default class StorageInfo extends Component {
     }
 
     componentDidMount() {
+        this.init();
+    }
+
+    init = () => {
         const condition = this.condition;
         getWarehouseList(condition).then(res => {
             if (res.status === 200) {
                 this.setState({storageInfo: res.data || {}});
             }
         })
-    }
-
+    };
     getShowTable = () => {
         const status = {'1': '入库', '2': '货权交割', '3': '安排货转', '4': '出库'};
         const menu = (record) => (
             <Menu onClick={item => this.onHandleMore(item, record)}>
+                {record.isSell && <Menu.Item key='4'>确认出售</Menu.Item>}
                 {record.isPurchase && <Menu.Item key='3'>买入</Menu.Item>}
                 {record.isExtract && <Menu.Item key='2'>提取</Menu.Item>}
-                <Menu.Item key='1'>查看附件</Menu.Item>
+                {record.isExtract && <Menu.Item key='1'>查看附件</Menu.Item>}
             </Menu>
         );
         const {storageInfo} = this.state;
@@ -60,7 +74,7 @@ export default class StorageInfo extends Component {
                 title: '订单号',
                 dataIndex: 'orderNumber',
             }, {
-                title: '货权转让方',
+                title: '货权受让方',
                 width: 150,
                 dataIndex: 'cargoInName',
             }, {
@@ -107,7 +121,18 @@ export default class StorageInfo extends Component {
         return (<Table {...tableData}/>);
     };
     onHandleMore = (item, record) => {
-        item.key === '1' && this.setState({isShowAttachment: true, attachmentData: record});
+        let params = {orderNumber: record.orderNumber};
+        if (item.key === '1') {
+            this.setState({isShowAttachment: true, attachmentData: record});
+        } else if (item.key === '2') {
+            // this.setState({sellModal: {visible: true, record}})
+            this.onMoreMake(extract, params);
+        } else if (item.key === '3') {
+            params.sellUid = record.uid;
+            this.onMoreMake(purchase, params);
+        } else if (item.key === '4') {
+            this.setState({sellModal: {visible: true, record}})
+        }
     }
     createFiles = (record) => {
         const {id, orderNumber, uid} = record;
@@ -117,9 +142,30 @@ export default class StorageInfo extends Component {
     handleAfterClose = () => {
         this.setState({isShowAttachment: false})
     }
+    onMoreMake = (api, params) => {
+        api(params).then(res => {
+            if (res.status === 200) {
+                this.init();
+            }
+        })
+    }
+
+    footerButton = () => {
+        const {sellModal: {record}} = this.state;
+        if (!!record) {
+            let params = {orderNumber: record.orderNumber};
+            return (<React.Fragment>
+                <Button onClick={() => this.onMoreMake(cancelPurchase, params)}>取消出售</Button>
+                <Button type='primary' onClick={() => this.onMoreMake(confirmationSell, params)}>确认出售</Button>
+            </React.Fragment>);
+        } else {
+            return false;
+        }
+    }
+
 
     render() {
-        const {isOpen, isShowAttachment, attachmentData} = this.state;
+        const {isOpen, isShowAttachment, attachmentData, sellModal: {visible, record}} = this.state;
         const showTable = this.getShowTable();
         return (<div id={style.storage_info_wrapper}>
             <div className="mb20">
@@ -190,6 +236,13 @@ export default class StorageInfo extends Component {
             </div>
             {showTable}
             {isShowAttachment ? <AttachmentModal data={attachmentData} afterClose={this.handleAfterClose}/> : null}
+            <Modal
+                title="确认出售"
+                visible={visible}
+                footer={this.footerButton()}
+                onCancel={() => this.setState({sellModal: {visible: false}})}>
+                {visible && <p>{`确认出售给 【${record.cargoOutName}】 商品： ${record.cargoName} 数量：${record.quantity}`}</p>}
+            </Modal>
         </div>);
     }
 }
