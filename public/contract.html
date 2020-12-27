@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>合同</title>
     <style>
-        html, body {
+        html, body, p {
             margin: 0;
             padding: 0;
             text-decoration: none;
+            font-family:SimHei;
         }
 
         h3 {
@@ -17,8 +18,16 @@
         }
 
         table tr td {
-            padding: 5px;
+            padding: 4px;
             font-size: 12px;
+        }
+        .table_font tr td{
+        	font-size: 14px;
+        }
+
+        div p {
+            margin-bottom: 10px;
+            line-height: 1.5;
         }
 
         .table_list {
@@ -30,8 +39,9 @@
         }
 
         h4 {
-            font-weight: inherit;
-
+            font-weight: bold;
+            margin: 10px 0px;
+			font-size: 16px;
         }
 
         .table_list_info {
@@ -41,33 +51,32 @@
 
         .table_list_info td {
             border-left: 1px solid black;
+            font-size: 14px;
         }
 
         .fs12 {
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .indent {
             text-indent: 2em;
         }
-
-
     </style>
 </head>
 <body>
 <h3>购销合同</h3>
-<table width="100%">
+<table width="100%" class="table_font">
     <tr>
-        <td>供方：15791-1</td>
-        <td>合同编号：15791-1</td>
+        <td width="75%">供方：${csupplierCompany}</td>
+        <td>合同编号：${contractNo}</td>
     </tr>
     <tr>
-        <td>需方：15791-1</td>
-        <td>签订地点：1河北</td>
+        <td>需方：${demanderCompany}</td>
+        <td>签订地点：${contractAddress}</td>
     </tr>
     <tr>
         <td></td>
-        <td>签订时间：15791-1</td>
+        <td>签订时间：${contractTime}</td>
     </tr>
 </table>
 <p class="fs12">根据《中华人民共和国合同法》及相关法律法规，经双方协商一致，订立本合同。</p>
@@ -78,7 +87,7 @@
             <td align="center" width="100">产品名称</td>
             <td align="center" width="100">规格型号</td>
             <td align="center" width="100">计量单位</td>
-            <td align="center" width="100">数量（吨）</td>
+            <td align="center" width="100">数量（${productUnit}）</td>
             <td align="center" width="100">包装</td>
             <td align="center" width="100">含税单价（元）</td>
             <td align="center" width="100">不含税金额（元）</td>
@@ -86,24 +95,24 @@
             <td align="center" width="100">总金额（元）</td>
         </tr>
         <tr>
-            <td align="center">乙二醇</td>
-            <td align="center">优等品</td>
-            <td align="center">吨</td>
-            <td align="center">5000</td>
-            <td align="center">散水</td>
-            <td align="center">3496</td>
-            <td align="center">15464601.77</td>
-            <td align="center">2010398.23</td>
-            <td align="center">17475000.00</td>
+            <td align="center">${productName}</td>
+            <td align="center">${productModel}</td>
+            <td align="center">${productUnit}</td>
+            <td align="center">${productQuantity}</td>
+            <td align="center">${productPack}</td>
+            <td align="center">${productUnitPrice}</td>
+            <td align="center">${productNoUnitPrice}</td>
+            <td align="center">${productTaxAmount}</td>
+            <td align="center">${productTotalAmount}</td>
         </tr>
         <tr>
             <td colspan="2">合计含税总金额：</td>
-            <td colspan="7">17475000.00</td>
+            <td colspan="7">${productTaxTotalAmount}</td>
         </tr>
         <tr>
             <td colspan="2">大写人民币（元）</td>
-            <td colspan="5">壹仟柒佰此时七万五千年远征</td>
-            <td colspan="2" align="center">（含13%增值说）</td>
+            <td colspan="5">${productBigTaxTotalAmount}</td>
+            <td colspan="2" align="center">${productTaxRate}</td>
         </tr>
     </table>
 </div>
@@ -112,32 +121,44 @@
 </div>
 <div>
     <h4>三、交（提）货起讫时间、方式、地点及费用负担：</h4>
-    <p class="indent fs12">质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准。</p>
+    <p class="indent fs12">交割时间；2020年7月30日前（含当日），具体时间由双方协商确认；供方向需方提供免费仓储期自交割日起5天；交割当日，供需双方通过长江国际网上仓储平台CA交割，供方将已复核完毕的全部货权或批次货权的有效货转截图提供给需方，需方确认后立即将全部货款或批次货款支付到供方指定账户，可分批交割，每500吨交割接受3个以内（含三个）拼单，供方收到全部货款或批次货款后当日立即发送提单完成最终货转。供方应于交割后当日向需方开具货值等额的相应增值税专用发票。</p>
 </div>
 <div>
     <h4>四、交（提）货起讫时间、方式、地点及费用负担：</h4>
-    <p class="indent fs12">质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准。</p>
-    <p class="indent fs12">质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准。</p>
 </div>
 <div>
+    <h4>五、所有权归属：</h4>
+    <p class="indent fs12">
+        需方未向供方支付货款或未能支付全部货款的，即使需方已收到或提取货物，该未支付货款部分的货物的所有权仍归属供方，供方有权在本合同规定的支付日后，就需方未支付部分的货物主张权利，包括但不限于要求支付货款，立即停止使用或转售货物及返还原物等，但需方仍应对其收到或提取货物后的货物毁损、灭失承担责任。
+    </p>
+</div>
+
+<div>
+    <h4>六、验收标准、方法、地点及期限：</h4>
+    <p class="indent fs12">
+        按本合同第二条标准验收，如对货物有异议，需方应在提货后一个工作日以书面形式提出。
+    </p>
+</div>
+
+<div>
+    <h4>七、违约责任：</h4>
+    <p class="indent fs12">
+        违反本合同的任一条款，均视为违约，违约方均需向对方支付相当于本合同总金额20%的违约金，受损失方损失额超过违约金的，违约方还需按实际损失金额赔偿给对方。
+    </p>
+</div>
+
+<div>
+    <h4>八、争议解决：</h4>
+    <p class="indent fs12">
+        本合同若有未尽事宜，双方应友好协商，协商不成的，应提交原告方所在地人民法院裁决。
+    </p>
+</div>
+
+
+<div>
     <h4>九、效力及其他：</h4>
-    <p class="indent fs12">（1）质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准。</p>
-    <p class="indent fs12">（2）质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T 4649-2018聚酯级标准,质量标准符合GB/T
-        4649-2018聚酯级标准。</p>
+    <p class="indent fs12">（1）本合同一式两份，双方各执一份，经双方加盖公章或合同章后生效，扫描件与原件具有同等效力。双方履行完毕本合同义务无异议后，合同自行终止。</p>
+    <p class="indent fs12">（2）本合同未尽事宜，在本合同上不得有任何修改，双方需协商另行签订书面补充协议；补充协议是本合同的组成部分，具有同等法律效力。</p>
 </div>
 
 <table class="table_list_info" width="100%">
@@ -146,32 +167,32 @@
         <td align="center" width="50%">需方</td>
     </tr>
     <tr>
-        <td >单位名称：河北新能源科技有限公司</td>
-        <td>单位名称：河北新能源科技有限公司河北新能源科技有限公司河北新能源科技有限公司</td>
+        <td>单位名称：${companyName}</td>
+        <td>单位名称：${demanderCompanyName}</td>
     </tr>
     <tr>
-        <td>地址：廊坊</td>
-        <td>地址：廊坊</td>
+        <td>地址：${detailedAddress}</td>
+        <td>地址：${demanderDetailedAddress}</td>
     </tr>
     <tr>
         <td>供方代表签字：</td>
         <td>供方代表签字：</td>
     </tr>
     <tr>
-        <td>电话：</td>
-        <td>电话：</td>
+        <td>电话：${telephone}</td>
+        <td>电话：${demanderTelephone}</td>
     </tr>
     <tr>
         <td>传真：</td>
         <td>传真：</td>
     </tr>
     <tr>
-        <td>开户银行：</td>
-        <td>开户银行：</td>
+        <td>开户银行：${depositBank}</td>
+        <td>开户银行：${demanderDepositBank}</td>
     </tr>
     <tr>
-        <td>账号：</td>
-        <td>账号：</td>
+        <td>账号：${bankCard}</td>
+        <td>账号：${demanderBankCard}</td>
     </tr>
 </table>
 

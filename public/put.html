@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>入库单</title>
     <style>
         html, body {
+            font-family:SimHei;
             margin: 0;
             padding: 0;
             text-decoration: none;
@@ -14,11 +15,6 @@
             width: 100%;
             margin: 20px 0;
             text-align: center;
-        }
-
-        .No_number {
-            float: right;
-            margin-top: -66px;
         }
 
         table tr td {
@@ -58,28 +54,34 @@
         <td>网址(Web)：xxx.ci-ibt.cn</td>
     </tr>
 </table>
-<h3>货权转移入库凭证 <br/> Warehouse warrant</h3>
-<span class="No_number">（No：ZM20071549879）</span>
+<h3>货权转移入库凭证 <br /> Warehouse warrant</h3>
+<table  width="100%">
+    <tr>
+        <td>制单日期（Date to be compiled）：${makingTime}</td>
+        <td align="right">（No：${orderNumber}）</td>
+    </tr>
+</table>
+
 <table class="table_list" width="100%">
     <tr>
-        <td colspan="1" width="240" align="center">货权受让方 <br>Licensee for the right of cargo</td>
-        <td colspan="3">辽西大宗仓储（阜新）有限公司</td>
+        <td colspan="1" width="240" align="center">货权受让方 <br />Licensee for the right of cargo</td>
+        <td colspan="3">${cargoInName}</td>
     </tr>
     <tr>
-        <td align="center">仓储合同编号<br>Number of Storage Contract</td>
-        <td>ZM68381255</td>
-        <td width="100" align="center">货物名称<br>Name of Cargo</td>
-        <td>乙二醇</td>
+        <td align="center">仓储合同编号<br />Number of Storage Contract</td>
+        <td>${warehouseContract}</td>
+        <td width="100" align="center">货物名称<br />Name of Cargo</td>
+        <td>${cargoName}</td>
     </tr>
     <tr>
-        <td align="center">货权出让方单证号码<br>Number of Cargo</td>
-        <td>ZM68381255</td>
-        <td width="100" align="center"><span class="vam">数量（MT）<br>Quantity</span><span class="vam"></span></td>
-        <td>500</td>
+        <td align="center">货权出让方单证号码<br />Number of Cargo</td>
+        <td>${cargoNumber}</td>
+        <td width="100" align="center"><span class="vam">数量（MT）<br />Quantity</span><span class="vam"></span></td>
+        <td>${quantity}</td>
     </tr>
     <tr>
-        <td colspan="1" align="center">货权出让方 <br>Licensee for the right of cargo</td>
-        <td colspan="3">辽西大宗仓储（阜新）有限公司</td>
+        <td colspan="1" align="center">货权出让方 <br />Licensee for the right of cargo</td>
+        <td colspan="3">${cargoOutName}</td>
     </tr>
 </table>
 <div></div>
@@ -88,14 +90,12 @@
     <li>仅作货权受让方入库时的凭证。</li>
     <li>需加盖“仓库专用章”方为有效。</li>
 </ol>
-<table width="100%">
+<table  width="100%">
     <tr>
-        <td width="135">制单（Compiled by）：</td>
-        <td>15791-1</td>
-        <td width="210">制单日期（Date to be compiled）：</td>
-        <td>2020-07-17</td>
+        <td width="50%">制单（Compiled by）：15791-1</td>
         <td>仓库签章（Sealed by warehouse）:</td>
     </tr>
 </table>
+
 </body>
 </html>

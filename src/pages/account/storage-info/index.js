@@ -10,7 +10,7 @@ import PageTitle from '../../../components/account/page-title'
 import AttachmentModal from './AttachmentModal'
 import {
     getWarehouseList,
-    createAccessory,
+    // createAccessory,
     purchase,
     extract,
     confirmationSell,
@@ -65,7 +65,7 @@ export default class StorageInfo extends Component {
                 {record.isSell && <Menu.Item key='4'>确认出售</Menu.Item>}
                 {record.isPurchase && <Menu.Item key='3'>买入</Menu.Item>}
                 {record.isExtract && <Menu.Item key='2'>提取</Menu.Item>}
-                {record.isExtract && <Menu.Item key='1'>查看附件</Menu.Item>}
+                {record.isArrange && <Menu.Item key='1'>查看附件</Menu.Item>}
             </Menu>
         );
         const {storageInfo} = this.state;
@@ -99,7 +99,8 @@ export default class StorageInfo extends Component {
             }, {
                 title: '操作',
                 render: (record) => <div>
-                    <a type='link' onClick={() => this.createFiles(record)}>生成</a> | <Dropdown overlay={menu(record)}>
+                    {/*<a type='link' onClick={() => this.createFiles(record)}>生成</a> | */}
+                    <Dropdown overlay={menu(record)}>
                     <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                         更多<Icon type="down"/>
                     </a>
@@ -134,11 +135,11 @@ export default class StorageInfo extends Component {
             this.setState({sellModal: {visible: true, record}})
         }
     }
-    createFiles = (record) => {
-        const {id, orderNumber, uid} = record;
-        const params = {id, orderNumber, uid}
-        createAccessory(params).then();
-    }
+    // createFiles = (record) => {
+    //     const {id, orderNumber, uid} = record;
+    //     const params = {id, orderNumber, uid}
+    //     createAccessory(params).then();
+    // }
     handleAfterClose = () => {
         this.setState({isShowAttachment: false})
     }
