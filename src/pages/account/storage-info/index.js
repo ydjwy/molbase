@@ -25,7 +25,7 @@ const formItemLayout = {
 };
 
 @connect(({user}) => ({...user}), {...userModel.actions})
-export default class StorageInfo extends Component {
+class StorageInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,8 +39,8 @@ export default class StorageInfo extends Component {
         };
         this.condition = {
             page: 1,
-            limit: 1,
-            status: "1"
+            size: 10,
+            flag: "1"
         };
 
 
@@ -101,10 +101,10 @@ export default class StorageInfo extends Component {
                 render: (record) => <div>
                     {/*<a type='link' onClick={() => this.createFiles(record)}>生成</a> | */}
                     <Dropdown overlay={menu(record)}>
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        更多<Icon type="down"/>
-                    </a>
-                </Dropdown>
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                            更多<Icon type="down"/>
+                        </a>
+                    </Dropdown>
                 </div>,
             },
 
@@ -115,7 +115,11 @@ export default class StorageInfo extends Component {
             dataSource: storageInfo.warehouseWarrant || [],
             pagination: {
                 total: storageInfo.total || 0,
-                pageSize: 10
+                pageSize: this.condition.size,
+                onChange: (page) => {
+                    this.condition.page = page;
+                    this.init();
+                }
             }
         }
 
@@ -162,10 +166,39 @@ export default class StorageInfo extends Component {
         } else {
             return false;
         }
+    };
+
+    onRadioChange = (e) => {
+        if (e.target) {
+            this.condition.flag = e.target.value;
+            this.init();
+        }
+    };
+    onSearch = () => {
+        const {form: {validateFields}} = this.props;
+        validateFields((err, values) => {
+            if (!err) {
+                if (!!values.storageTime && values.storageTime.length > 0) {
+                    this.condition.starStorageTime = moment(values.storageTime[0]).format('YYYY-MM-DD');
+                    this.condition.endStorageTime = moment(values.storageTime[1]).format('YYYY-MM-DD');
+                }
+                this.condition = {...this.condition, ...values};
+                delete this.condition.storageTime;
+                this.init();
+            }
+        })
+    };
+    onReset = () => {
+        const {form: {resetFields}} = this.props;
+        const {page, size, flag} = this.condition;
+        resetFields();
+        this.condition = {page, size, flag};
+        this.init();
+
     }
 
-
     render() {
+        const {form: {getFieldDecorator}} = this.props;
         const {isOpen, isShowAttachment, attachmentData, sellModal: {visible, record}} = this.state;
         const showTable = this.getShowTable();
         return (<div id={style.storage_info_wrapper}>
@@ -177,55 +210,67 @@ export default class StorageInfo extends Component {
                     <Row>
                         <Col span={8}>
                             <Form.Item>
-                                <Radio.Group defaultValue="a" buttonStyle="solid">
-                                    <Radio.Button value="0">全部(10)</Radio.Button>
-                                    <Radio.Button value="1">买入(10)</Radio.Button>
-                                    <Radio.Button value="2">卖出(10)</Radio.Button>
+                                <Radio.Group defaultValue='1' onChange={this.onRadioChange} buttonStyle="solid">
+                                    <Radio.Button value="1">全部</Radio.Button>
+                                    <Radio.Button value="2">购买</Radio.Button>
+                                    <Radio.Button value="3">售出</Radio.Button>
                                 </Radio.Group>
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label="货物名称" {...formItemLayout}>
-                                <Input placeholder="请输入货物名称"/>
+                            <Form.Item label="订单号" {...formItemLayout}>
+                                {getFieldDecorator('orderNumber', {
+                                    rules: [{required: false, message: '请输入订单号'},],
+                                })(<Input placeholder="请输入订单号"/>)}
                             </Form.Item>
                         </Col>
                         {isOpen ? (<React.Fragment>
                             <Col span={8}>
-                                <Form.Item label="订单号" {...formItemLayout}>
-                                    <Input placeholder="请输入订单号"/>
+                                <Form.Item label="货物名称" {...formItemLayout}>
+                                    {getFieldDecorator('cargoName', {
+                                        rules: [{required: false, message: '请输入货物名称'},],
+                                    })(<Input placeholder="请输入货物名称"/>)}
                                 </Form.Item>
                             </Col>
                             <Col span={8}>
                                 <Form.Item label="货权转让方" {...formItemLayout}>
-                                    <Input placeholder="请输入货权转让方"/>
+                                    {getFieldDecorator('demanderName', {
+                                        rules: [{required: false, message: '请输入货权转让方'},],
+                                    })(<Input placeholder="请输入货权转让方"/>)}
                                 </Form.Item>
                             </Col>
                             <Col span={8}>
                                 <Form.Item label="货权出让方" {...formItemLayout}>
-                                    <Input placeholder="请输入货权出让方"/>
+                                    {getFieldDecorator('supplierName', {
+                                        rules: [{required: false, message: '请输入货权出让方'},],
+                                    })(<Input placeholder="请输入货权出让方"/>)}
                                 </Form.Item>
                             </Col>
                             <Col span={8}>
                                 <Form.Item label="状态"  {...formItemLayout}>
-                                    <Select placeholder="请选择状态">
+                                    {getFieldDecorator('status', {
+                                        rules: [{required: false, message: '请选择状态'},],
+                                    })(<Select placeholder="请选择状态">
                                         <Option value="1">入库</Option>
                                         <Option value="2">货权交割</Option>
                                         <Option value="3">安排货转</Option>
                                         <Option value="4">出库</Option>
-                                    </Select>
+                                    </Select>)}
                                 </Form.Item>
                             </Col>
                             <Col span={8}>
                                 <Form.Item label="入库时间" {...formItemLayout}>
-                                    <RangePicker/>
+                                    {getFieldDecorator('storageTime', {
+                                        rules: [{required: false, message: '请选择入库时间'},],
+                                    })(<RangePicker/>)}
+
                                 </Form.Item>
                             </Col>
                         </React.Fragment>) : null}
-
                         <Col span={8}>
                             <Form.Item>
-                                <Button type="primary" className='ml10 mr10'>查询</Button>
-                                <Button className='mr10'>重置</Button>
+                                <Button type="primary" className='ml10 mr10' onClick={this.onSearch}>查询</Button>
+                                <Button className='mr10' onClick={this.onReset}>重置</Button>
                                 <a onClick={() => this.setState({isOpen: !isOpen})}>
                                     {isOpen ? '收起 ' : '展开 '}
                                     <Icon type={isOpen ? 'up' : 'down'}/>
@@ -247,3 +292,4 @@ export default class StorageInfo extends Component {
         </div>);
     }
 }
+export default Form.create()(StorageInfo);

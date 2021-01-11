@@ -330,7 +330,7 @@ export async function getWarehouseList(params) {
     return XHR({
         url: prefix + '/api/web/warehouse/getWarehouseList',
         body: params,
-        method: 'POST'
+        method: 'GET'
     });
 }
 
