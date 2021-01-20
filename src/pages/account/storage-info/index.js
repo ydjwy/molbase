@@ -52,7 +52,14 @@ class StorageInfo extends Component {
 
     init = () => {
         const condition = this.condition;
-        getWarehouseList(condition).then(res => {
+        let filterCondition = {};
+        Object.keys(condition).forEach(key => {
+            if (!!condition[key]) {
+                filterCondition[key] = condition[key];
+            }
+        });
+
+        getWarehouseList(filterCondition).then(res => {
             if (res.status === 200) {
                 this.setState({storageInfo: res.data || {}});
             }
@@ -152,6 +159,7 @@ class StorageInfo extends Component {
             if (res.status === 200) {
                 this.init();
             }
+            this.setState({sellModal: {visible: false}});
         })
     }
 

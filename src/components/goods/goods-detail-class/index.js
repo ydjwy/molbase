@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Descriptions, Radio, InputNumber, Button,message} from "antd";
+import {Descriptions, Radio, InputNumber, Button, message} from "antd";
 import {joinCart} from '../../../services/api2'
 import style from './index.scss'
 const {Item} = Descriptions;
@@ -19,7 +19,7 @@ export default class GoodsDetailClass extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {goodsInfo: {productAttr, productValue}} = nextProps;
-        this.setState({selectedAttr:productValue[productAttr[0].attrValueArr[0]]});
+        this.setState({selectedAttr: productValue[productAttr[0].attrValueArr[0]]});
     }
 
     //选择数量
@@ -29,30 +29,32 @@ export default class GoodsDetailClass extends Component {
     //选择规格
     onChangeAttr = (attr) => {
         const {goodsInfo: {productValue}} = this.props;
-        this.setState({selectedAttr:productValue[attr.target.value]})
+        this.setState({selectedAttr: productValue[attr.target.value]})
     };
-    //加入购物车
-    onJoinShoppingCart = () => {
+    //加入购物车或立即购买
+    onJoinShoppingCartOrBuyNow = (type) => {
         const {goodsInfo: {storeInfo}} = this.props;
-        const {count,selectedAttr}=this.state;
-        const data={
+        const {count, selectedAttr} = this.state;
+        const data = {
             productId: storeInfo.id,  //商品id
-            cartNum:count,     //商品数量
-            new: 0,         //默认是否立即购买   0 是 不立即购买 1是立即购买
+            cartNum: count,     //商品数量
+            new: type === 'new' ? 1 : 0,         //默认是否立即购买   0 是 不立即购买 1是立即购买
             uniqueId: selectedAttr.unique  // 商品规格id  从商品详情接口里去拿
         }
-        joinCart(data).then(res=>{
-            if(res.status===200){
-                message.success(res.msg)
+        joinCart(data).then(res => {
+            if (res.status === 200) {
+                message.success(res.msg);
+                if (type === 'new') {
+                    localStorage.setItem('newData', JSON.stringify(res.data));
+                    window.open('/#/shopping-cart');
+                }
             }
         })
     };
-    //立即购买
-    onBuyNow = () => {
-    }
+
 
     render() {
-        const { count,selectedAttr:{price}} = this.state;
+        const {count, selectedAttr: {price}} = this.state;
         const {goodsInfo: {storeInfo, productAttr}} = this.props;
         return (
             <div className={style.goods_detail_class_wrapper}>
@@ -89,8 +91,9 @@ export default class GoodsDetailClass extends Component {
                     <Item label="商品总价" span={4}>￥{price * count}元</Item>
                 </Descriptions>
                 <InputNumber min={1} defaultValue={1} precision={0} className='vam' onChange={this.onSelectCount}/>
-                <Button type="primary" className='vam ml10' onClick={this.onBuyNow}>立即购买</Button>
-                <Button className='vam ml10' onClick={this.onJoinShoppingCart}>加入购物车</Button>
+                <Button type="primary" className='vam ml10'
+                        onClick={() => this.onJoinShoppingCartOrBuyNow('new')}>立即购买</Button>
+                <Button className='vam ml10' onClick={() => this.onJoinShoppingCartOrBuyNow('join')}>加入购物车</Button>
                 <Descriptions>
                     <Item label="支付方式" span={3}>线下转账 在线支付</Item>
                     <Item label="发票服务" span={3}>增税普票 增税专票</Item>

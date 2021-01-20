@@ -20,6 +20,17 @@ export default class ShoppingCart extends Component {
         };
     }
 
+    componentWillMount() {
+        const newData = localStorage.getItem('newData');
+        // localStorage.removeItem('newData');
+        if (newData) {
+            const cartData = JSON.parse(newData);
+            if (cartData && cartData.cartId) {
+                this.setState({currentStep: 1, selectedGoods: cartData.cartId});
+            }
+        }
+
+    }
 
     //返回购物车
     onBackCart = () => {
