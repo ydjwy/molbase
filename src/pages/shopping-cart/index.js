@@ -22,7 +22,7 @@ export default class ShoppingCart extends Component {
 
     componentWillMount() {
         const newData = localStorage.getItem('newData');
-        // localStorage.removeItem('newData');
+        localStorage.removeItem('newData');
         if (newData) {
             const cartData = JSON.parse(newData);
             if (cartData && cartData.cartId) {
